@@ -45,6 +45,12 @@
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <mainClass>co.uniquindio.piii.App</mainClass>
+                    <modulePaths>
+                        <path>${project.basedir}/src/main/resources</path>
+                    </modulePaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>
