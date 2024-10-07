@@ -12,19 +12,17 @@ public class RegistroController {
     private TextField userTextField;
 
     @FXML
-    private PasswordField passwordField;
+    private PasswordField passwordTextField;
 
     @FXML
     private void handleRegister() {
         String username = userTextField.getText();
-        String password = passwordField.getText();
+        String password = passwordTextField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
             showAlert(AlertType.ERROR, "Error de registro", "Por favor, completa todos los campos.");
         } else {
-            // Aquí agregarías la lógica para registrar al usuario en tu base de datos o sistema
-            // Por ejemplo, podrías validar si el usuario ya existe o guardar los datos.
-            
+            Registro.guardarDatosRegistro(username, password);  // Llama al método para guardar datos
             showAlert(AlertType.INFORMATION, "Registro exitoso", "Usuario registrado correctamente.");
             limpiarCampos();
         }
@@ -32,7 +30,7 @@ public class RegistroController {
 
     private void limpiarCampos() {
         userTextField.clear();
-        passwordField.clear();
+        passwordTextField.clear();
     }
 
     private void showAlert(AlertType alertType, String title, String message) {
