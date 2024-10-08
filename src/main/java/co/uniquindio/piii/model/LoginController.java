@@ -18,6 +18,8 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
+        
         // Aquí puedes agregar la lógica de validación del usuario y contraseña
         if (username.equals("admin") && password.equals("1234")) {
             System.out.println("Inicio de sesión exitoso");
