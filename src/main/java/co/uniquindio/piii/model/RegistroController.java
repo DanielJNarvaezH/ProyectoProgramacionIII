@@ -2,6 +2,7 @@ package co.uniquindio.piii.model;
 
 import java.io.IOException;
 
+import co.uniquindio.piii.App;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -49,29 +50,29 @@ public class RegistroController {
         alert.showAndWait();
     }
 
-    // Método para abrir la ventana de login
-    @FXML
-    private void abrirVentanaLogin() {
-        try {
-            System.out.println(getClass().getResource("login.fxml"));  // Línea de depuración
+@FXML
+private void abrirVentanaLogin() {
+    try {
+        // Depuración: Imprimir la ruta para confirmar que es correcta
+        System.out.println(App.class.getResource("login.fxml")); 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml")); // Asegúrate de que la ruta sea correcta
-            Parent root = loader.load();
+        // Usar la misma lógica que en la clase App para cargar el FXML
+        Parent root = FXMLLoader.load(App.class.getResource("login.fxml")); // Asegúrate de que esta ruta sea correcta
         
-            // Si deseas abrir una nueva ventana (Stage)
-            Stage stage = new Stage();
-            stage.setTitle("Login");
-            stage.setScene(new Scene(root));
-            stage.show();
+        // Abrir una nueva ventana (Stage)
+        Stage stage = new Stage();
+        stage.setTitle("Login");
+        stage.setScene(new Scene(root));
+        stage.show();
         
-            // Cerrar la ventana actual si es necesario
-            Stage currentStage = (Stage) userTextField.getScene().getWindow();
-            currentStage.close();
-    }  
-        catch (IOException e) {
-            e.printStackTrace();
-            showAlert(AlertType.ERROR, "Error", "No se pudo abrir la ventana de Login.");
+        // Cerrar la ventana actual si es necesario
+        Stage currentStage = (Stage) userTextField.getScene().getWindow();
+        currentStage.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+        showAlert(AlertType.ERROR, "Error", "No se pudo abrir la ventana de Login.");
     }
 }
+
 
 }
