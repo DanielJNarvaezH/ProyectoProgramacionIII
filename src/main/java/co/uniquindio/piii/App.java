@@ -19,7 +19,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Cargamos la vista de registro como primera pantalla
-        scene = new Scene(loadFXML("registro"), 400, 300);
+        scene = new Scene(loadFXML("Producto"), 400, 300);
         stage.setScene(scene);
         stage.setTitle("Registro de Usuario");
         stage.show();

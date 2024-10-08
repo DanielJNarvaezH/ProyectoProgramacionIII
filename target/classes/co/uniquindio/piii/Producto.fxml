@@ -41,7 +41,7 @@
             <TextField fx:id="txtPrecio" promptText="Ingrese el precio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="cbCategoria" prefHeight="31.0" prefWidth="283.0" promptText="Seleccione la categoria" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ImageView fx:id="imageViewProducto" fitHeight="124.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true" translateX="180.0" GridPane.rowIndex="6" />
-            <Button fx:id="btSeleccionarImagen" mnemonicParsing="false" prefHeight="31.0" prefWidth="208.0" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button fx:id="btSeleccionarImagen" mnemonicParsing="false" onAction="#seleccionarImagen" prefHeight="31.0" prefWidth="208.0" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Imagen Producto" textAlignment="CENTER" GridPane.rowIndex="6" />
          </children>
       </GridPane>
