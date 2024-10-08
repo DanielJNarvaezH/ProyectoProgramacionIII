@@ -7,24 +7,24 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.model.RegistroController" spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171">
+<VBox alignment="CENTER" prefHeight="190.0" prefWidth="219.0" spacing="10" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.model.RegistroController">
     
-    <Label text="Ingresa los datos de tu registro"/>
+    <Label text="Ingresa los datos de tu registro" />
     
     <VBox spacing="5">
-        <Label text="Usuario"/>
-        <TextField fx:id="userTextField"/>
+        <Label text="Usuario" />
+        <TextField fx:id="userTextField" />
     </VBox>
     
     <VBox spacing="5">
-        <Label text="Contraseña"/>
-        <PasswordField fx:id="passwordTextField"/>
+        <Label text="Contraseña" />
+        <PasswordField fx:id="passwordTextField" />
     </VBox>
 
-    <Button text="Registrarse" onAction="#handleRegister"/>
+    <Button onAction="#handleRegister" text="Registrarse" />
 
     <VBox.margin>
-        <Insets top="10"/>
+        <Insets top="10" />
     </VBox.margin>
 
 </VBox>
