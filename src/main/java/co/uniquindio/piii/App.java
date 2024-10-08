@@ -24,10 +24,12 @@ public class App extends Application {
         stage.setTitle("Registro de Usuario");
         stage.show();
     }
+    
     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("registro.fxml"));
-
+    
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
+        
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -38,4 +40,5 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
 }
