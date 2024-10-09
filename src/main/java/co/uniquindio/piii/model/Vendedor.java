@@ -14,6 +14,68 @@ public class Vendedor {
     private ArrayList<Producto> productos;
     private ArrayList<Vendedor> contactos;
 
+    
+
+    public Vendedor(String nombre, String usuario, String contrasena, String email) {
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.email = email;
+        this.productos = new ArrayList<>();
+        this.contactos = new ArrayList<>();
+
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+
+    public ArrayList<Vendedor> getContactos() {
+        return contactos;
+    }
+
+    
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setProductos(ArrayList<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public void setContactos(ArrayList<Vendedor> contactos) {
+        this.contactos = contactos;
+    }
+
     public void publicarProducto(Producto producto){
 
     }

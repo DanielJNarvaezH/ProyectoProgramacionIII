@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.ChatContactoController">
    <children>
       <Label layoutX="228.0" layoutY="119.0" prefHeight="183.0" prefWidth="143.0" text="       chat de contacto" />
       <Label layoutX="35.0" layoutY="116.0" prefHeight="189.0" prefWidth="163.0" text="        Lista de contactos" textAlignment="CENTER" />
