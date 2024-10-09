@@ -5,6 +5,8 @@ module co.uniquindio.piii {
 
     opens co.uniquindio.piii to javafx.fxml;
     opens co.uniquindio.piii.model to javafx.fxml;
-
+    opens co.uniquindio.piii.controller;
+    exports co.uniquindio.piii.controller;
+    exports co.uniquindio.piii.model;
     exports co.uniquindio.piii;
 }
