@@ -1,13 +1,17 @@
-co\uniquindio\piii\PrimaryController.class
+co\uniquindio\piii\controller\ChatContactoController.class
+co\uniquindio\piii\controller\RegistroController.class
+co\uniquindio\piii\model\Registro.class
 co\uniquindio\piii\exceptions\LimiteContactosExcedidoException.class
+co\uniquindio\piii\controller\LoginController.class
 co\uniquindio\piii\exceptions\ProductoNoEncontradoException.class
 module-info.class
 co\uniquindio\piii\model\Producto.class
 co\uniquindio\piii\model\Contacto.class
 co\uniquindio\piii\exceptions\ContactoNoEncontradoException.class
 co\uniquindio\piii\exceptions\ProductoYaExistenteException.class
+co\uniquindio\piii\controller\ComentarioController.class
+co\uniquindio\piii\controller\ProductoController.class
 co\uniquindio\piii\model\CategoriaProducto.class
-co\uniquindio\piii\model\RegistroController.class
 co\uniquindio\piii\exceptions\ContrasenaIncorrectaException.class
 co\uniquindio\piii\App.class
 co\uniquindio\piii\exceptions\VendedorInexistenteException.class
@@ -19,6 +23,5 @@ co\uniquindio\piii\exceptions\ProductoSinNombreException.class
 co\uniquindio\piii\exceptions\EmailYaRegistradoException.class
 co\uniquindio\piii\exceptions\ContactoYaExistenteException.class
 co\uniquindio\piii\model\EstadoProducto.class
-co\uniquindio\piii\SecondaryController.class
 co\uniquindio\piii\model\Vendedor.class
 co\uniquindio\piii\model\Estadistica.class
