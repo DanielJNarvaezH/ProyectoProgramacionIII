@@ -1,7 +1,8 @@
 package co.uniquindio.piii.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;  
+import java.util.ArrayList;
+import java.io.File;
 
 public class Producto {
 
@@ -11,10 +12,9 @@ public class Producto {
     private int numLikes;
     private Vendedor vendedor;
     private ArrayList<Comentario> comentarios;
+    private File imagen;
 
     
-    
-
     public String getTitulo() {
         return titulo;
     }
@@ -46,13 +46,14 @@ public class Producto {
         this.comentarios = comentarios;
     
     }
-    public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, int numLikes, Vendedor vendedor) {
+    public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, int numLikes, Vendedor vendedor, File imagen) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaPublicacion = fechaPublicacion;
         this.numLikes = numLikes;
         this.vendedor = vendedor;
         comentarios = new ArrayList<>();
+        this.imagen = imagen;
     }
     @Override
     public String toString() {
@@ -73,6 +74,12 @@ public class Producto {
     }
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
+    }
+    public File getImagen() { 
+        return imagen; 
+    }
+    public void setImagen(File imagen){
+        this.imagen = imagen;
     }
 
 

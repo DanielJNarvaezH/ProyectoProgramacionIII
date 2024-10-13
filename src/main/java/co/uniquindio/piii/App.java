@@ -15,7 +15,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Cargamos la vista de registro como primera pantalla
-        scene = new Scene(loadFXML("producto"), 640, 480);
+        scene = new Scene(loadFXML("vendedor"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }

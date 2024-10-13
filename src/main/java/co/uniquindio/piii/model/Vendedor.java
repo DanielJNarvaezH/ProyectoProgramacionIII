@@ -77,7 +77,7 @@ public class Vendedor {
     }
 
     public void publicarProducto(Producto producto){
-
+        productos.add(producto);
     }
     public void agregarContacto(Vendedor vendedor){
 
