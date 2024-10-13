@@ -52,7 +52,7 @@ public class ComentarioController {
         String autor = autorTextField.getText();
         String textoComentario = comentarioTextField.getText();
         Comentario comentario = new Comentario(autor, textoComentario, fecha);
-        Producto producto = new Producto("", "", null, 0, null);
+        Producto producto = new Producto("", "", null, 0, null, null);
         producto.agregarComentario(comentario);
         
     }
@@ -60,7 +60,7 @@ public class ComentarioController {
     @FXML
     void mostrarListaComentarios(ActionEvent event) {
 
-        Producto producto1 = new Producto("", "", null, 0, null);
+        Producto producto1 = new Producto("", "", null, 0, null, null);
         ArrayList<Comentario> listaComentarios = producto1.getComentarios();
         StringBuilder sb = new StringBuilder();  
             for (Comentario comentario : listaComentarios) {  
