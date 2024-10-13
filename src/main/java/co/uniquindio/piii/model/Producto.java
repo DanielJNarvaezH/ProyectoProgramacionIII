@@ -46,7 +46,16 @@ public class Producto {
         this.comentarios = comentarios;
     
     }
+<<<<<<< Updated upstream
     public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, int numLikes, Vendedor vendedor, File imagen) {
+=======
+
+    public void agregarComentario(Comentario comentario){
+        comentarios.add(comentario);
+
+    }
+    public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, int numLikes, Vendedor vendedor) {
+>>>>>>> Stashed changes
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaPublicacion = fechaPublicacion;
@@ -60,9 +69,7 @@ public class Producto {
         return "Producto [titulo=" + titulo + ", descripcion=" + descripcion + ", fechaPublicacion=" + fechaPublicacion
                 + ", numLikes=" + numLikes + ", vendedor=" + vendedor + ", comentarios=" + comentarios + "]";
     }
-    public void agregarComentario(Comentario comentario){
-
-    }
+    
     public void recibirLike(){
 
     }
