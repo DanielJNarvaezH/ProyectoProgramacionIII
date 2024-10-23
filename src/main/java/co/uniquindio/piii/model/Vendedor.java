@@ -1,9 +1,10 @@
 package co.uniquindio.piii.model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Vendedor {
+public class Vendedor implements Serializable {
 
     private String nombre;
     private String usuario;

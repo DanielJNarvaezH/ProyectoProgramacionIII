@@ -3,8 +3,9 @@ package co.uniquindio.piii.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.Serializable;
 
-public class Producto {
+public class Producto implements Serializable {
 
     private String titulo;
     private String descripcion;

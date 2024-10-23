@@ -1,8 +1,9 @@
 package co.uniquindio.piii.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Comentario {
+public class Comentario implements Serializable{
 
     private String autor;
     private String texto;

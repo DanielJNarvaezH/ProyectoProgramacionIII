@@ -1,7 +1,8 @@
 package co.uniquindio.piii.model;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Contacto {
+public class Contacto implements Serializable {
 
     private Vendedor contacto;
     private LocalDate fechaSolicitud;

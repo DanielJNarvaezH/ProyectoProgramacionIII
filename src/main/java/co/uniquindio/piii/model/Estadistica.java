@@ -1,9 +1,10 @@
 package co.uniquindio.piii.model;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
 
-public class Estadistica {
+public class Estadistica implements Serializable{
 
     private int totalProductoPublicados;
     private int totalLikes;

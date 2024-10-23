@@ -2,8 +2,9 @@ package co.uniquindio.piii.model;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Registro {
+public class Registro implements Serializable {
 
     // Método para guardar datos de registro sin email
     public static void guardarDatosRegistro(String nombreUsuario, String contrasena) {

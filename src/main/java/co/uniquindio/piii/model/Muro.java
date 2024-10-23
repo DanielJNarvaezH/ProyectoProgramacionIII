@@ -1,7 +1,8 @@
 package co.uniquindio.piii.model;
+import java.io.Serializable;
 import java.util.ArrayList;  
 
-public class Muro {
+public class Muro implements Serializable{
 
     private ArrayList<Producto> productos;
 

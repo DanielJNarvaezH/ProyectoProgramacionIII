@@ -2,6 +2,8 @@ module co.uniquindio.piii {
     requires javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.graphics; 
+    requires java.desktop;
+    requires java.logging;
 
     opens co.uniquindio.piii to javafx.graphics;
     opens co.uniquindio.piii.model to javafx.fxml;
