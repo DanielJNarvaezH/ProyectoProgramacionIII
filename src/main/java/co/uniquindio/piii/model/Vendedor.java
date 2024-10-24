@@ -83,6 +83,8 @@ public class Vendedor implements Serializable {
     public void agregarContacto(Vendedor vendedor){
 
     }
+
+
     public void enviarMensaje(Vendedor destinatario, String mensaje){
 
     }
@@ -98,6 +100,12 @@ public class Vendedor implements Serializable {
 
     public void recibirLike(Producto producto){
 
+    }
+
+    @Override
+    public String toString() {
+        return "Vendedor [nombre=" + nombre + ", usuario=" + usuario + ", contrasena=" + contrasena + ", email=" + email
+                + ", productos=" + productos + ", contactos=" + contactos + "]";
     }
 
 

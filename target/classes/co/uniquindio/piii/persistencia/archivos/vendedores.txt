@@ -1,0 +1,8 @@
+Vendedor [nombre=Samuel, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Matías, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Hugo, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Daniel, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Samuel, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Matías, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Hugo, usuario=, contrasena=, email=, productos=[], contactos=[]]
+Vendedor [nombre=Daniel, usuario=, contrasena=, email=, productos=[], contactos=[]]

@@ -11,8 +11,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Writer;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import co.uniquindio.piii.model.Vendedor;
 
 
 
@@ -85,5 +88,31 @@ public class Persistencia {
             writer.newLine();
             writer.flush();
         }*/
+
+
+        public static void guardarVendedoresTXT(ArrayList<Vendedor> vendedores)  {
+
+            try{
+                FileWriter archivoSalida;
+                BufferedWriter bufferSalida;
+
+                archivoSalida = null;
+                archivoSalida = new FileWriter("C:\\Users\\Dell\\Documents\\.vscode\\ProyectoProgramacionIII\\proyectoProgramacionIII\\src\\main\\java\\co\\uniquindio\\piii\\persistencia\\archivos\\vendedores.txt", true); // Appends to the archivosFile
+                bufferSalida = new BufferedWriter(archivoSalida);
+                //String personajeString;
+                for (Vendedor vendedor: vendedores){
+                    //personajeString = habitaciones.getNumero() +"%%" +personaje.getPais() +"%%" + personaje.getEdad() + "%%" + personaje.getCodigoPelicula();
+                    bufferSalida.write(vendedor.toString()+ "\n" );
+                }
+                bufferSalida.flush();
+                bufferSalida.close();
+
+                archivoSalida.close();
+            }catch(Exception e){
+                e.printStackTrace();
+                System.out.println("Error al guardar el archivo: " + e.getMessage());
+            }
+        }
+    
 
 }
