@@ -5,15 +5,20 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.FileHandler;
+import java.util.ResourceBundle;
 
 public class EjemploLog {
+
+    static ResourceBundle config = ResourceBundle.getBundle("archivosProperties/config");
+   
+
 
     private static final Logger logger =Logger.getLogger(EjemploLog.class.getName());
     private static FileHandler fileHandler;
 
         static {
             try {
-                fileHandler = new FileHandler("C:\\Users\\Dell\\Documents\\.vscode\\ProyectoProgramacionIII\\proyectoProgramacionIII\\src\\main\\java\\co\\uniquindio\\piii\\persistencia\\log\\proyectoProgramacionIII_Log.txt", true); // Appends to the log file
+                fileHandler = new FileHandler(config.getString("rutaLog"), true); // Appends to the log file
                 fileHandler.setFormatter(new SimpleFormatter());
     
                 logger.addHandler(fileHandler);

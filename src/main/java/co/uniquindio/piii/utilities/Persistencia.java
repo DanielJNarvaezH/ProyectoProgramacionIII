@@ -14,6 +14,7 @@ import java.io.Writer;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import co.uniquindio.piii.model.Vendedor;
 
@@ -21,6 +22,8 @@ import co.uniquindio.piii.model.Vendedor;
 
 
 public class Persistencia {
+
+    static ResourceBundle config = ResourceBundle.getBundle("archivosProperties/config");
     private static Persistencia instance;
     public static Persistencia getInstance() {
         if (instance == null) {
@@ -97,7 +100,7 @@ public class Persistencia {
                 BufferedWriter bufferSalida;
 
                 archivoSalida = null;
-                archivoSalida = new FileWriter("C:\\Users\\Dell\\Documents\\.vscode\\ProyectoProgramacionIII\\proyectoProgramacionIII\\src\\main\\java\\co\\uniquindio\\piii\\persistencia\\archivos\\vendedores.txt", true); // Appends to the archivosFile
+                archivoSalida = new FileWriter(config.getString("rutaVendedores"), true); // Appends to the archivosFile
                 bufferSalida = new BufferedWriter(archivoSalida);
                 //String personajeString;
                 for (Vendedor vendedor: vendedores){
