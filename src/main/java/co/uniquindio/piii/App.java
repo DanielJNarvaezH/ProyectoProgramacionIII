@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Aplicación JavaFX
+ * JavaFX App
  */
 
 public class App extends Application {
@@ -18,15 +18,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Cargamos la vista de "comentarios" como la primera pantalla
-        scene = new Scene(loadFXML("comentarios"), 400, 300);
+        // Cargamos la vista de registro como primera pantalla
+        scene = new Scene(loadFXML("registro"), 400, 300);
         stage.setScene(scene);
-        stage.setTitle("Comentarios");
+        stage.setTitle("Registro de Usuario");
         stage.show();
     }
-
+    
+    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("registro.fxml"));
+    
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
+        
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -37,5 +40,5 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
 }
-
