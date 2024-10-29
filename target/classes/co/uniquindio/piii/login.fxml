@@ -13,16 +13,19 @@
     </padding>
 
     <!-- Título de la ventana -->
-    <Label text="Bienvenido" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+    <Label fx:id="welcomeLabel" text="Bienvenido" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
     <!-- Campo de Usuario -->
-    <Label text="Usuario:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <Label fx:id="usernameLabel" text="Usuario:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
     <TextField fx:id="usernameField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
     <!-- Campo de Contraseña -->
-    <Label text="Contraseña:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+    <Label fx:id="passwordLabel" text="Contraseña:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
     <PasswordField fx:id="passwordField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
     <!-- Botón para iniciar sesión -->
-    <Button text="Iniciar sesión" GridPane.rowIndex="3" GridPane.columnIndex="1" onAction="#handleLogin"/>
+    <Button fx:id="loginButton" text="Iniciar sesión" GridPane.rowIndex="3" GridPane.columnIndex="1" onAction="#handleLogin"/>
+
+    <!-- Botón para cambiar idioma -->
+    <Button fx:id="languageButton" text="Cambiar Idioma" GridPane.rowIndex="4" GridPane.columnIndex="1" onAction="#cambiarIdioma"/>
 </GridPane>

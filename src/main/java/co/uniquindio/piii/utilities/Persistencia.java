@@ -15,6 +15,7 @@ import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Calendar;
 
 import co.uniquindio.piii.model.Vendedor;
 
@@ -51,24 +52,71 @@ public class Persistencia {
         return objeto;
     }
 
-    public static void serializarObjetoXML(String nombre, Object objeto) throws IOException{
+    public static void serializarObjetoXML(String rutaArchivo, Object objeto) throws IOException{
 
         XMLEncoder codificador;
 
-        codificador = new XMLEncoder( new FileOutputStream(nombre));
+        codificador = new XMLEncoder( new FileOutputStream(rutaArchivo));
         codificador.writeObject(objeto);
         codificador.close();
     }
 
-    public static Object deserializarObjetoXML (String nombre) throws IOException{
+    public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+        XMLDecoder decodificadorXML;
+        Object objetoXML;
+        decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
+        objetoXML = decodificadorXML.readObject();
+        decodificadorXML.close();
+        return objetoXML;
+    }
+
+    public static Object deserializarObjetoXML (String rutaArchivo) throws IOException{
         XMLDecoder decodificador;
         Object objeto;
 
-        decodificador = new XMLDecoder( new FileInputStream(nombre));
+        decodificador = new XMLDecoder( new FileInputStream(rutaArchivo));
         objeto = decodificador.readObject();
         decodificador.close();
 
         return objeto;
+    }
+
+    public static void crearRespaldoArchivoXML(String rutaArchivoOriginal) throws IOException {
+        String rutaArchivoRespaldo = generarNombreArchivoRespaldo(rutaArchivoOriginal);
+        File archivoOriginal = new File(rutaArchivoOriginal);
+        File archivoRespaldo = new File(rutaArchivoRespaldo);
+
+        if (!archivoRespaldo.getParentFile().exists()) {
+            archivoRespaldo.getParentFile().mkdirs();
+        }
+
+        try (FileInputStream fis = new FileInputStream(archivoOriginal);
+                FileOutputStream fos = new FileOutputStream(archivoRespaldo)) {
+            byte[] buffer = new byte[1024];
+            int longitud;
+
+            while ((longitud = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, longitud);
+            }
+        }
+
+        System.out.println("Copia de seguridad creada: " + rutaArchivoRespaldo);
+    }
+
+    public static String generarNombreArchivoRespaldo(String rutaArchivoOriginal) {
+        Calendar cal = Calendar.getInstance();
+        String dia = String.format("%02d", cal.get(Calendar.DATE));
+        String mes = String.format("%02d", cal.get(Calendar.MONTH) + 1);
+        String anio = String.valueOf(cal.get(Calendar.YEAR));
+        String hora = String.format("%02d", cal.get(Calendar.HOUR_OF_DAY));
+        String minuto = String.format("%02d", cal.get(Calendar.MINUTE));
+        String segundo = String.format("%02d", cal.get(Calendar.SECOND));
+
+        File archivoOriginal = new File(rutaArchivoOriginal);
+        String nombreArchivo = archivoOriginal.getName().replaceFirst("[.][^.]+$", "");
+
+        String nombreArchivoBackup = nombreArchivo + "_" + dia + mes + anio + "_" + hora + "_" + minuto + "_" + segundo;
+        return archivoOriginal.getParent() + File.separator + "backup" +  File.separator + nombreArchivoBackup;
     }
     /* 
     public void guardarHabitacionesTXT(ArrayList<Habitacion> habitaciones) throws IOException {

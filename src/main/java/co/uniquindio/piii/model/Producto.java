@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.Serializable;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Producto implements Serializable {
 
     private String titulo;
     private String descripcion;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaPublicacion;
     private int numLikes;
     private Vendedor vendedor;
@@ -47,6 +49,13 @@ public class Producto implements Serializable {
         this.comentarios = comentarios;
     
     }
+
+    public Producto(){
+        //Constructor vacio para la serialización
+    }
+
+
+
     public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, int numLikes, Vendedor vendedor, File imagen) {
         this.titulo = titulo;
         this.descripcion = descripcion;
