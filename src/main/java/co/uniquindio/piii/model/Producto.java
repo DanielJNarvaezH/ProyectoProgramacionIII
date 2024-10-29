@@ -2,22 +2,24 @@ package co.uniquindio.piii.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import java.io.File;
 import java.io.Serializable;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+
+@XStreamAlias("producto")
 public class Producto implements Serializable {
 
     private String titulo;
     private String descripcion;
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaPublicacion;
     private int numLikes;
     private Vendedor vendedor;
     private ArrayList<Comentario> comentarios;
     private File imagen;
 
-    
     public String getTitulo() {
         return titulo;
     }
@@ -30,18 +32,21 @@ public class Producto implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
     public LocalDate getFechaPublicacion() {
         return fechaPublicacion;
     }
     public void setFechaPublicacion(LocalDate fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
+    
     public int getNumLikes() {
         return numLikes;
     }
     public void setNumLikes(int numLikes) {
         this.numLikes = numLikes;
     }
+    
     public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }

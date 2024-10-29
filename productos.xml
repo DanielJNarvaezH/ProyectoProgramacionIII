@@ -1,0 +1,17 @@
+<producto-list>
+  <productos>
+    <producto>
+      <titulo>Producto 1</titulo>
+      <descripcion>Descripción del producto 1</descripcion>
+      <fechaPublicacion>2023-05-01</fechaPublicacion>
+      <numLikes>50</numLikes>
+    </producto>
+    <producto>
+      <titulo>Producto 2</titulo>
+      <descripcion>Descripción del producto 2</descripcion>
+      <fechaPublicacion>2023-06-15</fechaPublicacion>
+      <numLikes>30</numLikes>
+      <vendedor>Vendedor 2</vendedor>
+    </producto>
+  </productos>
+</producto-list>
