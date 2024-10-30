@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Calendar;
 
-import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.model.Estadistica;
 
 
 
@@ -141,19 +141,19 @@ public class Persistencia {
         }*/
 
 
-        public static void guardarVendedoresTXT(ArrayList<Vendedor> vendedores)  {
+        public static void guardarEstadisticasTXT(ArrayList<Estadistica> estadisticas)  {
 
             try{
                 FileWriter archivoSalida;
                 BufferedWriter bufferSalida;
 
                 archivoSalida = null;
-                archivoSalida = new FileWriter(config.getString("rutaVendedores"), true); // Appends to the archivosFile
+                archivoSalida = new FileWriter(config.getString("rutaEstadisticas"), true); // Appends to the archivosFile
                 bufferSalida = new BufferedWriter(archivoSalida);
                 //String personajeString;
-                for (Vendedor vendedor: vendedores){
+                for (Estadistica estadistica: estadisticas){
                     //personajeString = habitaciones.getNumero() +"%%" +personaje.getPais() +"%%" + personaje.getEdad() + "%%" + personaje.getCodigoPelicula();
-                    bufferSalida.write(vendedor.toString()+ "\n" );
+                    bufferSalida.write(estadistica.toString()+ "\n" );
                 }
                 bufferSalida.flush();
                 bufferSalida.close();

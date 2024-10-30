@@ -12,21 +12,24 @@ public class PruebaServidor {
         EjemploLog.logInfo("segunda prueba del servidor");
 
 
- 
-        Vendedor vendedor1 = new Vendedor("Samuel", "", "", "");
-        Vendedor vendedor2 = new Vendedor("Matías", "","", "");
-        Vendedor vendedor3 = new Vendedor("Hugo", "", "", "");
-        Vendedor vendedor4 = new Vendedor("Daniel", "", "", "");
 
-        ArrayList<Vendedor> listaVendedores = new ArrayList<>();
-
-        listaVendedores.add(vendedor1);
-        listaVendedores.add(vendedor2);
-        listaVendedores.add(vendedor3);
-        listaVendedores.add(vendedor4);
+        Estadistica estadistica1 = new Estadistica(10, 20, 5, 0);
+        Estadistica estadistica2 = new Estadistica(3, 2, 4, 0);
+        Estadistica estadistica3 = new Estadistica(1, 0, 2, 0);
+        Estadistica estadistica4 = new Estadistica(5, 7, 8, 0);
 
 
-        Persistencia.guardarVendedoresTXT(listaVendedores);
+        ArrayList<Estadistica> listaEstadisticas = new ArrayList<>();
+
+        listaEstadisticas.add(estadistica1);
+        listaEstadisticas.add(estadistica2);
+        listaEstadisticas.add(estadistica3);
+        listaEstadisticas.add(estadistica4);
+
+  
+
+
+        Persistencia.guardarEstadisticasTXT(listaEstadisticas);
 
     }
 
