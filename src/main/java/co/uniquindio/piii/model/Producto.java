@@ -15,6 +15,8 @@ public class Producto implements Serializable {
     private String titulo;
     private String descripcion;
     private LocalDate fechaPublicacion;
+    private EstadoProducto estadoProducto;
+    private CategoriaProducto categoria;
     private int numLikes;
     private Vendedor vendedor;
     private ArrayList<Comentario> comentarios;
@@ -61,10 +63,12 @@ public class Producto implements Serializable {
 
 
 
-    public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, int numLikes, Vendedor vendedor, File imagen) {
+    public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, EstadoProducto estadoProducto, CategoriaProducto categoria, int numLikes, Vendedor vendedor, File imagen) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaPublicacion = fechaPublicacion;
+        this.estadoProducto = estadoProducto;
+        this.categoria = categoria;
         this.numLikes = numLikes;
         this.vendedor = vendedor;
         comentarios = new ArrayList<>();
@@ -98,6 +102,18 @@ public class Producto implements Serializable {
     }
     public void setImagen(File imagen){
         this.imagen = imagen;
+    }
+    public EstadoProducto getEstadoProducto() {
+        return estadoProducto;
+    }
+    public void setEstadoProducto(EstadoProducto estadoProducto) {
+        this.estadoProducto = estadoProducto;
+    }
+    public CategoriaProducto getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaProducto categoria) {
+        this.categoria = categoria;
     }
 
 

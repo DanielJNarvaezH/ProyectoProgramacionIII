@@ -13,7 +13,7 @@ import co.uniquindio.piii.model.Vendedor;
 
 class ProductoConverter implements Converter {
     @Override
-    public boolean canConvert(Class type) {
+    public boolean canConvert(@SuppressWarnings("rawtypes") Class type) {
         return type.equals(Producto.class);
     }
 
@@ -23,6 +23,7 @@ class ProductoConverter implements Converter {
         writeNode(writer, "titulo", producto.getTitulo());
         writeNode(writer, "descripcion", producto.getDescripcion());
         writeNode(writer, "fechaPublicacion", producto.getFechaPublicacion() != null ? producto.getFechaPublicacion().toString() : null);
+        writeNode(writer, "Categoria", String.valueOf(producto.getCategoria()));
         writeNode(writer, "numLikes", String.valueOf(producto.getNumLikes()));
         writeNode(writer, "vendedor", producto.getVendedor() != null ? producto.getVendedor().getNombre() : null);
         // Agrega más nodos para los otros campos, si los hay

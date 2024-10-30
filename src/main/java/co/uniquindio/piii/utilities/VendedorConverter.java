@@ -1,6 +1,5 @@
 package co.uniquindio.piii.utilities;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +9,13 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-import co.uniquindio.piii.model.Comentario;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Vendedor;
 
 class VendedorConverter implements Converter {
     public UnmarshallingContext context;
     @Override
-    public boolean canConvert(Class type) {
+    public boolean canConvert(@SuppressWarnings("rawtypes") Class type) {
         return type.equals(Vendedor.class);
     }
 
