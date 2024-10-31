@@ -112,7 +112,7 @@ public class GestorProductos {
     //Casos de prueba para la serialización de los productos
     public static void main(String[] args) {
         GestorProductos gestor = new GestorProductos();
-
+        EjemploLog.logInfo("Iniciando prueba de serialización en XML y binario mediante hilos con datos quemados");
         Producto producto1 = new Producto();
         producto1.setTitulo("Producto de Prueba");
         producto1.setDescripcion("Descripción del producto de prueba");
@@ -132,7 +132,8 @@ public class GestorProductos {
         gestor.agregarProductoDisponible(producto2);  // Agrega producto a la lista de disponibles
         gestor.publicarProducto(producto1);           // Mueve el producto a la lista de publicados
         gestor.venderProducto(producto1);
-        gestor.publicarProducto(producto2);              
+        gestor.publicarProducto(producto2);
+        EjemploLog.logInfo("Finalizando prueba de serialización en XML y binario mediante hilos con datos quemados");              
     }
 }
 
