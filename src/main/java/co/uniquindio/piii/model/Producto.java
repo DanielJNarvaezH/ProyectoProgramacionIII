@@ -79,11 +79,6 @@ public class Producto implements Serializable {
         comentarios.add(comentario);
 
     }
-    @Override
-    public String toString() {
-        return "Producto [titulo=" + titulo + ", descripcion=" + descripcion + ", fechaPublicacion=" + fechaPublicacion
-                + ", numLikes=" + numLikes + ", vendedor=" + vendedor + ", comentarios=" + comentarios + "]";
-    }
     
     public void recibirLike(){
 
@@ -114,6 +109,12 @@ public class Producto implements Serializable {
     }
     public void setCategoria(CategoriaProducto categoria) {
         this.categoria = categoria;
+    }
+    @Override
+    public String toString() {
+        return "Producto [titulo=" + titulo + ", descripcion=" + descripcion + ", fechaPublicacion=" + fechaPublicacion
+                + ", estadoProducto=" + estadoProducto + ", categoria=" + categoria + ", numLikes=" + numLikes
+                + ", vendedor=" + vendedor + ", comentarios=" + comentarios + "]";
     }
 
 

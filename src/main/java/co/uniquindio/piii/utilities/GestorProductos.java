@@ -7,6 +7,7 @@ import co.uniquindio.piii.model.CategoriaProducto;
 import co.uniquindio.piii.model.EstadoProducto;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.model.Tienda;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,9 +17,10 @@ import java.time.LocalDate;
 //Clase para manejar la serialización de los productos y actualizar los archivos segun su estado 
 
 public class GestorProductos {
-    private List<Producto> productosDisponibles = new ArrayList<>();
-    private List<Producto> productosPublicados = new ArrayList<>();
-    private List<Producto> productosVendidos = new ArrayList<>();
+    Tienda tienda = Tienda.getInstance(null);
+    private List<Producto> productosCancelados = tienda.obtenerProductosPorEstado(EstadoProducto.CANCELADO);
+    private List<Producto> productosPublicados = tienda.obtenerProductosPorEstado(EstadoProducto.PUBLICADO);
+    private List<Producto> productosVendidos = tienda.obtenerProductosPorEstado(EstadoProducto.VENDIDO);
     private static GestorProductos instance;
     
     //Singleton
@@ -36,18 +38,18 @@ public class GestorProductos {
     }
     //Método sincrinizado para el uso de las listas e hilos de serialización
     public synchronized void agregarProductoDisponible(Producto producto) {
-        productosDisponibles.add(producto);
-        actualizarArchivoXML("Productos_disponibles.xml", productosDisponibles);
-        actualizarArchivoBinario("Productos_disponibles.dat", productosDisponibles);
+        productosPublicados.add(producto);
+        actualizarArchivoXML("Productos_publicados.xml", productosPublicados);
+        actualizarArchivoBinario("Productos_publicados.dat", productosPublicados);
     }
     //Método sincrinizado para el uso de las listas e hilos de serialización
-    public synchronized void publicarProducto(Producto producto) {
-        productosDisponibles.remove(producto);
-        productosPublicados.add(producto);
-        actualizarArchivoXML("Productos_disponibles.xml", productosDisponibles);
+    public synchronized void cancelarProducto(Producto producto) {
+        productosPublicados.remove(producto);
+        productosCancelados.add(producto);
         actualizarArchivoXML("Productos_publicados.xml", productosPublicados);
-        actualizarArchivoBinario("Productos_disponibles.dat", productosDisponibles);
+        actualizarArchivoXML("Productos_cancelados.xml", productosCancelados);
         actualizarArchivoBinario("Productos_publicados.dat", productosPublicados);
+        actualizarArchivoBinario("Productos_cancelados.dat", productosCancelados);
     }
     //Método sincrinizado para el uso de las listas e hilos de serialización
     public synchronized void venderProducto(Producto producto) {
@@ -112,6 +114,7 @@ public class GestorProductos {
     //Casos de prueba para la serialización de los productos
     public static void main(String[] args) {
         GestorProductos gestor = new GestorProductos();
+        Tienda tienda = Tienda.getInstance(null);
         EjemploLog.logInfo("Iniciando prueba de serialización en XML y binario mediante hilos con datos quemados");
         Producto producto1 = new Producto();
         producto1.setTitulo("Producto de Prueba");
@@ -121,6 +124,8 @@ public class GestorProductos {
         producto1.setFechaPublicacion(LocalDate.now());
         producto1.setVendedor(new Vendedor("Mario", null, null, null));
 
+        tienda.agregarProducto(producto1);
+
         Producto producto2 = new Producto();
         producto2.setTitulo("Muebles");
         producto2.setDescripcion("Hechos en madera");
@@ -128,11 +133,12 @@ public class GestorProductos {
         producto2.setEstadoProducto(EstadoProducto.PUBLICADO);
         producto2.setFechaPublicacion(LocalDate.now());
 
+        tienda.agregarProducto(producto2);
+
         gestor.agregarProductoDisponible(producto1);
         gestor.agregarProductoDisponible(producto2);  // Agrega producto a la lista de disponibles
-        gestor.publicarProducto(producto1);           // Mueve el producto a la lista de publicados
+        gestor.cancelarProducto(producto1);           // Mueve el producto a la lista de publicados
         gestor.venderProducto(producto1);
-        gestor.publicarProducto(producto2);
         EjemploLog.logInfo("Finalizando prueba de serialización en XML y binario mediante hilos con datos quemados");              
     }
 }

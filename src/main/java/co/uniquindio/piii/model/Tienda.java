@@ -8,6 +8,7 @@ public class Tienda implements Serializable {
     private static Tienda instance;
 
     private ArrayList<Vendedor> vendedores;
+    private ArrayList<Producto> productos;
 
     private String nombre;
 
@@ -18,9 +19,10 @@ public class Tienda implements Serializable {
         return instance;  
     }
 
-    public Tienda(ArrayList<Vendedor> vendedores, String nombre) {
-        this.vendedores = vendedores;
+    public Tienda(String nombre) {
+        this.vendedores = new ArrayList<>();
         this.nombre = nombre;
+        this.productos = new ArrayList<>();
     }
 
     public ArrayList<Vendedor> getVendedores() {
@@ -31,6 +33,17 @@ public class Tienda implements Serializable {
         this.vendedores = vendedores;
     }
 
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(ArrayList<Producto> productos) {
+        this.productos = productos;
+    }
+    public void agregarProducto(Producto producto){
+        productos.add(producto);
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -39,15 +52,20 @@ public class Tienda implements Serializable {
         this.nombre = nombre;
     }
 
-    public Tienda(String nombre) {
-        this.nombre = nombre;
-    }
-
     @Override
     public String toString() {
         return "Tienda [vendedores=" + vendedores + ", nombre=" + nombre + "]";
     } 
     
+    public ArrayList<Producto> obtenerProductosPorEstado(EstadoProducto estado) {
+        ArrayList<Producto> productosFiltrados = new ArrayList<>();
+        for (Producto producto : productos) {
+            if (producto.getEstadoProducto() == estado) {
+                productosFiltrados.add(producto);
+            }
+        }
+        return productosFiltrados;
+    }
     
 
 
