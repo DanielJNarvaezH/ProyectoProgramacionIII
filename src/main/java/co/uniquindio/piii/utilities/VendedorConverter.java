@@ -12,6 +12,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Vendedor;
 
+//Clase para definir la estructura de serialización en XML de un vendedor 
 class VendedorConverter implements Converter {
     public UnmarshallingContext context;
     @Override

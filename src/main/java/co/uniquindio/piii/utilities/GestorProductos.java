@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
+//Clase para manejar la serialización de los productos y actualizar los archivos segun su estado 
+
 public class GestorProductos {
     private List<Producto> productosDisponibles = new ArrayList<>();
     private List<Producto> productosPublicados = new ArrayList<>();
     private List<Producto> productosVendidos = new ArrayList<>();
     private static GestorProductos instance;
-
+    
+    //Singleton
     public static GestorProductos getInstance() {  
         if (instance == null) {  
             instance = new GestorProductos();  
@@ -29,15 +32,15 @@ public class GestorProductos {
     private XStream xstream = new XStream(new DomDriver());
 
     public GestorProductos() {
-        xstream.processAnnotations(Producto.class); // Activa las anotaciones de XStream
+        xstream.processAnnotations(Producto.class); // Activa las anotaciones de XStream de la clase a serializar
     }
-
+    //Método sincrinizado para el uso de las listas e hilos de serialización
     public synchronized void agregarProductoDisponible(Producto producto) {
         productosDisponibles.add(producto);
         actualizarArchivoXML("Productos_disponibles.xml", productosDisponibles);
         actualizarArchivoBinario("Productos_disponibles.dat", productosDisponibles);
     }
-
+    //Método sincrinizado para el uso de las listas e hilos de serialización
     public synchronized void publicarProducto(Producto producto) {
         productosDisponibles.remove(producto);
         productosPublicados.add(producto);
@@ -46,7 +49,7 @@ public class GestorProductos {
         actualizarArchivoBinario("Productos_disponibles.dat", productosDisponibles);
         actualizarArchivoBinario("Productos_publicados.dat", productosPublicados);
     }
-
+    //Método sincrinizado para el uso de las listas e hilos de serialización
     public synchronized void venderProducto(Producto producto) {
         producto.setEstadoProducto(EstadoProducto.VENDIDO);
         productosPublicados.remove(producto);
@@ -57,7 +60,7 @@ public class GestorProductos {
         actualizarArchivoBinario("Productos_vendidos.dat", productosVendidos);
     }
 
-    // Serialización en XML
+    // Serialización de los productos en XML usando hilos
     private void actualizarArchivoXML(String nombreArchivo, List<Producto> listaProductos) {
         new Thread(() -> {
             try (FileWriter writer = new FileWriter(nombreArchivo)) {
@@ -68,7 +71,7 @@ public class GestorProductos {
         }).start();
     }
 
-    // Serialización en Binario
+    // Serialización en Binario de los productos usando hilos
     private void actualizarArchivoBinario(String nombreArchivo, List<Producto> listaProductos) {
         new Thread(() -> {
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {
@@ -106,7 +109,7 @@ public class GestorProductos {
         }
         return productos;
     }
-;
+    //Casos de prueba para la serialización de los productos
     public static void main(String[] args) {
         GestorProductos gestor = new GestorProductos();
 
@@ -117,7 +120,6 @@ public class GestorProductos {
         producto1.setEstadoProducto(EstadoProducto.PUBLICADO);
         producto1.setFechaPublicacion(LocalDate.now());
         producto1.setVendedor(new Vendedor("Mario", null, null, null));
-        // Configura otros atributos de producto1 según sea necesario
 
         Producto producto2 = new Producto();
         producto2.setTitulo("Muebles");

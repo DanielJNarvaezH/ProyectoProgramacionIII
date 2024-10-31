@@ -11,6 +11,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Vendedor;
 
+
+//Clase para definir la estructura de serialización en XML de un producto 
 class ProductoConverter implements Converter {
     @Override
     public boolean canConvert(@SuppressWarnings("rawtypes") Class type) {
@@ -26,7 +28,6 @@ class ProductoConverter implements Converter {
         writeNode(writer, "Categoria", String.valueOf(producto.getCategoria()));
         writeNode(writer, "numLikes", String.valueOf(producto.getNumLikes()));
         writeNode(writer, "vendedor", producto.getVendedor() != null ? producto.getVendedor().getNombre() : null);
-        // Agrega más nodos para los otros campos, si los hay
     }
 
     @Override
