@@ -81,7 +81,7 @@ public class Vendedor implements Serializable {
         productos.add(producto);
     }
     public void agregarContacto(Vendedor vendedor){
-
+        contactos.add(vendedor);
     }
 
 
