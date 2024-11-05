@@ -62,14 +62,14 @@ public class LoginController {
     private boolean validarCredenciales(String username, String password) {
         String rutaArchivo = "registros.txt";
         String linea;
-
+    
         try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split("%%");
-                if (partes.length == 2) {
-                    String usuarioRegistrado = partes[0];
-                    String contrasenaRegistrada = partes[1];
-
+                if (partes.length == 4) { // Cambiar a 4 para coincidir con el formato
+                    String usuarioRegistrado = partes[0]; // Usuario en la posición 1
+                    String contrasenaRegistrada = partes[3]; // Contraseña en la posición 3
+    
                     if (usuarioRegistrado.equals(username) && contrasenaRegistrada.equals(password)) {
                         return true;
                     }
@@ -78,10 +78,10 @@ public class LoginController {
         } catch (IOException e) {
             System.out.println("Error al leer el archivo de registro: " + e.getMessage());
         }
-
+    
         return false;
     }
-
+    
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
