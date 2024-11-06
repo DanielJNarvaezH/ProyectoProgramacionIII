@@ -51,7 +51,7 @@ public class ComentarioController {
         LocalDate fecha = fechaDatePicker.getValue();
         String autor = autorTextField.getText();
         String textoComentario = comentarioTextField.getText();
-        Comentario comentario = new Comentario(autor, textoComentario, fecha);
+        Comentario comentario = new Comentario(autor, fecha, textoComentario);
         Producto producto = new Producto("", "", null, null, null, 0, null, null);
         producto.agregarComentario(comentario);
         

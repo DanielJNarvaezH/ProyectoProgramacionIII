@@ -36,11 +36,12 @@ public class Comentario implements Serializable{
         this.fecha = fecha;
     }
 
-    public Comentario(String autor, String texto, LocalDate fecha) {
-        this.autor = autor;
+    public Comentario(String texto, LocalDate fecha, String autor) {
         this.texto = texto;
         this.fecha = fecha;
+        this.autor = autor;
     }
+
 
     @Override
     public String toString() {

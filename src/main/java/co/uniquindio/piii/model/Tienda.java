@@ -1,6 +1,7 @@
 package co.uniquindio.piii.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList; 
 
 public class Tienda implements Serializable {
@@ -57,6 +58,10 @@ public class Tienda implements Serializable {
         return "Tienda [vendedores=" + vendedores + ", nombre=" + nombre + "]";
     } 
     
+    public void agregarVendedor(Vendedor vendedor) {
+        vendedores.add(vendedor);
+    }
+
     public ArrayList<Producto> obtenerProductosPorEstado(EstadoProducto estado) {
         ArrayList<Producto> productosFiltrados = new ArrayList<>();
         for (Producto producto : productos) {
@@ -66,7 +71,12 @@ public class Tienda implements Serializable {
         }
         return productosFiltrados;
     }
+
     
+    public void agregarComentarioProducto(String usuario, Producto producto, String texto) {
+        Comentario comentario = new Comentario(texto, LocalDate.now(), usuario);
+        producto.agregarComentario(comentario);
+    }
 
 
 
