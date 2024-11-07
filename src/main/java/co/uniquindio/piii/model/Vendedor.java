@@ -1,6 +1,11 @@
 package co.uniquindio.piii.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import co.uniquindio.piii.exceptions.ContactoYaExistenteException;
+import co.uniquindio.piii.exceptions.LimiteContactosExcedidoException;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -10,8 +15,7 @@ public class Vendedor implements Serializable {
     private String usuario;
     private String contrasena;
     private String email;
-    
-    
+    private ArrayList<Contacto> solicitudesPendientes;
     private ArrayList<Producto> productos;
     private ArrayList<Vendedor> contactos;
 
@@ -101,11 +105,29 @@ public class Vendedor implements Serializable {
     public void recibirLike(Producto producto){
 
     }
+    public ArrayList<Contacto> getSolicitudesPendientes() {
+    return solicitudesPendientes;
+}
 
     @Override
     public String toString() {
         return "Vendedor [nombre=" + nombre + ", usuario=" + usuario + ", contrasena=" + contrasena + ", email=" + email
                 + ", productos=" + productos + ", contactos=" + contactos + "]";
+    }
+
+    public void enviarSolicitudContacto(Vendedor destinatario) {
+        Contacto solicitud = new Contacto(this.getNombre(), this.getUsuario(), this.getContrasena(), this.getEmail(), LocalDate.now());
+        destinatario.getSolicitudesPendientes().add(solicitud);
+    }
+    
+    public void aceptarSolicitudContacto(Contacto solicitud) throws ContactoYaExistenteException, LimiteContactosExcedidoException {
+    this.getContactos().add(solicitud); // Agregar este contacto a la lista de contactos
+    this.getSolicitudesPendientes().remove(solicitud); // Eliminar la solicitud pendiente
+    solicitud.aceptarContacto(); // Agregar el contacto de manera recíproca
+}
+    
+    public void rechazarSolicitudContacto(Contacto solicitud) {
+        this.solicitudesPendientes.remove(solicitud);
     }
 
 

@@ -2,11 +2,14 @@ package co.uniquindio.piii.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.List; 
 
 public class Tienda implements Serializable {
 
     private static Tienda instance;
+    List<Vendedor> contactos = new ArrayList<>(); 
+
 
     private ArrayList<Vendedor> vendedores;
     private ArrayList<Producto> productos;
@@ -24,6 +27,7 @@ public class Tienda implements Serializable {
         this.vendedores = new ArrayList<>();
         this.nombre = nombre;
         this.productos = new ArrayList<>();
+        this.contactos = new ArrayList<>();
     }
 
     public ArrayList<Vendedor> getVendedores() {
@@ -76,6 +80,12 @@ public class Tienda implements Serializable {
     public void agregarComentarioProducto(String usuario, Producto producto, String texto) {
         Comentario comentario = new Comentario(texto, LocalDate.now(), usuario);
         producto.agregarComentario(comentario);
+    }
+
+    public void procesarSolicitudesPendientes(Vendedor vendedor) {
+        for (Contacto solicitud : vendedor.getSolicitudesPendientes()) {
+            // Lógica para aceptar o rechazar automáticamente las solicitudes según ciertas condiciones
+        }
     }
 
 

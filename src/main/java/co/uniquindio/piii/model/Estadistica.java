@@ -62,4 +62,8 @@ public class Estadistica implements Serializable{
     public int obtenerTotalProductoPorVendedor(){
         return 0;
     }
+
+    public int obtenerTotalSolicitudesPendientes(Vendedor vendedor) {
+        return vendedor.getSolicitudesPendientes().size();
+    }
 }
