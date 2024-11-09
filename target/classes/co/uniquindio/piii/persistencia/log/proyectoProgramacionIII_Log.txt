@@ -1,0 +1,30 @@
+Oct 23, 2024 6:46:14 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 23, 2024 6:49:04 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 23, 2024 6:49:04 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor
+Oct 23, 2024 8:35:22 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 23, 2024 8:35:22 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor
+Oct 23, 2024 8:35:42 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 23, 2024 8:35:42 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor
+Oct 27, 2024 12:13:53 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 27, 2024 12:13:53 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor
+Oct 30, 2024 10:33:26 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 30, 2024 10:33:26 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor
+Oct 30, 2024 10:33:45 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 30, 2024 10:33:45 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor
+Oct 30, 2024 10:34:44 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: primera prueba del servidor
+Oct 30, 2024 10:34:44 AM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: segunda prueba del servidor

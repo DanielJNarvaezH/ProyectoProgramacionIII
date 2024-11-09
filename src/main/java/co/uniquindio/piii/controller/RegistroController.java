@@ -89,4 +89,24 @@ public class RegistroController {
             showAlert(AlertType.ERROR, "Error", "No se pudo abrir la ventana de Login.");
         }
     }
+
+    @FXML
+    private void irALogin() {
+        try {
+            // Cargar la ventana de login
+            Parent root = FXMLLoader.load(App.class.getResource("login.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Login");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Cerrar la ventana de registro actual
+            Stage currentStage = (Stage) userTextField.getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Login.");
+        }
+    }
+
 }

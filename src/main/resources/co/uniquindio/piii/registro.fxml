@@ -33,6 +33,9 @@
 
     <Button onAction="#handleRegister" text="Registrarse" />
 
+    <!-- Botón adicional para ir a la ventana de login sin registrarse -->
+    <Button fx:id="btnIrALogin" onAction="#irALogin" text="Ir a Login" />
+
     <VBox.margin>
         <Insets top="10" />
     </VBox.margin>
