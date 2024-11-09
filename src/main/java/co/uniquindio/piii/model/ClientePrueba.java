@@ -8,8 +8,8 @@ import co.uniquindio.piii.model.CategoriaProducto;
 
 public class ClientePrueba {
     public static void main(String[] args) {
-        Producto producto1 = new Producto("Laptop", "Laptop de alto rendimiento", LocalDate.now(), EstadoProducto.PUBLICADO, CategoriaProducto.TECNOLOGIA, 0, null, null);
-        Producto producto2 = new Producto("Silla ergonómica", "Silla ideal para oficina", LocalDate.now(), EstadoProducto.PUBLICADO, CategoriaProducto.HOGAR, 0, null, null);
+        Producto producto1 = new Producto("Laptop", "Laptop de alto rendimiento", LocalDate.now(), EstadoProducto.PUBLICADO, CategoriaProducto.TECNOLOGIA, null, null);
+        Producto producto2 = new Producto("Silla ergonómica", "Silla ideal para oficina", LocalDate.now(), EstadoProducto.PUBLICADO, CategoriaProducto.HOGAR,  null, null);
 
         System.out.println("Productos disponibles:");
         System.out.println("1. " + producto1);

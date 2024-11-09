@@ -5,19 +5,23 @@ import java.util.List;
 
 import co.uniquindio.piii.exceptions.ContactoNoEncontradoException;
 import co.uniquindio.piii.exceptions.ContactoYaExistenteException;
+import co.uniquindio.piii.exceptions.FormatoInvalidoException;
 import co.uniquindio.piii.exceptions.LimiteContactosExcedidoException;
+import co.uniquindio.piii.exceptions.ProductoNoEncontradoException;
+import co.uniquindio.piii.exceptions.ProductoSinNombreException;
 import co.uniquindio.piii.exceptions.ProductoYaExistenteException;  
 import co.uniquindio.piii.model.*;
 import co.uniquindio.piii.utilities.EjemploLog;
 
 public class Muro implements Serializable{
 
+    private ArrayList<Publicacion> publicaciones;
     private ArrayList<Producto> productos;
     private Vendedor vendedor;
     // Lista de contactos asociados al muro (vendedor)
     private List<Vendedor> contactos;
     private List<Contacto> solicitudesPendientes;
- 
+
 
     // Método para obtener la lista de contactos
     public List<Vendedor> getContactos() {
@@ -96,6 +100,55 @@ public class Muro implements Serializable{
     
         // Aquí se pueden incluir acciones adicionales si son necesarias
         EjemploLog.logInfo("Solicitud de contacto aceptada en el muro para el contacto: " + contacto.getNombre());
+    }
+
+    public void solicitarContacto(Contacto contacto) throws ContactoYaExistenteException, LimiteContactosExcedidoException {
+        if (contactos.size() >= 9) {
+            throw new LimiteContactosExcedidoException("Límite de contactos alcanzado. No se puede enviar solicitud.");
+        }
+        if (contactos.contains(contacto)) {
+            throw new ContactoYaExistenteException("Ya tienes este contacto en tu muro.");
+        }
+        solicitudesPendientes.add(contacto); // Asume que solicitudesPendientes es una lista de solicitudes.
+    }
+    public void agregarProducto(Producto producto) throws ProductoYaExistenteException, ProductoSinNombreException {
+        if (producto.getTitulo() == null || producto.getTitulo().isEmpty()) {
+            throw new ProductoSinNombreException("El producto debe tener un nombre.");
+        }
+        if (productos.contains(producto)) {
+            throw new ProductoYaExistenteException("El producto ya está registrado en el muro.");
+        }
+        productos.add(producto);
+    }
+
+    public void removerProducto(Producto producto) throws ProductoNoEncontradoException {
+        if (!productos.contains(producto)) {
+            throw new ProductoNoEncontradoException("El producto no se encuentra en el muro.");
+        }
+        productos.remove(producto);
+    }
+
+    public void agregarComentario(Publicacion publicacion, Comentario comentario) throws ProductoNoEncontradoException {
+        if (!publicaciones.contains(publicacion)) {
+            throw new ProductoNoEncontradoException("La publicación no se encuentra en el muro.");
+        }
+        publicacion.agregarComentario(comentario);
+    }
+
+    public void darLike(Publicacion publicacion) throws ProductoNoEncontradoException {
+        if (!publicaciones.contains(publicacion)) {
+            throw new ProductoNoEncontradoException("La publicación no se encuentra en el muro.");
+        }
+        publicacion.incrementarLikes();
+    }
+
+    public Producto buscarProductoPorNombre(String nombreProducto) throws ProductoNoEncontradoException {
+        for (Producto producto : productos) {
+            if (producto.getTitulo().equalsIgnoreCase(nombreProducto)) {
+                return producto;
+            }
+        }
+        throw new ProductoNoEncontradoException("Producto con el nombre especificado no fue encontrado.");
     }
 
 }

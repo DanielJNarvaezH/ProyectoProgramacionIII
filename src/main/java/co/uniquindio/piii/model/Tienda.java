@@ -3,24 +3,25 @@ package co.uniquindio.piii.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import co.uniquindio.piii.exceptions.*;
 
 public class Tienda implements Serializable {
 
     private static Tienda instance;
-    List<Vendedor> contactos = new ArrayList<>(); 
-
-
+    private List<Vendedor> contactos = new ArrayList<>();
     private ArrayList<Vendedor> vendedores;
     private ArrayList<Producto> productos;
-
+    private Map<Producto, Publicacion> publicacionesDeProductos; // Mapa para asociar productos con publicaciones
     private String nombre;
 
-    public static Tienda getInstance(String nombre) {  
-        if (instance == null) {  
-            instance = new Tienda(nombre);  
-        }  
-        return instance;  
+    public static Tienda getInstance(String nombre) {
+        if (instance == null) {
+            instance = new Tienda(nombre);
+        }
+        return instance;
     }
 
     public Tienda(String nombre) {
@@ -28,6 +29,7 @@ public class Tienda implements Serializable {
         this.nombre = nombre;
         this.productos = new ArrayList<>();
         this.contactos = new ArrayList<>();
+        this.publicacionesDeProductos = new HashMap<>(); // Inicializar el mapa de publicaciones
     }
 
     public ArrayList<Vendedor> getVendedores() {
@@ -45,8 +47,13 @@ public class Tienda implements Serializable {
     public void setProductos(ArrayList<Producto> productos) {
         this.productos = productos;
     }
-    public void agregarProducto(Producto producto){
+
+    public void agregarProducto(Producto producto) {
         productos.add(producto);
+        
+        // Crear y asociar una nueva publicación para el producto
+        Publicacion publicacion = new Publicacion("Publicación para el producto: " + producto.getTitulo(), producto);
+        publicacionesDeProductos.put(producto, publicacion);
     }
 
     public String getNombre() {
@@ -60,8 +67,8 @@ public class Tienda implements Serializable {
     @Override
     public String toString() {
         return "Tienda [vendedores=" + vendedores + ", nombre=" + nombre + "]";
-    } 
-    
+    }
+
     public void agregarVendedor(Vendedor vendedor) {
         vendedores.add(vendedor);
     }
@@ -76,10 +83,18 @@ public class Tienda implements Serializable {
         return productosFiltrados;
     }
 
-    
-    public void agregarComentarioProducto(String usuario, Producto producto, String texto) {
+    // Método adaptado para agregar un comentario a la publicación asociada a un producto
+    public void agregarComentarioProducto(String usuario, Producto producto, String texto) throws ProductoNoEncontradoException {
+        // Verificar si el producto tiene una publicación asociada
+        Publicacion publicacion = publicacionesDeProductos.get(producto);
+        
+        if (publicacion == null) {
+            throw new ProductoNoEncontradoException("El producto no tiene una publicación asociada en la tienda.");
+        }
+
+        // Crear y agregar el comentario a la publicación
         Comentario comentario = new Comentario(texto, LocalDate.now(), usuario);
-        producto.agregarComentario(comentario);
+        publicacion.agregarComentario(comentario);
     }
 
     public void procesarSolicitudesPendientes(Vendedor vendedor) {
@@ -88,6 +103,8 @@ public class Tienda implements Serializable {
         }
     }
 
-
-
+    // Método para obtener la publicación asociada a un producto
+    public Publicacion obtenerPublicacionProducto(Producto producto) {
+        return publicacionesDeProductos.get(producto);
+    }
 }
