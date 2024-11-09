@@ -1,7 +1,4 @@
-juan%%juan%%juan@gmail%%123
-juan%%jaun%%juan@gmai%%123
-1%%1%%1%%1
+nombreUsuario%%usuario%%correo%%contraseña
 2%%2%%2%%2
-a%%a%%aa%%a
-5%%5%%5%%5
-9%%9
+juan%%juandi%%@%%juandi
+3%%3%%3%%3

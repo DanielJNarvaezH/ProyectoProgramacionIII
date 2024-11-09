@@ -12,6 +12,12 @@ public class Registro implements Serializable {
         Set<String> usuarios = obtenerUsuariosYCorreos(1); // índice 1 para usuario
         return usuarios.contains(nombreUsuario);
     }
+
+    public static boolean esCorreoDuplicado(String correo) {
+        Set<String> correos = obtenerUsuariosYCorreos(2); // índice 2 para correo
+        return correos.contains(correo);
+    }
+    
     
     public static void guardarDatosRegistro(String nombre, String nombreUsuario, String correo, String password) throws EmailYaRegistradoException {
         if (esCorreoDuplicado(correo)) {
@@ -26,19 +32,14 @@ public class Registro implements Serializable {
             System.out.println("Error al guardar los datos de registro: " + e.getMessage());
         }
     }
-
-    private static boolean esCorreoDuplicado(String correo) {
-        Set<String> correos = obtenerUsuariosYCorreos(2); // índice 2 para correo
-        return correos.contains(correo);
-    }
-
     private static Set<String> obtenerUsuariosYCorreos(int indice) {
         Set<String> datos = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(RUTA_ARCHIVO))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split("%%");
-                if (partes.length > indice) {
+                // Asegúrate de que la línea tiene la cantidad esperada de datos
+                if (partes.length == 4) { 
                     datos.add(partes[indice]);
                 }
             }
@@ -47,4 +48,5 @@ public class Registro implements Serializable {
         }
         return datos;
     }
+    
 }

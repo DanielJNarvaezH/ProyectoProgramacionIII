@@ -34,20 +34,22 @@ public class RegistroController {
         String username = userTextField.getText();
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
-
+    
         if (nombre.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             showAlert(AlertType.ERROR, "Error de registro", "Por favor, completa todos los campos.");
         } else if (Registro.esUsuarioDuplicado(username)) {
             showAlert(AlertType.ERROR, "Error de registro", "El nombre de usuario ya está registrado.");
+        } else if (Registro.esCorreoDuplicado(email)) {  // Validación de correo duplicado
+            showAlert(AlertType.ERROR, "Error de registro", "El correo electrónico ya está registrado.");
         } else {
             try {
                 // Crear el nuevo vendedor
                 Vendedor nuevoVendedor = new Vendedor(nombre, username, password, email);
-
+    
                 // Guardar los datos de registro y añadir a la lista de vendedores
                 Registro.guardarDatosRegistro(nombre, username, email, password);
                 tienda.getVendedores().add(nuevoVendedor);
-
+    
                 showAlert(AlertType.INFORMATION, "Registro exitoso", "Usuario registrado correctamente.");
                 limpiarCampos();
                 abrirVentanaLogin();
@@ -56,7 +58,7 @@ public class RegistroController {
             }
         }
     }
-
+    
     private void limpiarCampos() {
         nameTextField.clear();
         userTextField.clear();

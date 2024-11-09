@@ -67,7 +67,7 @@ public class LoginController {
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split("%%");
                 if (partes.length == 4) { // Cambiar a 4 para coincidir con el formato
-                    String usuarioRegistrado = partes[0]; // Usuario en la posición 1
+                    String usuarioRegistrado = partes[1]; // Usuario en la posición 1
                     String contrasenaRegistrada = partes[3]; // Contraseña en la posición 3
     
                     if (usuarioRegistrado.equals(username) && contrasenaRegistrada.equals(password)) {
