@@ -1,12 +1,10 @@
 package co.uniquindio.piii.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import co.uniquindio.piii.exceptions.*;
 
 public class Tienda implements Serializable {
 
@@ -73,6 +71,10 @@ public class Tienda implements Serializable {
         vendedores.add(vendedor);
     }
 
+    public void removerVendedor(Vendedor vendedor) {
+        vendedores.remove(vendedor);
+    }
+
     public ArrayList<Producto> obtenerProductosPorEstado(EstadoProducto estado) {
         ArrayList<Producto> productosFiltrados = new ArrayList<>();
         for (Producto producto : productos) {
@@ -83,28 +85,33 @@ public class Tienda implements Serializable {
         return productosFiltrados;
     }
 
-    // Método adaptado para agregar un comentario a la publicación asociada a un producto
-    public void agregarComentarioProducto(String usuario, Producto producto, String texto) throws ProductoNoEncontradoException {
-        // Verificar si el producto tiene una publicación asociada
-        Publicacion publicacion = publicacionesDeProductos.get(producto);
-        
-        if (publicacion == null) {
-            throw new ProductoNoEncontradoException("El producto no tiene una publicación asociada en la tienda.");
-        }
-
-        // Crear y agregar el comentario a la publicación
-        Comentario comentario = new Comentario(texto, LocalDate.now(), usuario);
-        publicacion.agregarComentario(comentario);
-    }
-
-    public void procesarSolicitudesPendientes(Vendedor vendedor) {
-        for (Contacto solicitud : vendedor.getSolicitudesPendientes()) {
-            // Lógica para aceptar o rechazar automáticamente las solicitudes según ciertas condiciones
-        }
-    }
-
-    // Método para obtener la publicación asociada a un producto
     public Publicacion obtenerPublicacionProducto(Producto producto) {
         return publicacionesDeProductos.get(producto);
+    }
+
+    // Método para obtener un vendedor por su nombre
+    public Vendedor obtenerVendedorPorNombre(String nombreVendedor) {
+        for (Vendedor vendedor : vendedores) {
+            if (vendedor.getNombre().equalsIgnoreCase(nombreVendedor)) {
+                return vendedor;
+            }
+        }
+        return null; // Si no se encuentra, retorna null
+    }
+
+    // Método para obtener los detalles de la publicación asociada a un producto
+    public String obtenerDetallesPublicacion(Producto producto) {
+        Publicacion publicacion = publicacionesDeProductos.get(producto);
+        return (publicacion != null) ? publicacion.mostrarDetalles() : "No hay publicación para este producto.";
+    }
+
+    // Método para obtener un producto por su nombre
+    public Producto obtenerProductoPorNombre(String nombreProducto) {
+        for (Producto producto : productos) {
+            if (producto.getTitulo().equalsIgnoreCase(nombreProducto)) {
+                return producto;
+            }
+        }
+        return null; // Si no se encuentra, retorna null
     }
 }

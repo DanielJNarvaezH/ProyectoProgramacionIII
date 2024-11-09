@@ -17,6 +17,7 @@ public class Vendedor implements Serializable {
     private String email;
     private ArrayList<Contacto> solicitudesPendientes;
     private ArrayList<Producto> productos;
+    private ArrayList<Publicacion> publicaciones;
     private ArrayList<Vendedor> contactos;
 
     
@@ -28,9 +29,18 @@ public class Vendedor implements Serializable {
         this.email = email;
         this.productos = new ArrayList<>();
         this.contactos = new ArrayList<>();
+        this.publicaciones = new ArrayList<>();
 
     }
     
+    public ArrayList<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
+
     public String getNombre() {
         return nombre;
     }
