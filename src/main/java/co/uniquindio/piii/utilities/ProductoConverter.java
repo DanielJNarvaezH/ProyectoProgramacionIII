@@ -26,7 +26,7 @@ class ProductoConverter implements Converter {
         writeNode(writer, "descripcion", producto.getDescripcion());
         writeNode(writer, "fechaPublicacion", producto.getFechaPublicacion() != null ? producto.getFechaPublicacion().toString() : null);
         writeNode(writer, "Categoria", String.valueOf(producto.getCategoria()));
-        writeNode(writer, "numLikes", String.valueOf(producto.getNumLikes()));
+        //writeNode(writer, "numLikes", String.valueOf(producto.getNumLikes()));
         writeNode(writer, "vendedor", producto.getVendedor() != null ? producto.getVendedor().getNombre() : null);
     }
 
@@ -39,10 +39,10 @@ class ProductoConverter implements Converter {
         if (fechaPublicacion != null) {
             producto.setFechaPublicacion(LocalDate.parse(fechaPublicacion));
         }
-        String numLikes = readNodeValue(reader, "numLikes");
+        /*String numLikes = readNodeValue(reader, "numLikes");
         if (numLikes != null) {
             producto.setNumLikes(Integer.parseInt(numLikes));
-        }
+        }*/
         String vendedorNombre = readNodeValue(reader, "vendedor");
         if (vendedorNombre != null) {
             producto.setVendedor(new Vendedor(vendedorNombre, null, null, null));
