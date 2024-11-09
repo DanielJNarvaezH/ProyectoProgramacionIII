@@ -1,4 +1,0 @@
-Estadistica [totalProductoPublicados=10, totalLikes=20, totalComentarios=5, totalContactos=0]
-Estadistica [totalProductoPublicados=3, totalLikes=2, totalComentarios=4, totalContactos=0]
-Estadistica [totalProductoPublicados=1, totalLikes=0, totalComentarios=2, totalContactos=0]
-Estadistica [totalProductoPublicados=5, totalLikes=7, totalComentarios=8, totalContactos=0]

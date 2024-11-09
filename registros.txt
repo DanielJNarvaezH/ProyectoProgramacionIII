@@ -2,3 +2,9 @@ nombreUsuario%%usuario%%correo%%contraseña
 2%%2%%2%%2
 juan%%juandi%%@%%juandi
 3%%3%%3%%3
+juan%%juan
+juandi%%juandi
+1%%1%%1%%1
+1%%1
+7%%7%%7%%7
+2%%2
