@@ -1,6 +1,9 @@
 package co.uniquindio.piii.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
@@ -8,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,10 +42,8 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
-
     private ResourceBundle messages;
 
-    // Inicializar el idioma predeterminado (por ejemplo, en español)
     public void initialize() {
         cargarIdioma("es"); // Predeterminado a español
     }
@@ -53,6 +55,9 @@ public class LoginController {
         if (validarCredenciales(username, password)) {
             showAlert(AlertType.INFORMATION, messages.getString("login.success"), 
                       messages.getString("welcome") + ", " + username);
+            abrirMenuGeneral();
+            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+            currentStage.close();
         } else {
             showAlert(AlertType.ERROR, messages.getString("login.failed"), 
                       messages.getString("error.credentials"));
@@ -66,9 +71,9 @@ public class LoginController {
         try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split("%%");
-                if (partes.length == 4) { // Cambiar a 4 para coincidir con el formato
-                    String usuarioRegistrado = partes[1]; // Usuario en la posición 1
-                    String contrasenaRegistrada = partes[3]; // Contraseña en la posición 3
+                if (partes.length == 4) {
+                    String usuarioRegistrado = partes[1];
+                    String contrasenaRegistrada = partes[3];
     
                     if (usuarioRegistrado.equals(username) && contrasenaRegistrada.equals(password)) {
                         return true;
@@ -90,7 +95,19 @@ public class LoginController {
         alert.showAndWait();
     }
 
-    // Cargar archivo de idioma
+    private void abrirMenuGeneral() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/co/uniquindio/piii/MenuGeneral.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menú General");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Error", "No se pudo abrir el Menú General.");
+        }
+    }
+
     public void cambiarIdioma() {
         String idiomaActual = messages.getLocale().getLanguage();
         if ("es".equals(idiomaActual)) {
@@ -104,7 +121,6 @@ public class LoginController {
     private void cargarIdioma(String idioma) {
         Locale locale = new Locale(idioma);
         messages = ResourceBundle.getBundle("archivosProperties.messages", locale);
-
     }
 
     private void actualizarTextos() {
@@ -116,5 +132,4 @@ public class LoginController {
         passwordLabel.setText(messages.getString("password.label"));
         loginButton.setText(messages.getString("login.button"));
     }
-    
 }
