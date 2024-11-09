@@ -91,15 +91,14 @@ public class VendedorController {
         descripcionArea.setPrefHeight(70);
 
         Label fechaLabel = new Label("Fecha de Publicación: " + producto.getFechaPublicacion().toString());
-        Label likesLabel = new Label("Me gusta: " + producto.getNumLikes());
-        Label comentariosLabel = new Label("Comentarios: " + producto.getComentarios().size());
+
 
         // Botones "Me gusta" y "Comentario"
         Button btnMeGusta = new Button("Dar Me gusta");
         Button btnComentario = new Button("Hacer Comentario");
 
         // Agregar los componentes al VBox de detalles
-        detallesBox.getChildren().addAll(tituloLabel, descripcionArea, fechaLabel, likesLabel, comentariosLabel, btnMeGusta, btnComentario);
+        detallesBox.getChildren().addAll(tituloLabel, descripcionArea, fechaLabel, btnMeGusta, btnComentario);
 
         // Añadir la imagen y los detalles al HBox principal
         productoBox.getChildren().addAll(imageView, detallesBox);
