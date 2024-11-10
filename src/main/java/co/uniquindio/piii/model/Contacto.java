@@ -11,8 +11,8 @@ public class Contacto extends Vendedor implements Serializable {
     private LocalDate fechaSolicitud;
 
     // Constructor
-    public Contacto(String nombre, String usuario, String contraseña, String email, LocalDate fechaSolicitud) {
-        super(nombre, usuario, contraseña, email); // Usa el constructor de Vendedor
+    public Contacto(String nombre, String usuario, String contraseña, String email, String direccion, String id,LocalDate fechaSolicitud) {
+        super(nombre, usuario, contraseña, email, direccion, id); // Usa el constructor de Vendedor
         this.fechaSolicitud = fechaSolicitud;
     }
 

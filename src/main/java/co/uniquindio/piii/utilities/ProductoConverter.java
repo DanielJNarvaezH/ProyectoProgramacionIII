@@ -45,7 +45,7 @@ class ProductoConverter implements Converter {
         }*/
         String vendedorNombre = readNodeValue(reader, "vendedor");
         if (vendedorNombre != null) {
-            producto.setVendedor(new Vendedor(vendedorNombre, null, null, null));
+            producto.setVendedor(new Vendedor(vendedorNombre, null, null, null,null, null));
         }
         // Agrega más campos, si los hay
         return producto;

@@ -7,28 +7,40 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="300.0" prefWidth="219.0" spacing="10" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.RegistroController">
+<VBox alignment="CENTER" prefHeight="586.0" prefWidth="810.0" spacing="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.RegistroController">
     
     <Label text="Ingresa los datos de tu registro" />
 
     <VBox spacing="5">
         <Label text="Nombre" />
-        <TextField fx:id="nameTextField" />
+        <TextField fx:id="nameTextField" prefHeight="31.0" prefWidth="748.0" promptText="Ingrese su nombre" />
     </VBox>
 
     <VBox spacing="5">
         <Label text="Usuario" />
-        <TextField fx:id="userTextField" />
+        <TextField fx:id="userTextField" promptText="Ingrese el usuario deseado" />
     </VBox>
 
     <VBox spacing="5">
         <Label text="Correo" />
-        <TextField fx:id="emailTextField" />
+        <TextField fx:id="emailTextField" promptText="Ingrese su correo electronico" />
     </VBox>
+   <VBox layoutX="10.0" layoutY="283.0" spacing="5">
+      <children>
+         <Label text="Dirección" />
+         <TextField fx:id="addressTextField" promptText="Ingrese su dirección" />
+      </children>
+   </VBox>
+   <VBox layoutX="10.0" layoutY="249.0" spacing="5">
+      <children>
+         <Label text="Número Documento" />
+         <TextField fx:id="IdTextField" promptText="Ingrese el número de documento" />
+      </children>
+   </VBox>
     
     <VBox spacing="5">
         <Label text="Contraseña" />
-        <PasswordField fx:id="passwordTextField" />
+        <PasswordField fx:id="passwordTextField" promptText="Ingrese la contraseña deseada" />
     </VBox>
 
     <Button onAction="#handleRegister" text="Registrarse" />

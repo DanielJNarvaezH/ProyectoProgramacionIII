@@ -30,7 +30,7 @@ public class VendedorController {
 
     @FXML
     public void initialize() {
-        vendedor = new Vendedor("Mario", null, null, null);
+        vendedor = new Vendedor("Mario", null, null, null,null,null);
         Producto producto1 = new Producto("Balón", "Balón para futbol de tamaño mediano", LocalDate.now(), null, null, vendedor, new File("src/imagenes/images/producto1.jpg"));
         Producto producto2 = new Producto("Mesa", "Mesa para el piano", LocalDate.now(), null, null,  vendedor, new File("src/imagenes/images/producto2.png"));
         Producto producto3 = new Producto("Funda", "Funda de tamaño mediano", LocalDate.now(), null, null,  vendedor, new File("src/imagenes/images/producto3.png"));

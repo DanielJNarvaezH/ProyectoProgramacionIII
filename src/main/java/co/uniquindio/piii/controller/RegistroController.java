@@ -1,11 +1,15 @@
 package co.uniquindio.piii.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
+
 import co.uniquindio.piii.App;
 import co.uniquindio.piii.exceptions.EmailYaRegistradoException;
 import co.uniquindio.piii.model.Registro;
 import co.uniquindio.piii.model.Tienda;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.Persistencia;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -24,18 +28,27 @@ public class RegistroController {
     @FXML
     private TextField emailTextField;
     @FXML
+    private TextField addressTextField;
+    @FXML
+    private TextField IdTextField;
+    @FXML
     private PasswordField passwordTextField;
 
     private Tienda tienda = Tienda.getInstance("MiTienda"); // Instancia de la tienda
-
+    private Persistencia persistencia = Persistencia.getInstance();
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_VENDEDORES_XML = config.getString("rutaVendedoresXML");
+    private static final String RUTA_VENDEDORES_BIN = config.getString("rutaVendedoresBin");
     @FXML
-    private void handleRegister() {
+    private void handleRegister() throws IOException {
         String nombre = nameTextField.getText();
         String username = userTextField.getText();
         String email = emailTextField.getText();
+        String direccion = addressTextField.getText();
+        String id = IdTextField.getText();
         String password = passwordTextField.getText();
     
-        if (nombre.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (nombre.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()|| direccion.isEmpty() || id.isEmpty()) {
             showAlert(AlertType.ERROR, "Error de registro", "Por favor, completa todos los campos.");
         } else if (Registro.esUsuarioDuplicado(username)) {
             showAlert(AlertType.ERROR, "Error de registro", "El nombre de usuario ya está registrado.");
@@ -44,11 +57,16 @@ public class RegistroController {
         } else {
             try {
                 // Crear el nuevo vendedor
-                Vendedor nuevoVendedor = new Vendedor(nombre, username, password, email);
+                Vendedor nuevoVendedor = new Vendedor(nombre, username, password, email, direccion, id);
     
                 // Guardar los datos de registro y añadir a la lista de vendedores
                 Registro.guardarDatosRegistro(nombre, username, email, password);
                 tienda.getVendedores().add(nuevoVendedor);
+
+                Persistencia.serializarObjetoXML(RUTA_VENDEDORES_XML, nuevoVendedor);
+                //Arreglar método, para que se sobreescriba
+                Persistencia.serializarObjetoBinario(RUTA_VENDEDORES_BIN, nuevoVendedor);
+                System.out.println("Serialización registro completada");
     
                 showAlert(AlertType.INFORMATION, "Registro exitoso", "Usuario registrado correctamente.");
                 limpiarCampos();
@@ -63,6 +81,8 @@ public class RegistroController {
         nameTextField.clear();
         userTextField.clear();
         emailTextField.clear();
+        addressTextField.clear();
+        IdTextField.clear();
         passwordTextField.clear();
     }
 
@@ -108,5 +128,4 @@ public class RegistroController {
             showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Login.");
         }
     }
-
 }

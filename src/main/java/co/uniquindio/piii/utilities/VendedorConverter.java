@@ -27,17 +27,21 @@ class VendedorConverter implements Converter {
         writeNode(writer, "usuario", vendedor.getUsuario());
         writeNode(writer, "contrasena", vendedor.getContrasena());
         writeNode(writer, "email", vendedor.getEmail());
+        writeNode(writer, "direccion", vendedor.getDireccion());
+        writeNode(writer, "id", vendedor.getId());
         writeCollection(writer, "productos", vendedor.getProductos());
         writeCollection(writer, "contactos", vendedor.getContactos());
     }
 
     @Override
     public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-        Vendedor vendedor = new Vendedor(null, null, null, null);
+        Vendedor vendedor = new Vendedor(null, null, null, null, null, null);
         vendedor.setNombre(readNodeValue(reader, "nombre"));
         vendedor.setUsuario(readNodeValue(reader, "usuario"));
         vendedor.setContrasena(readNodeValue(reader, "contrasena"));
         vendedor.setEmail(readNodeValue(reader, "email"));
+        vendedor.setDireccion(readNodeValue(reader, "addres1"));
+        vendedor.setId(readNodeValue(reader, "id"));
         vendedor.setProductos((ArrayList<Producto>) readCollection(reader, "productos", Producto.class));
         vendedor.setContactos((ArrayList<Vendedor>) readCollection(reader, "contactos", Vendedor.class));
         return vendedor;

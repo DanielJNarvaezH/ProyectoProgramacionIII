@@ -5,27 +5,42 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.LoginController" alignment="CENTER" hgap="10" vgap="10">
+<GridPane alignment="CENTER" hgap="10" prefHeight="344.0" prefWidth="500.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="co.uniquindio.piii.controller.LoginController">
     <padding>
-        <Insets top="25" right="25" bottom="25" left="25" />
+        <Insets bottom="25" left="25" right="25" top="25" />
     </padding>
 
     <!-- Título de la ventana -->
-    <Label fx:id="welcomeLabel" text="Bienvenido" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+    <Label fx:id="welcomeLabel" text="Bienvenido" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
     <!-- Campo de Usuario -->
-    <Label fx:id="usernameLabel" text="Usuario:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-    <TextField fx:id="usernameField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <Label fx:id="usernameLabel" text="Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="usernameField" promptText="Ingrese su usuario" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <!-- Campo de Contraseña -->
-    <Label fx:id="passwordLabel" text="Contraseña:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-    <PasswordField fx:id="passwordField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    <Label fx:id="passwordLabel" text="Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <PasswordField fx:id="passwordField" promptText="ingrese su contraseña" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
     <!-- Botón para iniciar sesión -->
-    <Button fx:id="loginButton" text="Iniciar sesión" GridPane.rowIndex="3" GridPane.columnIndex="1" onAction="#handleLogin"/>
+    <Button fx:id="loginButton" onAction="#handleLogin" text="Iniciar sesión" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <!-- Botón para cambiar idioma -->
-    <Button fx:id="languageButton" text="Cambiar Idioma" GridPane.rowIndex="4" GridPane.columnIndex="1" onAction="#cambiarIdioma"/>
+    <Button fx:id="languageButton" onAction="#cambiarIdioma" text="Cambiar Idioma" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+   <Button fx:id="btnRegistrarse" mnemonicParsing="false" onAction="#IrVentanaRegistro" text="Registrarse" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>

@@ -122,7 +122,7 @@ public class GestorProductos {
         producto1.setCategoria(CategoriaProducto.ROPA);
         producto1.setEstadoProducto(EstadoProducto.PUBLICADO);
         producto1.setFechaPublicacion(LocalDate.now());
-        producto1.setVendedor(new Vendedor("Mario", null, null, null));
+        producto1.setVendedor(new Vendedor("Mario", null, null, null, null, null));
 
         tienda.agregarProducto(producto1);
 

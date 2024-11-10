@@ -15,16 +15,21 @@ import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import java.util.Calendar;
 
 import co.uniquindio.piii.model.Estadistica;
+import co.uniquindio.piii.model.Vendedor;
 
 
 
 
 public class Persistencia {
 
-    static ResourceBundle config = ResourceBundle.getBundle("archivosProperties/config");
+    private static ResourceBundle config = ResourceBundle.getBundle("archivosProperties/config");
     private static Persistencia instance;
     public static Persistencia getInstance() {
         if (instance == null) {
@@ -33,10 +38,10 @@ public class Persistencia {
         return instance;
     }
 
-    public static void serializarObjetoBinario(String nombre, Object objeto) throws IOException{
+    public static void serializarObjetoBinario(String rutaArchivo, Object objeto) throws IOException{
         ObjectOutputStream salida;
 
-        salida = new  ObjectOutputStream(new FileOutputStream(nombre));
+        salida = new  ObjectOutputStream(new FileOutputStream(rutaArchivo));
         salida.writeObject(objeto);
         salida.close();
     }
@@ -52,14 +57,17 @@ public class Persistencia {
         return objeto;
     }
 
-    public static void serializarObjetoXML(String rutaArchivo, Object objeto) throws IOException{
-
-        XMLEncoder codificador;
-
-        codificador = new XMLEncoder( new FileOutputStream(rutaArchivo));
-        codificador.writeObject(objeto);
-        codificador.close();
+    public static void serializarObjetoXML(String rutaArchivo, Object objeto) throws IOException {
+        try (XMLEncoder codificador = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
+            codificador.writeObject(objeto);
+            codificador.flush();
+            System.out.println("Objeto serializado correctamente en XML: " + rutaArchivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al serializar el objeto en XML.");
+        }
     }
+    
 
     public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         XMLDecoder decodificadorXML;
@@ -164,6 +172,40 @@ public class Persistencia {
                 System.out.println("Error al guardar el archivo: " + e.getMessage());
             }
         }
-    
+    //-------------------------------------------------------------------------------
+        public static void agregarObjetoXML(String rutaArchivo, Vendedor nuevoVendedor) throws IOException {
+        List<Vendedor> vendedores = cargarObjetosDesdeXML(rutaArchivo);
+        vendedores.add(nuevoVendedor);
+        serializarListaObjetosXML(rutaArchivo, vendedores);
+    }
 
+    // Método para leer la lista de objetos del archivo XML
+    @SuppressWarnings("unchecked")
+    public static List<Vendedor> cargarObjetosDesdeXML(String rutaArchivo) {
+        File archivo = new File(rutaArchivo);
+        if (!archivo.exists()) {
+            return new ArrayList<>(); // Si el archivo no existe, devuelve una lista vacía
+        }
+        try (FileInputStream fis = new FileInputStream(rutaArchivo)) {
+            XStream xstream = new XStream(new DomDriver());
+            xstream.alias("vendedor", Vendedor.class);
+            return (List<Vendedor>) xstream.fromXML(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al cargar el archivo XML.");
+            return new ArrayList<>();
+        }
+    }
+
+    // Método para serializar una lista completa de objetos al archivo XML
+    public static void serializarListaObjetosXML(String rutaArchivo, List<Vendedor> listaVendedores) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(rutaArchivo)) {
+            XStream xstream = new XStream(new DomDriver());
+            xstream.alias("vendedor", Vendedor.class);
+            xstream.toXML(listaVendedores, fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al serializar la lista en XML.");
+        }
+    }
 }
