@@ -13,6 +13,7 @@ import co.uniquindio.piii.utilities.Persistencia;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -31,6 +32,9 @@ public class RegistroController {
     private TextField addressTextField;
     @FXML
     private TextField IdTextField;
+
+    @FXML
+    private Button btnIrALogin;
     @FXML
     private PasswordField passwordTextField;
 
@@ -63,7 +67,7 @@ public class RegistroController {
                 Registro.guardarDatosRegistro(nombre, username, email, password);
                 tienda.getVendedores().add(nuevoVendedor);
 
-                Persistencia.serializarObjetoXML(RUTA_VENDEDORES_XML, nuevoVendedor);
+                Persistencia.salvarRecursoSerializadoXML(RUTA_VENDEDORES_XML, nuevoVendedor);
                 //Arreglar método, para que se sobreescriba
                 Persistencia.serializarObjetoBinario(RUTA_VENDEDORES_BIN, nuevoVendedor);
                 System.out.println("Serialización registro completada");
@@ -127,5 +131,24 @@ public class RegistroController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Login.");
         }
+    }
+
+    @FXML
+    void initialize() {
+        
+        IdTextField.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume();
+            }
+        });
+
+        assert nameTextField != null : "fx:id=\"nameTextField\" was not injected: check your FXML file 'registro.fxml'.";
+        assert userTextField != null : "fx:id=\"userTextField\" was not injected: check your FXML file 'registro.fxml'.";
+        assert emailTextField != null : "fx:id=\"emailTextField\" was not injected: check your FXML file 'registro.fxml'.";
+        assert addressTextField != null : "fx:id=\"addressTextField\" was not injected: check your FXML file 'registro.fxml'.";
+        assert IdTextField != null : "fx:id=\"IdTextField\" was not injected: check your FXML file 'registro.fxml'.";
+        assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'registro.fxml'.";
+        assert btnIrALogin != null : "fx:id=\"btnIrALogin\" was not injected: check your FXML file 'registro.fxml'.";
+
     }
 }
