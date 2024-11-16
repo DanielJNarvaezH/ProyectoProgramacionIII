@@ -1,8 +1,6 @@
 package co.uniquindio.piii.model;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import co.uniquindio.piii.exceptions.ContactoYaExistenteException;
 import co.uniquindio.piii.exceptions.LimiteContactosExcedidoException;
 

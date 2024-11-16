@@ -1,6 +1,5 @@
 package co.uniquindio.piii.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
@@ -39,7 +38,6 @@ public class RegistroController {
     private PasswordField passwordTextField;
 
     private Tienda tienda = Tienda.getInstance("MiTienda"); // Instancia de la tienda
-    private Persistencia persistencia = Persistencia.getInstance();
     private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
     private static final String RUTA_VENDEDORES_XML = config.getString("rutaVendedoresXML");
     private static final String RUTA_VENDEDORES_BIN = config.getString("rutaVendedoresBin");
@@ -64,7 +62,7 @@ public class RegistroController {
                 Vendedor nuevoVendedor = new Vendedor(nombre, username, password, email, direccion, id);
     
                 // Guardar los datos de registro y añadir a la lista de vendedores
-                Registro.guardarDatosRegistro(nombre, username, email, password);
+                Registro.guardarDatosRegistro(nombre, username, email, password,direccion, id);
                 tienda.getVendedores().add(nuevoVendedor);
 
                 Persistencia.salvarRecursoSerializadoXML(RUTA_VENDEDORES_XML, nuevoVendedor);

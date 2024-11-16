@@ -1,6 +1,7 @@
 package co.uniquindio.piii.utilities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -37,7 +38,7 @@ class ProductoConverter implements Converter {
         producto.setDescripcion(readNodeValue(reader, "descripcion"));
         String fechaPublicacion = readNodeValue(reader, "fechaPublicacion");
         if (fechaPublicacion != null) {
-            producto.setFechaPublicacion(LocalDate.parse(fechaPublicacion));
+            producto.setFechaPublicacion(LocalDateTime.parse(fechaPublicacion));
         }
         /*String numLikes = readNodeValue(reader, "numLikes");
         if (numLikes != null) {

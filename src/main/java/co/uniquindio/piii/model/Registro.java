@@ -19,13 +19,13 @@ public class Registro implements Serializable {
     }
     
     
-    public static void guardarDatosRegistro(String nombre, String nombreUsuario, String correo, String password) throws EmailYaRegistradoException {
+    public static void guardarDatosRegistro(String nombre, String nombreUsuario, String correo, String password, String direccion, String id) throws EmailYaRegistradoException {
         if (esCorreoDuplicado(correo)) {
             throw new EmailYaRegistradoException("El correo electrónico ya está registrado.");
         }
         
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA_ARCHIVO, true))) {
-            writer.write(nombre + "%%" + nombreUsuario + "%%" + correo + "%%" + password);
+            writer.write(nombre + "%%" + nombreUsuario + "%%" + correo + "%%" + password+ "%%" + direccion + "%%" + id);
             writer.newLine();
             System.out.println("Datos guardados.");
         } catch (IOException e) {

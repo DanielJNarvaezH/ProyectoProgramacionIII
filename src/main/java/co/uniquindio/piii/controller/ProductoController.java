@@ -5,25 +5,29 @@ import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import co.uniquindio.piii.model.Tienda;
+import javax.swing.JOptionPane;
+
+import co.uniquindio.piii.App;
+import co.uniquindio.piii.model.CategoriaProducto;
+import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 public class ProductoController {
     @FXML
     private ResourceBundle resources;
     @FXML
     private URL location;
-    @FXML
-    private ComboBox<?> cbVendedor;
     @FXML
     private TextField txtDescripcion;
     @FXML
@@ -33,7 +37,7 @@ public class ProductoController {
     @FXML
     private TextField txtPrecio;
     @FXML
-    private ComboBox<?> cbCategoria;
+    private ComboBox<CategoriaProducto> cbCategoria;
     @FXML
     private ImageView imageViewProducto;
     @FXML
@@ -41,11 +45,43 @@ public class ProductoController {
     @FXML
     private Button btnAnadir;
     @FXML
-    private Label labelTest;
+    private Button btnAtras;
 
-    private Tienda tienda = Tienda.getInstance(null);
-    private Vendedor vendedorActual = UsuarioActivo.getInstance(); 
+    
+    @FXML
+void regresarVentana(MouseEvent event) {
+    try {
+        App.setRoot("MenuGeneral");
+    } catch (IOException e) {
+        e.printStackTrace(); // Esto imprimirá el error en la consola
+    }
+}
 
+@FXML
+void agregarProducto(MouseEvent event) throws IOException {
+    Vendedor vendedorActual = UsuarioActivo.getInstance().getVendedor();
+    Producto producto = new Producto();
+    producto.setCodigo(txtCodigo.getText());
+    producto.setTitulo(txtNombre.getText());
+    int precio = Integer.parseInt(txtPrecio.getText());
+    producto.setPrecio(precio); 
+    producto.setDescripcion(txtDescripcion.getText());
+    producto.setVendedor(vendedorActual);
+    producto.setCategoria(cbCategoria.getValue());
+    producto.setFechaPublicacion(LocalDateTime.now());
+    producto.setImagen(imageViewProducto.getImage());
+
+    vendedorActual.publicarProducto(producto);
+
+    JOptionPane.showMessageDialog(null, "Producto creado exitosamente:\n" +
+                "Nombre: " + producto.getTitulo() + "\n" +
+                "Código: " + producto.getCodigo() + "\n" +
+                "Precio: " + producto.getPrecio() + "\n" +
+                "Descripción: " + producto.getDescripcion(),
+                "Creación de Producto", JOptionPane.INFORMATION_MESSAGE);
+}    
+
+    
     // Método para seleccionar y mostrar la imagen
     @FXML
     private void seleccionarImagen(ActionEvent event) {
@@ -66,8 +102,7 @@ public class ProductoController {
     }
     @FXML
     void initialize() {
-        labelTest.setText(vendedorActual.getNombre());
-        assert cbVendedor != null : "fx:id=\"cbVendedor\" was not injected: check your FXML file 'Producto.fxml'.";
+        assert btnAtras != null : "fx:id=\"btnAtras\" was not injected: check your FXML file 'producto.fxml'.";
         assert txtDescripcion != null
                 : "fx:id=\"txtDescripcion\" was not injected: check your FXML file 'Producto.fxml'.";
         assert txtCodigo != null : "fx:id=\"txtCodigo\" was not injected: check your FXML file 'Producto.fxml'.";
@@ -79,5 +114,8 @@ public class ProductoController {
         assert btSeleccionarImagen != null
                 : "fx:id=\"btSeleccionarImagen\" was not injected: check your FXML file 'Producto.fxml'.";
         assert btnAnadir != null : "fx:id=\"btnAnadir\" was not injected: check your FXML file 'Producto.fxml'.";
+
+        //ComboBox seteado con el enum CategoriaProducto
+        cbCategoria.getItems().addAll(CategoriaProducto.values());
     }
 }

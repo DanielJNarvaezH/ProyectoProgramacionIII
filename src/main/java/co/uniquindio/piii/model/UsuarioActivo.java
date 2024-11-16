@@ -2,34 +2,39 @@ package co.uniquindio.piii.model;
 
 //Clase para obtener el usuario que se loguee en la app
 
-public class UsuarioActivo extends Vendedor {
+public class UsuarioActivo {
 
-    private static UsuarioActivo instance;
-    private String username;
+    // Instancia única del UsuarioActivo
+    private static UsuarioActivo instancia;
 
-    // Constructor privado para evitar instancias externas
+    // Objeto Vendedor que representa al usuario activo
+    private Vendedor vendedor;
+
+    // Constructor privado para evitar instancias directas
     private UsuarioActivo() {}
 
-    // Método para obtener la única instancia de la clase
+    // Método para obtener la instancia única
     public static UsuarioActivo getInstance() {
-        if (instance == null) {
-            instance = new UsuarioActivo();
+        if (instancia == null) {
+            instancia = new UsuarioActivo();
         }
-        return instance;
+        return instancia;
     }
 
-    // Métodos para establecer y obtener el usuario logueado
-    public void setUsername(String username) {
-        this.username = username;
+    // Método para establecer el vendedor activo
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
     }
 
-    public String getUsername() {
-        return username;
+    // Método para obtener el vendedor activo
+    public Vendedor getVendedor() {
+        return vendedor;
     }
 
-    // Método para limpiar el usuario activo
-    public void clear() {
-        username = null;
+    // Método para reiniciar la instancia (opcional, útil al cerrar sesión)
+    public void reset() {
+        vendedor = null;
     }
 }
+
 

@@ -13,6 +13,7 @@
 
 <VBox alignment="CENTER" prefHeight="621.0" prefWidth="867.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.ProductoController">
    <children>
+      <Button fx:id="btnAtras" alignment="TOP_LEFT" mnemonicParsing="false" onMousePressed="#regresarVentana" text="Atrás" translateX="-350.0" />
       <GridPane alignment="CENTER" prefHeight="544.0" prefWidth="827.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="470.0" />
@@ -24,29 +25,26 @@
           <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="155.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="170.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="223.0" minHeight="4.0" prefHeight="223.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="261.0" minHeight="0.0" prefHeight="261.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="223.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Código Producto" GridPane.rowIndex="2" />
-            <Label text="Vendedor" textAlignment="CENTER" />
-            <Label text="Descripción" GridPane.rowIndex="1" />
-            <Label text="Nombre" GridPane.rowIndex="3" />
-            <Label alignment="CENTER" text="Precio" textAlignment="CENTER" GridPane.rowIndex="4" />
-            <Label text="Categoria" GridPane.rowIndex="5" />
-            <ComboBox fx:id="cbVendedor" prefHeight="31.0" prefWidth="282.0" promptText="Seleccione el vendedor" GridPane.columnIndex="1" />
-            <TextField fx:id="txtDescripcion" promptText="Ingrese la descripción" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtCodigo" promptText="Ingrese el código" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtNombre" promptText="Ingrese el nombre" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtPrecio" promptText="Ingrese el precio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <ComboBox fx:id="cbCategoria" prefHeight="31.0" prefWidth="283.0" promptText="Seleccione la categoria" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ImageView fx:id="imageViewProducto" fitHeight="124.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true" translateX="180.0" GridPane.rowIndex="6" />
-            <Button fx:id="btSeleccionarImagen" mnemonicParsing="false" onAction="#seleccionarImagen" prefHeight="31.0" prefWidth="208.0" text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Imagen Producto" textAlignment="CENTER" GridPane.rowIndex="6" />
+            <Label text="Código Producto" GridPane.rowIndex="1" />
+            <Label text="Descripción" />
+            <Label text="Nombre" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" text="Precio" textAlignment="CENTER" GridPane.rowIndex="3" />
+            <Label text="Categoria" GridPane.rowIndex="4" />
+            <TextField fx:id="txtDescripcion" promptText="Ingrese la descripción" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCodigo" promptText="Ingrese el código del producto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtNombre" promptText="Ingrese el nombre del producto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtPrecio" promptText="Ingrese el precio del producto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="cbCategoria" prefHeight="31.0" prefWidth="283.0" promptText="Seleccione la categoria" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ImageView fx:id="imageViewProducto" fitHeight="189.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true" translateX="180.0" GridPane.rowIndex="5" />
+            <Button fx:id="btSeleccionarImagen" mnemonicParsing="false" onAction="#seleccionarImagen" prefHeight="31.0" prefWidth="208.0" text="Seleccionar Imagen" translateX="75.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Imagen Producto" textAlignment="CENTER" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Label fx:id="labelTest" text="Label" />
-      <Button fx:id="btnAnadir" mnemonicParsing="false" text="Añadir Producto" />
+      <Button fx:id="btnAnadir" mnemonicParsing="false" onMouseClicked="#agregarProducto" text="Añadir Producto" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

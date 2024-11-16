@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 import co.uniquindio.piii.App;
 import co.uniquindio.piii.model.UsuarioActivo;
+import co.uniquindio.piii.model.Vendedor;
 
 public class LoginController {
 
@@ -82,9 +83,11 @@ public class LoginController {
     String username = usernameField.getText();
     String password = passwordField.getText();
 
-    if (validarCredenciales(username, password)) {
+    Vendedor vendedorLogueado = validarCredenciales(username, password);
+
+    if (vendedorLogueado != null) {
         // Guardar el usuario en la clase UsuarioActivo
-        UsuarioActivo.getInstance().setUsername(username);
+        UsuarioActivo.getInstance().setVendedor(vendedorLogueado);
 
         showAlert(AlertType.INFORMATION, messages.getString("login.success"),
                 messages.getString("welcome") + ", " + username);
@@ -98,7 +101,7 @@ public class LoginController {
     }
 }
 
-    private boolean validarCredenciales(String username, String password) {
+    /*private boolean validarCredenciales(String username, String password) {
         String rutaArchivo = "registros.txt";
         String linea;
 
@@ -119,7 +122,38 @@ public class LoginController {
         }
 
         return false;
+    }*/
+
+    private Vendedor validarCredenciales(String username, String password) { 
+    String rutaArchivo = "registros.txt";
+    String linea;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
+        while ((linea = reader.readLine()) != null) {
+            // Suponiendo el formato: nombre%%usuario%%email%%contrasena%%direccion%%id
+            String[] partes = linea.split("%%");
+            if (partes.length == 6) {
+                String nombre = partes[0];
+                String usuarioRegistrado = partes[1];
+                String email = partes[2];
+                String contrasenaRegistrada = partes[3];
+                String direccion = partes[4];
+                String id = partes[5];
+
+                if (usuarioRegistrado.equals(username) && contrasenaRegistrada.equals(password)) {
+                    // Crear y retornar un objeto Vendedor con los datos del archivo
+                    return new Vendedor(nombre, usuarioRegistrado, contrasenaRegistrada, email, direccion,id);
+                }
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error al leer el archivo de registro: " + e.getMessage());
     }
+
+    // Retornar null si no se encuentran credenciales válidas
+    return null;
+}
+
 
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

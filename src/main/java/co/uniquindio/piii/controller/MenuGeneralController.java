@@ -35,7 +35,7 @@ public class MenuGeneralController {
     @FXML
     private Label labelPrueba;
 
-    private Vendedor usuario = UsuarioActivo.getInstance();
+    private Vendedor usuario = UsuarioActivo.getInstance().getVendedor();
 
     @FXML
     private void handleChatContacto() {
@@ -84,7 +84,7 @@ public class MenuGeneralController {
 
     @FXML
     void initialize() {
-        String nombreUsuario = UsuarioActivo.getInstance().getUsername();
+        String nombreUsuario = UsuarioActivo.getInstance().getVendedor().getNombre();
         labelPrueba.setText(nombreUsuario);
         assert btnChatContacto != null : "fx:id=\"btnChatContacto\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
         assert btnComentario != null : "fx:id=\"btnComentario\" was not injected: check your FXML file 'MenuGeneral.fxml'.";

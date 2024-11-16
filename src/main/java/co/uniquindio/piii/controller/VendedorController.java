@@ -6,14 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.io.File;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class VendedorController {
@@ -31,11 +26,11 @@ public class VendedorController {
     @FXML
     public void initialize() {
         vendedor = new Vendedor("Mario", null, null, null,null,null);
-        Producto producto1 = new Producto("Balón", "Balón para futbol de tamaño mediano", LocalDate.now(), null, null, vendedor, new File("src/imagenes/images/producto1.jpg"));
-        Producto producto2 = new Producto("Mesa", "Mesa para el piano", LocalDate.now(), null, null,  vendedor, new File("src/imagenes/images/producto2.png"));
-        Producto producto3 = new Producto("Funda", "Funda de tamaño mediano", LocalDate.now(), null, null,  vendedor, new File("src/imagenes/images/producto3.png"));
-        Producto producto4 = new Producto("Zapatos", "Zapatos deportivos", LocalDate.now(), null, null,  vendedor, new File("src/imagenes/images/producto4.png"));
-        Producto producto5 = new Producto("Gafas", "Gafas de sol", LocalDate.now(), null, null,  vendedor, new File("src/imagenes/images/producto5.png"));
+        Producto producto1 = new Producto("Balón", "Balón para futbol de tamaño mediano",null,  LocalDateTime.now(), null, null,0, vendedor, null);
+        Producto producto2 = new Producto("Mesa", "Mesa para el piano", null, LocalDateTime.now(), null, null, 0, vendedor, null);
+        Producto producto3 = new Producto("Funda", "Funda de tamaño mediano",null,  LocalDateTime.now(), null, null,0,  vendedor, null);
+        Producto producto4 = new Producto("Zapatos", "Zapatos deportivos", null, LocalDateTime.now(), null, null,  0,vendedor, null);
+        Producto producto5 = new Producto("Gafas", "Gafas de sol", null,  LocalDateTime.now(), null, null,0,  vendedor, null);
         vendedor.publicarProducto(producto5);
         vendedor.publicarProducto(producto4);
         vendedor.publicarProducto(producto3);
@@ -75,9 +70,9 @@ public class VendedorController {
         productoBox.setSpacing(10);
 
         // Cargar la imagen del producto desde el archivo local
-        ImageView imageView = new ImageView(new Image(producto.getImagen().toURI().toString()));
+        /*ImageView imageView = new ImageView(new Image(producto.getImagen().toURI().toString()));
         imageView.setFitHeight(160);
-        imageView.setFitWidth(200);
+        imageView.setFitWidth(200);*/
 
         // Crear un VBox para los detalles del producto
         VBox detallesBox = new VBox();
@@ -101,7 +96,7 @@ public class VendedorController {
         detallesBox.getChildren().addAll(tituloLabel, descripcionArea, fechaLabel, btnMeGusta, btnComentario);
 
         // Añadir la imagen y los detalles al HBox principal
-        productoBox.getChildren().addAll(imageView, detallesBox);
+        //productoBox.getChildren().addAll(imageView, detallesBox);
 
         // Añadir este HBox al contenedor principal (VBox)
         productosContainer.getChildren().add(productoBox);

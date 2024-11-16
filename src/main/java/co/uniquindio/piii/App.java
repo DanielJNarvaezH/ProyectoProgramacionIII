@@ -27,7 +27,7 @@ public class App extends Application {
     
     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("registro.fxml"));
     
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
         
     }
