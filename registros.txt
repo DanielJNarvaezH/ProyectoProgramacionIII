@@ -1,11 +1,9 @@
 nombreUsuario%%usuario%%correo%%contraseña
-2%%2%%2%%2
 juan%%juandi%%@%%juandi
 3%%3%%3%%3
-juan%%juan
-juandi%%juandi
 1%%1%%1%%1
-1%%1
 7%%7%%7%%7
-2%%2
 8%%8%%8%%8
+diego%%1231%%@7h8y6byb%%1231
+juan %%jd%%jd@gamil%%1234
+Adiministrador%%Admin%%@Admin%%12345

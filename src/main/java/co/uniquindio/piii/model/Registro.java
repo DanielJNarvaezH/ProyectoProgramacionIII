@@ -48,5 +48,46 @@ public class Registro implements Serializable {
         }
         return datos;
     }
+    public static void listarRegistros() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(RUTA_ARCHIVO))) {
+            String linea;
+            int contador = 1;
+            System.out.println("Registros actuales:");
+            while ((linea = reader.readLine()) != null) {
+                System.out.println(contador++ + ". " + linea);
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo de registros: " + e.getMessage());
+        }
+    }
+    
+    public static void eliminarRegistro(int indice) {
+        File archivo = new File(RUTA_ARCHIVO);
+        File archivoTemporal = new File("registros_temp.txt");
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal))) {
+            
+            String linea;
+            int contador = 1;
+            while ((linea = reader.readLine()) != null) {
+                if (contador != indice) {
+                    writer.write(linea);
+                    writer.newLine();
+                }
+                contador++;
+            }
+        } catch (IOException e) {
+            System.out.println("Error al eliminar el registro: " + e.getMessage());
+        }
+        
+        if (archivo.delete()) {
+            archivoTemporal.renameTo(archivo);
+            System.out.println("Registro eliminado con éxito.");
+        } else {
+            System.out.println("Error al actualizar el archivo de registros.");
+        }
+    }
+    
     
 }

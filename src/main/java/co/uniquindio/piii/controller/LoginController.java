@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import co.uniquindio.piii.App;
+import co.uniquindio.piii.model.Registro;
 import co.uniquindio.piii.model.UsuarioActivo;
 
 public class LoginController {
@@ -77,26 +78,56 @@ public class LoginController {
         }
     }
 
-    //Método para realizar el login de acuerdo al resgistro txt y obtener el UsuarioActivo
-    public void handleLogin() {
+public void handleLogin() {
     String username = usernameField.getText();
     String password = passwordField.getText();
 
     if (validarCredenciales(username, password)) {
-        // Guardar el usuario en la clase UsuarioActivo
-        UsuarioActivo.getInstance().setUsername(username);
-
-        showAlert(AlertType.INFORMATION, messages.getString("login.success"),
-                messages.getString("welcome") + ", " + username);
-        abrirMenuGeneral();
-
+        if (username.equals("Admin") && password.equals("12345")) {
+            System.out.println("Bienvenido, Administrador.");
+            manejarOpcionesAdministrador();
+        } else {
+            UsuarioActivo.getInstance().setUsername(username);
+            showAlert(AlertType.INFORMATION, messages.getString("login.success"),
+                      messages.getString("welcome") + ", " + username);
+            abrirMenuGeneral();
+        }
         Stage currentStage = (Stage) loginButton.getScene().getWindow();
         currentStage.close();
     } else {
         showAlert(AlertType.ERROR, messages.getString("login.failed"),
-                messages.getString("error.credentials"));
+                  messages.getString("error.credentials"));
     }
 }
+
+private void manejarOpcionesAdministrador() {
+    boolean salir = false;
+    java.util.Scanner scanner = new java.util.Scanner(System.in);
+    while (!salir) {
+        System.out.println("\nOpciones del Administrador:");
+        System.out.println("1. Listar registros");
+        System.out.println("2. Eliminar un registro");
+        System.out.println("3. Salir");
+        System.out.print("Seleccione una opción: ");
+        int opcion = scanner.nextInt();
+        switch (opcion) {
+            case 1:
+                Registro.listarRegistros();
+                break;
+            case 2:
+                System.out.print("Ingrese el número del registro a eliminar: ");
+                int numero = scanner.nextInt();
+                Registro.eliminarRegistro(numero);
+                break;
+            case 3:
+                salir = true;
+                break;
+            default:
+                System.out.println("Opción no válida.");
+        }
+    }
+}
+
 
     private boolean validarCredenciales(String username, String password) {
         String rutaArchivo = "registros.txt";
