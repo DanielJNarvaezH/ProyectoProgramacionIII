@@ -1,40 +1,53 @@
-/**
- * Sample Skeleton for 'chatDeContactos.fxml' Controller Class
- */
+package co.uniquindio.piii.controller;
 
- package co.uniquindio.piii.controller;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
- import java.net.URL;
- import java.util.ResourceBundle;
- import javafx.event.ActionEvent;
- import javafx.fxml.FXML;
- import javafx.scene.control.TextField;
- 
- public class ChatContactoController {
- 
-     @FXML // ResourceBundle that was given to the FXMLLoader
-     private ResourceBundle resources;
- 
-     @FXML // URL location of the FXML file that was given to the FXMLLoader
-     private URL location;
- 
-     @FXML // fx:id="BarraBUsquedaTextField"
-     private TextField BarraBUsquedaTextField; // Value injected by FXMLLoader
- 
-     @FXML // fx:id="MensajeTextField"
-     private TextField MensajeTextField; // Value injected by FXMLLoader
- 
-     @FXML
-     void verListaProductosContacto(ActionEvent event) {
- 
-     }
- 
-     @FXML // This method is called by the FXMLLoader when initialization is complete
-     void initialize() {
-         assert BarraBUsquedaTextField != null : "fx:id=\"BarraBUsquedaTextField\" was not injected: check your FXML file 'chatDeContactos.fxml'.";
-         assert MensajeTextField != null : "fx:id=\"MensajeTextField\" was not injected: check your FXML file 'chatDeContactos.fxml'.";
- 
-     }
- 
- }
- 
+import co.uniquindio.piii.App;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.stage.Stage;
+
+public class ChatContactoController {
+
+    @FXML
+    private ListView<String> listViewUsuarios;
+
+    private final String RUTA_REGISTRO = "registros.txt";
+
+    @FXML
+    public void initialize() {
+        List<String> usuarios = cargarUsuarios();
+        ObservableList<String> usuariosObservable = FXCollections.observableArrayList(usuarios);
+        listViewUsuarios.setItems(usuariosObservable);
+    }
+
+    private List<String> cargarUsuarios() {
+        List<String> usuarios = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_REGISTRO))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split("%%");
+                if (datos.length >= 2) {
+                    usuarios.add(datos[1]); // Agrega el nombre de usuario
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return usuarios;
+    }
+
+    @FXML
+    private void handleVolver(ActionEvent event) {
+        // Cierra la ventana actual
+        Stage stage = (Stage) listViewUsuarios.getScene().getWindow();
+        stage.close();
+    }
+}
