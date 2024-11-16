@@ -38,10 +38,23 @@ public class MenuGeneralController {
     private Vendedor usuario = UsuarioActivo.getInstance();
 
     @FXML
-    private void handleChatContacto() {
-        // Lógica para redirigir a la vista de chat de contacto
-        System.out.println("Ir a chat de contacto.");
+    private void handleChatContacto(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("chatContacto.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Chat de Contacto");
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Chat de Contacto.");
+        }
     }
+    
 
     @FXML
     private void handleComentario() {
