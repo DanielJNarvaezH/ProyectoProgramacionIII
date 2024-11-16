@@ -13,7 +13,7 @@
 
 <VBox alignment="CENTER" prefHeight="621.0" prefWidth="867.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.ProductoController">
    <children>
-      <Button fx:id="btnAtras" alignment="TOP_LEFT" mnemonicParsing="false" onMousePressed="#regresarVentana" text="Atrás" translateX="-350.0" />
+      <Button fx:id="btnAtras" alignment="TOP_LEFT" mnemonicParsing="false" onMouseClicked="#regresarVentana" text="Atrás" translateX="-350.0" />
       <GridPane alignment="CENTER" prefHeight="544.0" prefWidth="827.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="470.0" />

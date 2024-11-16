@@ -2,10 +2,12 @@ package co.uniquindio.piii.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +22,11 @@ import co.uniquindio.piii.model.CategoriaProducto;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -51,11 +58,21 @@ public class ProductoController {
     @FXML
 void regresarVentana(MouseEvent event) {
     try {
-        App.setRoot("MenuGeneral");
-    } catch (IOException e) {
-        e.printStackTrace(); // Esto imprimirá el error en la consola
+            // Cargar la ventana de registro de productos
+            Parent root = FXMLLoader.load(App.class.getResource("MenuGeneral.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menu General");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Registro.");
+        }
     }
-}
 
 @FXML
 void agregarProducto(MouseEvent event) throws IOException {
@@ -117,5 +134,13 @@ void agregarProducto(MouseEvent event) throws IOException {
 
         //ComboBox seteado con el enum CategoriaProducto
         cbCategoria.getItems().addAll(CategoriaProducto.values());
+    }
+
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
     }
 }

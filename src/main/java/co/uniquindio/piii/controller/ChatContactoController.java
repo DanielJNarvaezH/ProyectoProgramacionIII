@@ -11,7 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class ChatContactoController {
@@ -46,8 +53,28 @@ public class ChatContactoController {
 
     @FXML
     private void handleVolver(ActionEvent event) {
-        // Cierra la ventana actual
-        Stage stage = (Stage) listViewUsuarios.getScene().getWindow();
-        stage.close();
+        try {
+            // Cargar la ventana de registro de productos
+            Parent root = FXMLLoader.load(App.class.getResource("MenuGeneral.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menu General");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Registro.");
+        }
+    }
+
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
     }
 }

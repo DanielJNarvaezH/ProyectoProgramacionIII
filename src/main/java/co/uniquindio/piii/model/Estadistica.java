@@ -1,7 +1,6 @@
 package co.uniquindio.piii.model;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +58,7 @@ public class Estadistica implements Serializable {
     }
 
     // Obtener el total de productos publicados en una fecha específica
-    public int obtenerTotalProductosPorFecha(List<Producto> productos, LocalDate fecha) {
+    public int obtenerTotalProductosPorFecha(List<Producto> productos, LocalDateTime fecha) {
         return (int) productos.stream()
                 .filter(producto -> producto.getFechaPublicacion().equals(fecha))
                 .count();

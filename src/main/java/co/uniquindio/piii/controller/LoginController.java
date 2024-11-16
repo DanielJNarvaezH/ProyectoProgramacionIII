@@ -133,29 +133,6 @@ private void manejarOpcionesAdministrador() {
         }
     }
 }
-    /*private boolean validarCredenciales(String username, String password) {
-        String rutaArchivo = "registros.txt";
-        String linea;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
-            while ((linea = reader.readLine()) != null) {
-                String[] partes = linea.split("%%");
-                if (partes.length == 4) {
-                    String usuarioRegistrado = partes[1];
-                    String contrasenaRegistrada = partes[3];
-
-                    if (usuarioRegistrado.equals(username) && contrasenaRegistrada.equals(password)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo de registro: " + e.getMessage());
-        }
-
-        return false;
-    }*/
-
     private Vendedor validarCredenciales(String username, String password) { 
     String rutaArchivo = "registros.txt";
     String linea;
