@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import co.uniquindio.piii.App;
+import co.uniquindio.piii.model.UsuarioActivo;
 
 public class LoginController {
 
@@ -76,21 +77,26 @@ public class LoginController {
         }
     }
 
+    //Método para realizar el login de acuerdo al resgistro txt y obtener el UsuarioActivo
     public void handleLogin() {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+    String username = usernameField.getText();
+    String password = passwordField.getText();
 
-        if (validarCredenciales(username, password)) {
-            showAlert(AlertType.INFORMATION, messages.getString("login.success"),
-                    messages.getString("welcome") + ", " + username);
-            abrirMenuGeneral();
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-            currentStage.close();
-        } else {
-            showAlert(AlertType.ERROR, messages.getString("login.failed"),
-                    messages.getString("error.credentials"));
-        }
+    if (validarCredenciales(username, password)) {
+        // Guardar el usuario en la clase UsuarioActivo
+        UsuarioActivo.getInstance().setUsername(username);
+
+        showAlert(AlertType.INFORMATION, messages.getString("login.success"),
+                messages.getString("welcome") + ", " + username);
+        abrirMenuGeneral();
+
+        Stage currentStage = (Stage) loginButton.getScene().getWindow();
+        currentStage.close();
+    } else {
+        showAlert(AlertType.ERROR, messages.getString("login.failed"),
+                messages.getString("error.credentials"));
     }
+}
 
     private boolean validarCredenciales(String username, String password) {
         String rutaArchivo = "registros.txt";
@@ -147,6 +153,7 @@ public class LoginController {
     }
 
     private void cargarIdioma(String idioma) {
+        @SuppressWarnings("deprecation")
         Locale locale = new Locale(idioma);
         messages = ResourceBundle.getBundle("archivosProperties.messages", locale);
     }

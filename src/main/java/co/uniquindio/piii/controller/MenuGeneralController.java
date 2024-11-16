@@ -3,6 +3,8 @@ package co.uniquindio.piii.controller;
 import java.io.IOException;
 
 import co.uniquindio.piii.App;
+import co.uniquindio.piii.model.UsuarioActivo;
+import co.uniquindio.piii.model.Vendedor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
@@ -28,6 +31,11 @@ public class MenuGeneralController {
     
     @FXML
     private Button btnVendedor;
+
+    @FXML
+    private Label labelPrueba;
+
+    private Vendedor usuario = UsuarioActivo.getInstance();
 
     @FXML
     private void handleChatContacto() {
@@ -76,6 +84,8 @@ public class MenuGeneralController {
 
     @FXML
     void initialize() {
+        String nombreUsuario = UsuarioActivo.getInstance().getUsername();
+        labelPrueba.setText(nombreUsuario);
         assert btnChatContacto != null : "fx:id=\"btnChatContacto\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
         assert btnComentario != null : "fx:id=\"btnComentario\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
         assert btnProducto != null : "fx:id=\"btnProducto\" was not injected: check your FXML file 'MenuGeneral.fxml'.";

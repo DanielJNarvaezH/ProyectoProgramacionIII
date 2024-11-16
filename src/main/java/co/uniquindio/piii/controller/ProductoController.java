@@ -9,8 +9,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.uniquindio.piii.model.Tienda;
+import co.uniquindio.piii.model.UsuarioActivo;
+import co.uniquindio.piii.model.Vendedor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 public class ProductoController {
     @FXML
@@ -35,6 +40,12 @@ public class ProductoController {
     private Button btSeleccionarImagen;
     @FXML
     private Button btnAnadir;
+    @FXML
+    private Label labelTest;
+
+    private Tienda tienda = Tienda.getInstance(null);
+    private Vendedor vendedorActual = UsuarioActivo.getInstance(); 
+
     // Método para seleccionar y mostrar la imagen
     @FXML
     private void seleccionarImagen(ActionEvent event) {
@@ -55,6 +66,7 @@ public class ProductoController {
     }
     @FXML
     void initialize() {
+        labelTest.setText(vendedorActual.getNombre());
         assert cbVendedor != null : "fx:id=\"cbVendedor\" was not injected: check your FXML file 'Producto.fxml'.";
         assert txtDescripcion != null
                 : "fx:id=\"txtDescripcion\" was not injected: check your FXML file 'Producto.fxml'.";
