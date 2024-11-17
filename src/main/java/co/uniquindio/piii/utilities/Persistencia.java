@@ -168,7 +168,7 @@ public class Persistencia {
         return objetosXML;
     }
 
-    public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
+    /*public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
         List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);
         objetosExistentes.add(nuevoObjeto); // Agregar el nuevo objeto a la lista
         
@@ -177,6 +177,26 @@ public class Persistencia {
                 codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
             }
         }
+    }*/
+
+    public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
+        List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);
+        objetosExistentes.add(nuevoObjeto); // Agregar el nuevo objeto a la lista
+    
+        // Crear un nuevo hilo para realizar la serialización
+        Thread hiloSerializacion = new Thread(() -> {
+            try (XMLEncoder codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
+                for (Object objeto : objetosExistentes) {
+                    codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
+                }
+                System.out.println("Serialización completada en el hilo: " + Thread.currentThread().getName());
+            } catch (IOException e) {
+                System.err.println("Error al serializar el objeto: " + e.getMessage());
+            }
+        });
+    
+        // Iniciar el hilo
+        hiloSerializacion.start();
     }
 
 
