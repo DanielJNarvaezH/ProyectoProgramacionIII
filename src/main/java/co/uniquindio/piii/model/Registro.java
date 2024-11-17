@@ -2,11 +2,13 @@ package co.uniquindio.piii.model;
 
 import java.io.*;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 import co.uniquindio.piii.exceptions.EmailYaRegistradoException;
 
 public class Registro implements Serializable {
-    private static final String RUTA_ARCHIVO = "registros.txt";
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_REGISTRO_TXT = config.getString("rutaRegistrosTxt");
     
     public static boolean esUsuarioDuplicado(String nombreUsuario) {
         Set<String> usuarios = obtenerUsuariosYCorreos(1); // índice 1 para usuario
@@ -24,7 +26,7 @@ public class Registro implements Serializable {
             throw new EmailYaRegistradoException("El correo electrónico ya está registrado.");
         }
         
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA_ARCHIVO, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA_REGISTRO_TXT, true))) {
             writer.write(nombre + "%%" + nombreUsuario + "%%" + correo + "%%" + password+ "%%" + direccion + "%%" + id);
             writer.newLine();
             System.out.println("Datos guardados.");
@@ -34,7 +36,7 @@ public class Registro implements Serializable {
     }
     private static Set<String> obtenerUsuariosYCorreos(int indice) {
         Set<String> datos = new HashSet<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(RUTA_ARCHIVO))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(RUTA_REGISTRO_TXT))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] partes = linea.split("%%");
@@ -49,7 +51,7 @@ public class Registro implements Serializable {
         return datos;
     }
     public static void listarRegistros() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(RUTA_ARCHIVO))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(RUTA_REGISTRO_TXT))) {
             String linea;
             int contador = 1;
             System.out.println("Registros actuales:");
@@ -62,7 +64,7 @@ public class Registro implements Serializable {
     }
     
     public static void eliminarRegistro(int indice) {
-        File archivo = new File(RUTA_ARCHIVO);
+        File archivo = new File(RUTA_REGISTRO_TXT);
         File archivoTemporal = new File("registros_temp.txt");
         
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo));

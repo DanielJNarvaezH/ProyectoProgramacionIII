@@ -60,6 +60,9 @@ public class LoginController {
     @FXML
     private Button btnRegistrarse;
 
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_REGISTRO_TXT = config.getString("rutaRegistrosTxt");
+
     @FXML
     void IrVentanaRegistro(ActionEvent event) {
         try {
@@ -134,7 +137,7 @@ private void manejarOpcionesAdministrador() {
     }
 }
     private Vendedor validarCredenciales(String username, String password) { 
-    String rutaArchivo = "registros.txt";
+    String rutaArchivo = RUTA_REGISTRO_TXT;
     String linea;
 
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
