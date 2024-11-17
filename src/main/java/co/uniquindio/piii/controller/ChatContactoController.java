@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import co.uniquindio.piii.App;
 import javafx.collections.FXCollections;
@@ -26,7 +27,8 @@ public class ChatContactoController {
     @FXML
     private ListView<String> listViewUsuarios;
 
-    private final String RUTA_REGISTRO = "registros.txt";
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_REGISTRO_TXT = config.getString("rutaRegistrosTxt");
 
     @FXML
     public void initialize() {
@@ -37,7 +39,7 @@ public class ChatContactoController {
 
     private List<String> cargarUsuarios() {
         List<String> usuarios = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_REGISTRO))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_REGISTRO_TXT))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split("%%");
