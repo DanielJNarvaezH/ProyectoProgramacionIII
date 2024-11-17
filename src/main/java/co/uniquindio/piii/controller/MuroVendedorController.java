@@ -67,7 +67,7 @@ public class MuroVendedorController {
 
     @FXML
     void buscarVendedor(ActionEvent event) {
-        
+
     }
 
     @FXML
@@ -114,7 +114,8 @@ public class MuroVendedorController {
         for (Producto producto : productos) {
             // Crear un contenedor horizontal para la imagen, detalles y botones
             HBox productBox = new HBox(10);
-            productBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
+            productBox.setStyle(
+                    "-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
             productBox.setSpacing(10);
 
             // Crear ImageView
@@ -130,34 +131,33 @@ public class MuroVendedorController {
             textArea.setEditable(false);
             textArea.setWrapText(true);
             textArea.setText("Nombre: " + producto.getTitulo() + "\n" +
-                             "Código: " + producto.getCodigo() + "\n" +
-                             "Precio: $" + producto.getPrecio() + "\n" +
-                             "Descripción: " + producto.getDescripcion());
+                    "Código: " + producto.getCodigo() + "\n" +
+                    "Precio: $" + producto.getPrecio() + "\n" +
+                    "Descripción: " + producto.getDescripcion());
             HBox.setHgrow(textArea, Priority.ALWAYS);
 
             // Crear botones
             Button commentButton = new Button("Comentario");
             commentButton.setStyle(
-    "-fx-font-size: 16px; " + // Tamaño de la fuente
-    "-fx-padding: 10 30; " +  // Relleno interno (vertical y horizontal)
-    "-fx-min-width: 150px; " + // Ancho mínimo
-    "-fx-min-height: 25px; " + // Altura mínima
-    "-fx-text-fill: black; " + // Color del texto
-    "-fx-border-radius: 4; " + // Bordes redondeados
-    "-fx-background-radius: 4;" // Bordes del fondo
-);
+                    "-fx-font-size: 16px; " + // Tamaño de la fuente
+                            "-fx-padding: 10 30; " + // Relleno interno (vertical y horizontal)
+                            "-fx-min-width: 150px; " + // Ancho mínimo
+                            "-fx-min-height: 25px; " + // Altura mínima
+                            "-fx-text-fill: black; " + // Color del texto
+                            "-fx-border-radius: 4; " + // Bordes redondeados
+                            "-fx-background-radius: 4;" // Bordes del fondo
+            );
             commentButton.setOnAction(e -> handleComment(producto));
 
             Button likeButton = new Button("Me gusta");
             likeButton.setStyle(
-    "-fx-font-size: 16px; " +
-    "-fx-padding: 10 30; " +
-    "-fx-min-width: 150px; " +
-    "-fx-min-height: 25px; " +
-    "-fx-text-fill: black; " +
-    "-fx-border-radius: 4; " +
-    "-fx-background-radius: 4;"
-);
+                    "-fx-font-size: 16px; " +
+                            "-fx-padding: 10 30; " +
+                            "-fx-min-width: 150px; " +
+                            "-fx-min-height: 25px; " +
+                            "-fx-text-fill: black; " +
+                            "-fx-border-radius: 4; " +
+                            "-fx-background-radius: 4;");
             likeButton.setOnAction(e -> handleLike(producto));
 
             // Agregar los elementos al HBox
@@ -185,13 +185,19 @@ public class MuroVendedorController {
         labelVendedor.setText(vendedor.getNombre());
         ArrayList<Producto> productos = vendedor.getProductos();
         mostrarProductos(productos);
-        assert labelVendedor != null : "fx:id=\"labelVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
-        assert txtVendedor != null : "fx:id=\"txtVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
-        assert btnBuscarVendedor != null : "fx:id=\"btnBuscarVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
-        assert txtProducto != null : "fx:id=\"txtProducto\" was not injected: check your FXML file 'muroProductos.fxml'.";
+        assert labelVendedor != null
+                : "fx:id=\"labelVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
+        assert txtVendedor != null
+                : "fx:id=\"txtVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
+        assert btnBuscarVendedor != null
+                : "fx:id=\"btnBuscarVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
+        assert txtProducto != null
+                : "fx:id=\"txtProducto\" was not injected: check your FXML file 'muroProductos.fxml'.";
         assert labelLikes != null : "fx:id=\"labelLikes\" was not injected: check your FXML file 'muroProductos.fxml'.";
-        assert labelFechaHora != null : "fx:id=\"labelFechaHora\" was not injected: check your FXML file 'muroProductos.fxml'.";
-        assert btnRegresar != null : "fx:id=\"btnBuscarVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
+        assert labelFechaHora != null
+                : "fx:id=\"labelFechaHora\" was not injected: check your FXML file 'muroProductos.fxml'.";
+        assert btnRegresar != null
+                : "fx:id=\"btnBuscarVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
     }
 
     private void showAlert(AlertType alertType, String title, String message) {
@@ -202,4 +208,3 @@ public class MuroVendedorController {
         alert.showAndWait();
     }
 }
-
