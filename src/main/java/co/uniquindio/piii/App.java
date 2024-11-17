@@ -30,10 +30,15 @@ public class App extends Application {
      */
     public static void inicializarCliente(String usuario) throws IOException {
         if (cliente == null) {
+            System.out.println("Inicializando el cliente con el usuario: " + usuario); // Log para depurar
             cliente = new Cliente(usuario);
             cliente.conectar();
+            System.out.println("Cliente conectado al servidor."); // Log para confirmar conexión
+        } else {
+            System.out.println("El cliente ya está inicializado.");
         }
     }
+    
 
     /**
      * Obtiene la instancia actual del cliente.
@@ -92,19 +97,25 @@ public class App extends Application {
      * @throws IOException si ocurre un error al cargar el FXML
      */
     public static void mostrarVentanaChatContacto(Cliente cliente) throws IOException {
+        if (cliente == null) {
+            throw new IllegalStateException("El cliente no está inicializado");
+        }
+        System.out.println("Abriendo la ventana de chat para el cliente: ");
+    
         FXMLLoader loader = new FXMLLoader(App.class.getResource("chatcontacto.fxml"));
         Parent root = loader.load();
-
-        // Obtén el controlador y configura la instancia del cliente
+    
+        // Obtén el controlador del FXML
         ChatContactoController controller = loader.getController();
+        // Configura el cliente
         controller.setCliente(cliente);
-
+    
         Stage stage = new Stage();
         stage.setTitle("Chat de Contacto");
         stage.setScene(new Scene(root));
         stage.show();
     }
-
+    
     public static void main(String[] args) {
         launch();
     }

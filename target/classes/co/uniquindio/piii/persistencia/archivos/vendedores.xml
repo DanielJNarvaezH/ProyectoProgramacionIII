@@ -58,4 +58,33 @@
    <string>Admin</string>
   </void>
  </object>
+ <object class="co.uniquindio.piii.model.Vendedor">
+  <void property="contactos">
+   <object class="java.util.ArrayList"/>
+  </void>
+  <void property="contrasena">
+   <string>3</string>
+  </void>
+  <void property="direccion">
+   <string>3</string>
+  </void>
+  <void property="email">
+   <string>3</string>
+  </void>
+  <void property="id">
+   <string>3</string>
+  </void>
+  <void property="nombre">
+   <string>3</string>
+  </void>
+  <void property="productos">
+   <object class="java.util.ArrayList"/>
+  </void>
+  <void property="publicaciones">
+   <object class="java.util.ArrayList"/>
+  </void>
+  <void property="usuario">
+   <string>3</string>
+  </void>
+ </object>
 </java>

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="co.uniquindio.piii.controller.SolicitudController">
-    <Label fx:id="labelSolicitud" />
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.VentanaContactoController">
+    <Label text="¿Aceptar solicitud de contacto?" />
     <Button text="Aceptar" onAction="#handleAceptar" />
     <Button text="Rechazar" onAction="#handleRechazar" />
 </VBox>
