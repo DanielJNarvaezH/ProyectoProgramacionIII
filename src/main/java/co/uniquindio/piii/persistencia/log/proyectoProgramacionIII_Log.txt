@@ -28,3 +28,5 @@ Oct 30, 2024 10:34:44 AM co.uniquindio.piii.utilities.EjemploLog logInfo
 INFO: primera prueba del servidor
 Oct 30, 2024 10:34:44 AM co.uniquindio.piii.utilities.EjemploLog logInfo
 INFO: segunda prueba del servidor
+Nov 16, 2024 11:00:03 PM co.uniquindio.piii.utilities.EjemploLog logInfo
+INFO: Primer prueba de creación reporte

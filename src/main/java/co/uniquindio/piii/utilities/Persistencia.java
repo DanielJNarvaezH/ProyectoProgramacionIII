@@ -23,6 +23,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.Calendar;
 
 import co.uniquindio.piii.model.Estadistica;
+import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Vendedor;
 
 
@@ -127,27 +128,7 @@ public class Persistencia {
         String nombreArchivoBackup = nombreArchivo + "_" + dia + mes + anio + "_" + hora + "_" + minuto + "_" + segundo;
         return archivoOriginal.getParent() + File.separator + "backup" +  File.separator + nombreArchivoBackup;
     }
-    /* 
-    public void guardarHabitacionesTXT(ArrayList<Habitacion> habitaciones) throws IOException {
-        writer = new BufferedWriter(new FileWriter("habitaciones.txt"));
-        String personajeString;
-        for (Personaje personaje: personajes){
-            personajeString = habitaciones.getNumero() +"%%" +personaje.getPais() +"%%" + personaje.getEdad() + "%%" + personaje.getCodigoPelicula();
-            writer.write(personajeString);
-            writer.newLine();
-            writer.flush();
-        }
-        writer.close();
-    }
-    public void guardarSeriesTXT(ArrayList<Habitacion> habitaciones) throws IOException{
-        writer = new BufferedWriter(new FileWriter("habitaciones.txt"));
-        String serieString;
-        for (Serie serie: series){
-            serieString = serie.getTitulo() +"%%" +serie.getGenero() +"%%" + serie.getAñoInicio() + "%%" + serie.getCodigo() + "%%"  + serie.getPersonajes();
-            writer.write(serieString);
-            writer.newLine();
-            writer.flush();
-        }*/
+
 
 
         public static void guardarEstadisticasTXT(ArrayList<Estadistica> estadisticas)  {
@@ -202,6 +183,54 @@ public class Persistencia {
             for (Object objeto : objetosExistentes) {
                 codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
             }
+        }
+    }
+
+
+    public static void generarReporte(ArrayList<Vendedor> vendedores) {
+        StringBuilder reporte = new StringBuilder("-----Reporte de vendedores y productos-----\n");
+
+        for (Vendedor vendedor : vendedores) {
+            reporte.append(vendedor.getNombre()).append(" - ").append(vendedor.getUsuario()).append("\n");
+
+            // Productos publicados
+            List<Producto> productosPublicados = vendedor.getProductos();
+            if (productosPublicados.isEmpty()) {
+                reporte.append("-sin productos publicados-\n");
+            } else {
+                reporte.append("Productos publicados:\n");
+                for (int i = 0; i < productosPublicados.size(); i++) {
+                    Producto producto = productosPublicados.get(i);
+                    reporte.append(i + 1).append("- ")
+                            .append(producto.getTitulo()).append(", $")
+                            .append(producto.getPrecio()).append("\n");
+                }
+            }
+
+            // Productos vendidos
+            List<Producto> productosVendidos = vendedor.getProductosVendidos(); // Asumimos que existe este método.
+            if (productosVendidos == null || productosVendidos.isEmpty()) {
+                reporte.append("-sin productos vendidos-\n");
+            } else {
+                reporte.append("Productos vendidos:\n");
+                for (int i = 0; i < productosVendidos.size(); i++) {
+                    Producto producto = productosVendidos.get(i);
+                    reporte.append(i + 1).append("- ")
+                            .append(producto.getTitulo()).append(", $")
+                            .append(producto.getPrecio()).append("\n");
+                }
+            }
+            reporte.append("\n");
+        }
+
+        // Mostrar en consola
+        System.out.println(reporte);
+
+        // Guardar en archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(config.getString("rutaEstadisticas"), true))) {
+            writer.write(reporte.toString());
+        } catch (IOException e) {
+            System.err.println("Error al guardar el reporte en archivo: " + e.getMessage());
         }
     }
 }
