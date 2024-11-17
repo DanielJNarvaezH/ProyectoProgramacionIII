@@ -9,4 +9,5 @@
     <TextArea fx:id="textAreaChat" editable="false" />
     <TextField fx:id="textFieldMensaje" promptText="Escribe un mensaje..." />
     <Button fx:id="btnEnviar" text="Enviar" onAction="#enviarMensaje" />
+    <Button fx:id="btnAbrirSegundoChat" text="Abrir Segundo Chat" onAction="#abrirSegundoChat" />
 </VBox>

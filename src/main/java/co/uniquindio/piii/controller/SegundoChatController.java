@@ -6,12 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-public class ChatController {
+public class SegundoChatController {
 
     @FXML
     private TextArea textAreaChat;
@@ -24,6 +20,7 @@ public class ChatController {
 
     private Cliente cliente;
     private String usuarioDestino;
+    private TextArea textAreaChatCompartido;
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
@@ -34,11 +31,19 @@ public class ChatController {
         this.usuarioDestino = usuarioDestino;
     }
 
+    public void setTextAreaChatCompartido(TextArea textAreaChatCompartido) {
+        this.textAreaChatCompartido = textAreaChatCompartido;
+    }
+
     private void iniciarEscuchaMensajes() {
         // Inicia un nuevo hilo para escuchar mensajes
         new Thread(() -> cliente.escucharMensajes(mensaje -> {
             // Actualiza el área de texto del chat con los mensajes entrantes
             Platform.runLater(() -> textAreaChat.appendText(mensaje + "\n"));
+            // También se muestra en el chat compartido
+            if (textAreaChatCompartido != null) {
+                Platform.runLater(() -> textAreaChatCompartido.appendText(mensaje + "\n"));
+            }
         })).start();
     }
 
@@ -49,6 +54,10 @@ public class ChatController {
             try {
                 cliente.enviarMensaje(usuarioDestino, mensaje); // Método para enviar mensajes al servidor
                 textAreaChat.appendText("Tú: " + mensaje + "\n");
+                // También se muestra en el chat compartido
+                if (textAreaChatCompartido != null) {
+                    Platform.runLater(() -> textAreaChatCompartido.appendText("Tú: " + mensaje + "\n"));
+                }
                 textFieldMensaje.clear();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -56,26 +65,5 @@ public class ChatController {
             }
         }
     }
-
-    @FXML
-    private void abrirSegundoChat() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/piii/segundoChat.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-    
-            SegundoChatController segundoChatController = loader.getController();
-            segundoChatController.setCliente(cliente);
-            segundoChatController.setUsuarioDestino(usuarioDestino);
-            segundoChatController.setTextAreaChatCompartido(textAreaChat); // Compartir el área de texto
-    
-            stage.setTitle("Segundo Chat");
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
 }
+
