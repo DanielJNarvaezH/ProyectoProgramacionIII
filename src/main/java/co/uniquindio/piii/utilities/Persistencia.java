@@ -11,19 +11,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Writer;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import java.util.Calendar;
-
 import co.uniquindio.piii.model.Estadistica;
-import co.uniquindio.piii.model.Vendedor;
 
 
 

@@ -23,8 +23,6 @@ public class MenuGeneralController {
     @FXML
     private Button btnChatContacto;
     
-    @FXML
-    private Button btnComentario;
     
     @FXML
     private Button btnProducto;
@@ -75,7 +73,7 @@ public class MenuGeneralController {
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Registro.");
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de productos.");
         }
     }
 
@@ -83,7 +81,7 @@ public class MenuGeneralController {
     private void muroVendedor(MouseEvent event) {
         try {
             // Cargar la ventana del muro de productos
-            Parent root = FXMLLoader.load(App.class.getResource("muro.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource("muroProductos.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Muro vendedor");
             stage.setScene(new Scene(root));
@@ -111,7 +109,6 @@ public class MenuGeneralController {
         String nombreUsuario = UsuarioActivo.getInstance().getVendedor().getNombre();
         labelPrueba.setText(nombreUsuario);
         assert btnChatContacto != null : "fx:id=\"btnChatContacto\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
-        assert btnComentario != null : "fx:id=\"btnComentario\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
         assert btnProducto != null : "fx:id=\"btnProducto\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
         assert btnMuro != null : "fx:id=\"btnMuro\" was not injected: check your FXML file 'MenuGeneral.fxml'.";
 

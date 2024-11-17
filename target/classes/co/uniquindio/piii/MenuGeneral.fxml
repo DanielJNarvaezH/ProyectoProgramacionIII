@@ -24,7 +24,6 @@
    </HBox>
     
     <Button fx:id="btnChatContacto" onAction="#handleChatContacto" prefHeight="31.0" prefWidth="157.0" text="Chat de Contacto" />
-    <Button fx:id="btnComentario" onAction="#handleComentario" text="Comentario" />
     <Button fx:id="btnProducto" onAction="#handleProducto" text="Agregar Producto" />
     <Button fx:id="btnMuro" onMouseClicked="#muroVendedor" text="Muro" />
 
