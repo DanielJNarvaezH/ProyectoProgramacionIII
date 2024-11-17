@@ -77,43 +77,59 @@ public class ChatContactoController {
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "El cliente no está inicializado. Por favor, inicia sesión.");
             return;
         }
-
+    
         String usuarioSeleccionado = listViewUsuarios.getSelectionModel().getSelectedItem();
-
+    
         if (usuarioSeleccionado == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Selecciona un usuario", "Por favor, selecciona un usuario para iniciar contacto.");
             return;
         }
-
+    
         try {
-            // Envía la solicitud de contacto al servidor
-            cliente.enviarMensaje(usuarioSeleccionado, "Solicitud de contacto");
-
-            // Notifica al usuario que la solicitud fue enviada
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Solicitud enviada", "La solicitud de contacto fue enviada a " + usuarioSeleccionado);
-
-            // Ahora abrir la ventana de contacto para aceptar o rechazar
-            abrirVentanaContacto();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo enviar la solicitud de contacto.");
-        }
-    }
-
-    private void abrirVentanaContacto() {
-        try {
-            // Cargar la nueva ventana de contacto
-            Parent root = FXMLLoader.load(getClass().getResource("/co/uniquindio/piii/ventanaContacto.fxml"));
+            // Crear y mostrar la ventana de solicitud
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/piii/SolicitudContacto.fxml"));
+            Parent root = loader.load();
+            SolicitudContactoController controller = loader.getController();
+    
+            // Configurar el mensaje y las acciones
+            controller.setMensaje("¿Deseas aceptar la solicitud de contacto con " + usuarioSeleccionado + "?");
+            controller.setOnAceptar(() -> iniciarChat(usuarioSeleccionado));
+            controller.setOnRechazar(() -> System.out.println("Solicitud rechazada por " + usuarioSeleccionado));
+    
+            // Mostrar la ventana
             Stage stage = new Stage();
             stage.setTitle("Solicitud de Contacto");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de contacto.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de solicitud de contacto.");
         }
     }
+    
+    private void iniciarChat(String usuarioSeleccionado) {
+        System.out.println("Iniciando chat con " + usuarioSeleccionado);
+        abrirVentanaChat(usuarioSeleccionado);
+    }
+    
+    private void abrirVentanaChat(String usuarioSeleccionado) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/piii/Chat.fxml"));
+            Parent root = loader.load();
+            ChatController controller = loader.getController();
+            controller.setCliente(cliente);
+            controller.setUsuarioDestino(usuarioSeleccionado);
+    
+            Stage stage = new Stage();
+            stage.setTitle("Chat con " + usuarioSeleccionado);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana del chat.");
+        }
+    }
+    
 
 
     @FXML
