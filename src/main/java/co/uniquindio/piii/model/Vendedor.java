@@ -3,6 +3,7 @@ package co.uniquindio.piii.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.Month;
 
 import co.uniquindio.piii.exceptions.ContactoYaExistenteException;
 import co.uniquindio.piii.exceptions.LimiteContactosExcedidoException;
@@ -174,5 +175,17 @@ public class Vendedor implements Serializable {
 
     public ArrayList<Producto> getProductosVendidos() {
         return productosVendidos;
+    }
+
+    public ArrayList<Producto> getProductosVendidosPorMes(Month mesSeleccionado) {
+        ArrayList<Producto> productosDelMes = new ArrayList<>();
+    
+        for (Producto producto : getProductosVendidos()) {
+            if (producto.getFechaPublicacion().getMonth() == mesSeleccionado) {
+                productosDelMes.add(producto);
+            }
+        }
+    
+        return productosDelMes;
     }
 }

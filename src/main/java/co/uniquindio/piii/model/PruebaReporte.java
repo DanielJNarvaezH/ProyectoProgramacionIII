@@ -1,5 +1,6 @@
 package co.uniquindio.piii.model;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 
 import co.uniquindio.piii.utilities.*;
@@ -37,6 +38,9 @@ public class PruebaReporte {
 
         // Generar reporte
         Persistencia.generarReporte(vendedores);
+        // Mostrar ventas del mes seleccionado
+        Month mesSeleccionado = Month.NOVEMBER; // Por ejemplo, noviembre
+        Estadistica.mostrarVentasPorMes(vendedores, mesSeleccionado);
 
 
     }

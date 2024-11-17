@@ -14,3 +14,15 @@ Juan - 345
 -sin productos publicados-
 -sin productos vendidos-
 
+-----Reporte de vendedores y productos-----
+Pedro - 123
+Productos publicados:
+1- Iphone 11, $1000000
+2- Guitarra, $200000
+Productos vendidos:
+1- Portatil Dell, $2000000
+
+Juan - 345
+-sin productos publicados-
+-sin productos vendidos-
+
