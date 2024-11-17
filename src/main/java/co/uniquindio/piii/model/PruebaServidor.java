@@ -26,10 +26,9 @@ public class PruebaServidor {
         listaEstadisticas.add(estadistica3);
         listaEstadisticas.add(estadistica4);
 
-  
-
-
         Persistencia.guardarEstadisticasTXT(listaEstadisticas);
+
+        
 
     }
 

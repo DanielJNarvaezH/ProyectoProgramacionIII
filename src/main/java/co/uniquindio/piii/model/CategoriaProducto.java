@@ -5,6 +5,7 @@ public enum CategoriaProducto {
     TECNOLOGIA,
     HOGAR,
     SALUD,
-    ROPA
+    ROPA,
+    MUSICA
 
 }
