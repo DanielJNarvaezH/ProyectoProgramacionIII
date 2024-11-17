@@ -79,32 +79,42 @@ public class LoginController {
         }
     }
 
-public void handleLogin() {
-    String username = usernameField.getText();
-    String password = passwordField.getText();
-
-    Vendedor vendedorLogueado = validarCredenciales(username, password);
-
-    if (vendedorLogueado != null) {
-        // Guardar el usuario en la clase UsuarioActivo
-        UsuarioActivo.getInstance().setVendedor(vendedorLogueado);
-        if (vendedorLogueado.getUsuario().equals("Admin") && vendedorLogueado.getContrasena().equals("12345")) {
-            System.out.println("Bienvenido, Administrador.");
-            manejarOpcionesAdministrador();
-        }else{
-
-        showAlert(AlertType.INFORMATION, messages.getString("login.success"),
-                messages.getString("welcome") + ", " + username);
-        abrirMenuGeneral();
+    public void handleLogin() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+    
+        Vendedor vendedorLogueado = validarCredenciales(username, password);
+    
+        if (vendedorLogueado != null) {
+            // Guardar el usuario en la clase UsuarioActivo
+            UsuarioActivo.getInstance().setVendedor(vendedorLogueado);
+    
+            try {
+                // Inicializar el cliente con el usuario logueado
+                App.inicializarCliente(vendedorLogueado.getUsuario());
+    
+                if (vendedorLogueado.getUsuario().equals("Admin") && vendedorLogueado.getContrasena().equals("12345")) {
+                    System.out.println("Bienvenido, Administrador.");
+                    manejarOpcionesAdministrador();
+                } else {
+                    showAlert(AlertType.INFORMATION, messages.getString("login.success"),
+                              messages.getString("welcome") + ", " + username);
+                    abrirMenuGeneral();
+                }
+    
+                // Cerrar la ventana actual
+                Stage currentStage = (Stage) loginButton.getScene().getWindow();
+                currentStage.close();
+            } catch (IOException e) {
+                showAlert(AlertType.ERROR, "Error", "No se pudo inicializar el cliente.");
+                e.printStackTrace();
+            }
+        } else {
+            showAlert(AlertType.ERROR, messages.getString("login.failed"),
+                      messages.getString("error.credentials"));
         }
-
-        Stage currentStage = (Stage) loginButton.getScene().getWindow();
-        currentStage.close();
-    } else {
-        showAlert(AlertType.ERROR, messages.getString("login.failed"),
-                  messages.getString("error.credentials"));
     }
-}
+    
 
 private void manejarOpcionesAdministrador() {
     boolean salir = false;

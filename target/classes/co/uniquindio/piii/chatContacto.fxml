@@ -6,7 +6,9 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="co.uniquindio.piii.controller.ChatContactoController">
-    <ListView fx:id="listViewUsuarios" />
+      fx:controller="co.uniquindio.piii.controller.ChatContactoController"
+      spacing="10" alignment="CENTER">
+    <ListView fx:id="listViewUsuarios" prefHeight="200.0" prefWidth="300.0" />
+    <Button text="Iniciar contacto" onAction="#handleIniciarContacto" />
     <Button text="Volver" onAction="#handleVolver" />
 </VBox>
