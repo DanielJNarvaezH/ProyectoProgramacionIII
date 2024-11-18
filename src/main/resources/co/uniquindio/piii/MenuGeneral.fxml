@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="517.0" prefWidth="916.0" spacing="15" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.MenuGeneralController">
+<VBox alignment="CENTER" prefHeight="517.0" prefWidth="916.0" spacing="15" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.MenuGeneralController">
    <HBox prefHeight="100.0" prefWidth="200.0" translateY="-100.0">
       <children>
          <Label prefHeight="44.0" prefWidth="120.0" text="Bienvenido">
@@ -26,6 +26,7 @@
     <Button fx:id="btnChatContacto" onAction="#handleChatContacto" prefHeight="31.0" prefWidth="157.0" text="Chat de Contacto" />
     <Button fx:id="btnProducto" onAction="#handleProducto" text="Agregar Producto" />
     <Button fx:id="btnMuro" onMouseClicked="#muroVendedor" text="Muro" />
+   <Button fx:id="btnMostrarVentasTotalesMes" mnemonicParsing="false" onAction="#mostrarVentasTotales" text="MostrarVentasTotalesMes" />
 
     <VBox.margin>
         <Insets top="20" />
