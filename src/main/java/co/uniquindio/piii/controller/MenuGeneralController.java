@@ -24,6 +24,8 @@ public class MenuGeneralController {
     @FXML
     private Button btnChatContacto;
     
+    @FXML
+    private Button btnMostrarVentasTotalesMes;
     
     @FXML
     private Button btnProducto;
@@ -106,6 +108,12 @@ public class MenuGeneralController {
         alert.setContentText(message);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
+    }
+
+    
+    @FXML
+    void mostrarVentasTotales(ActionEvent event) {
+
     }
 
     @FXML
