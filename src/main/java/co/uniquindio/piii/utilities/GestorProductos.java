@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 //Clase para manejar la serialización de los productos y actualizar los archivos segun su estado 
 
@@ -121,8 +122,8 @@ public class GestorProductos {
         producto1.setDescripcion("Descripción del producto de prueba");
         producto1.setCategoria(CategoriaProducto.ROPA);
         producto1.setEstadoProducto(EstadoProducto.PUBLICADO);
-        producto1.setFechaPublicacion(LocalDate.now());
-        producto1.setVendedor(new Vendedor("Mario", null, null, null));
+        producto1.setFechaPublicacion(LocalDateTime.now());
+        producto1.setVendedor(new Vendedor("Mario", null, null, null, null, null));
 
         tienda.agregarProducto(producto1);
 
@@ -131,7 +132,7 @@ public class GestorProductos {
         producto2.setDescripcion("Hechos en madera");
         producto2.setCategoria(CategoriaProducto.HOGAR);
         producto2.setEstadoProducto(EstadoProducto.PUBLICADO);
-        producto2.setFechaPublicacion(LocalDate.now());
+        producto2.setFechaPublicacion(LocalDateTime.now());
 
         tienda.agregarProducto(producto2);
 

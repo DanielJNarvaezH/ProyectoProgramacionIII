@@ -5,6 +5,7 @@ import java.beans.XMLEncoder;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,16 +16,21 @@ import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import java.util.Calendar;
 
 import co.uniquindio.piii.model.Estadistica;
+import co.uniquindio.piii.model.Vendedor;
 
 
 
 
 public class Persistencia {
 
-    static ResourceBundle config = ResourceBundle.getBundle("archivosProperties/config");
+    private static ResourceBundle config = ResourceBundle.getBundle("archivosProperties/config");
     private static Persistencia instance;
     public static Persistencia getInstance() {
         if (instance == null) {
@@ -33,10 +39,10 @@ public class Persistencia {
         return instance;
     }
 
-    public static void serializarObjetoBinario(String nombre, Object objeto) throws IOException{
+    public static void serializarObjetoBinario(String rutaArchivo, Object objeto) throws IOException{
         ObjectOutputStream salida;
 
-        salida = new  ObjectOutputStream(new FileOutputStream(nombre));
+        salida = new  ObjectOutputStream(new FileOutputStream(rutaArchivo));
         salida.writeObject(objeto);
         salida.close();
     }
@@ -52,23 +58,26 @@ public class Persistencia {
         return objeto;
     }
 
-    public static void serializarObjetoXML(String rutaArchivo, Object objeto) throws IOException{
-
-        XMLEncoder codificador;
-
-        codificador = new XMLEncoder( new FileOutputStream(rutaArchivo));
-        codificador.writeObject(objeto);
-        codificador.close();
+    public static void serializarObjetoXML(String rutaArchivo, Object objeto) throws IOException {
+        try (XMLEncoder codificador = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
+            codificador.writeObject(objeto);
+            codificador.flush();
+            System.out.println("Objeto serializado correctamente en XML: " + rutaArchivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al serializar el objeto en XML.");
+        }
     }
+    
 
-    public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+    /*public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         XMLDecoder decodificadorXML;
         Object objetoXML;
         decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
         objetoXML = decodificadorXML.readObject();
         decodificadorXML.close();
         return objetoXML;
-    }
+    }*/
 
     public static Object deserializarObjetoXML (String rutaArchivo) throws IOException{
         XMLDecoder decodificador;
@@ -164,6 +173,35 @@ public class Persistencia {
                 System.out.println("Error al guardar el archivo: " + e.getMessage());
             }
         }
-    
+    //-------------------------------------------------------------------------------
+        public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+        List<Object> objetosXML = new ArrayList<>();
+        
+        try (XMLDecoder decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo))) {
+            // Leer todos los objetos del archivo XML
+            while (true) {
+                try {
+                    Object objetoXML = decodificadorXML.readObject();
+                    objetosXML.add(objetoXML);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break; // Fin del archivo
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado, se creará uno nuevo al guardar.");
+        }
+        
+        return objetosXML;
+    }
 
+    public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
+        List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);
+        objetosExistentes.add(nuevoObjeto); // Agregar el nuevo objeto a la lista
+        
+        try (XMLEncoder codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
+            for (Object objeto : objetosExistentes) {
+                codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
+            }
+        }
+    }
 }

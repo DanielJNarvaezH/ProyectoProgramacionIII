@@ -1,33 +1,38 @@
 package co.uniquindio.piii.model;
 
-import java.io.File;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import javafx.scene.image.Image;
 
 @XStreamAlias("producto")
 public class Producto implements Serializable {
 
     private String titulo;
     private String descripcion;
-    private LocalDate fechaPublicacion;
+    private String codigo;
+    private LocalDateTime fechaPublicacion;
     private EstadoProducto estadoProducto;
     private CategoriaProducto categoria;
+    private int precio;
     private Vendedor vendedor;
-    private File imagen;
+    private Image imagen;
 
     // Constructor vacío para la serialización
     public Producto() {
     }
 
     // Constructor principal
-    public Producto(String titulo, String descripcion, LocalDate fechaPublicacion, EstadoProducto estadoProducto, 
-                    CategoriaProducto categoria, Vendedor vendedor, File imagen) {
+    public Producto(String titulo, String descripcion,String codigo, LocalDateTime fechaPublicacion, EstadoProducto estadoProducto, 
+                    CategoriaProducto categoria, int precio, Vendedor vendedor, Image imagen) {
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.codigo = codigo;
         this.fechaPublicacion = fechaPublicacion;
         this.estadoProducto = estadoProducto;
         this.categoria = categoria;
+        this.precio = precio;
         this.vendedor = vendedor;
         this.imagen = imagen;
     }
@@ -49,11 +54,27 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaPublicacion() {
+    public String getCodigo() {
+        return titulo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public LocalDateTime getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+    public void setFechaPublicacion(LocalDateTime fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 
@@ -81,11 +102,11 @@ public class Producto implements Serializable {
         this.vendedor = vendedor;
     }
 
-    public File getImagen() {
+    public Image getImagen() {
         return imagen;
     }
 
-    public void setImagen(File imagen) {
+    public void setImagen(Image imagen) {
         this.imagen = imagen;
     }
 
@@ -99,6 +120,7 @@ public class Producto implements Serializable {
         return "Producto{" +
                 "titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", precio=" + codigo +
                 ", fechaPublicacion=" + fechaPublicacion +
                 ", estadoProducto=" + estadoProducto +
                 ", categoria=" + categoria +

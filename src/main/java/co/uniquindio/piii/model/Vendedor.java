@@ -1,8 +1,6 @@
 package co.uniquindio.piii.model;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import co.uniquindio.piii.exceptions.ContactoYaExistenteException;
 import co.uniquindio.piii.exceptions.LimiteContactosExcedidoException;
 
@@ -15,18 +13,24 @@ public class Vendedor implements Serializable {
     private String usuario;
     private String contrasena;
     private String email;
+    private String direccion;
+    private String id;
     private ArrayList<Contacto> solicitudesPendientes;
     private ArrayList<Producto> productos;
     private ArrayList<Publicacion> publicaciones;
     private ArrayList<Vendedor> contactos;
 
-    
+    public Vendedor(){
+        
+    }
 
-    public Vendedor(String nombre, String usuario, String contrasena, String email) {
+    public Vendedor(String nombre, String usuario, String contrasena, String email, String direccion, String id) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.email = email;
+        this.direccion = direccion;
+        this.id = id;
         this.productos = new ArrayList<>();
         this.contactos = new ArrayList<>();
         this.publicaciones = new ArrayList<>();
@@ -126,7 +130,7 @@ public class Vendedor implements Serializable {
     }
 
     public void enviarSolicitudContacto(Vendedor destinatario) {
-        Contacto solicitud = new Contacto(this.getNombre(), this.getUsuario(), this.getContrasena(), this.getEmail(), LocalDate.now());
+        Contacto solicitud = new Contacto(this.getNombre(), this.getUsuario(), this.getContrasena(), this.getEmail(), this.getDireccion(), this.getId() ,LocalDate.now());
         destinatario.getSolicitudesPendientes().add(solicitud);
     }
     
@@ -138,6 +142,26 @@ public class Vendedor implements Serializable {
     
     public void rechazarSolicitudContacto(Contacto solicitud) {
         this.solicitudesPendientes.remove(solicitud);
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSolicitudesPendientes(ArrayList<Contacto> solicitudesPendientes) {
+        this.solicitudesPendientes = solicitudesPendientes;
     }
 
 
