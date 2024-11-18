@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import co.uniquindio.piii.App;
 import co.uniquindio.piii.model.UsuarioActivo;
+import co.uniquindio.piii.utilities.EjemploLog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +42,7 @@ public class MenuGeneralController {
             stage.setTitle("Chat de Contacto");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ " accedió a la escena de chat desde el Menu General");
             
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -67,6 +69,7 @@ public class MenuGeneralController {
             stage.setTitle("Productos vendedor");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ " accedió a la escena de producto desde el Menu General");
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -86,6 +89,7 @@ public class MenuGeneralController {
             stage.setTitle("Muro vendedor");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ "accedió a la escena del muro desde el Menu General");
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -25,6 +25,7 @@ import co.uniquindio.piii.App;
 import co.uniquindio.piii.model.Registro;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.EjemploLog;
 
 public class LoginController {
 
@@ -72,6 +73,7 @@ public class LoginController {
             stage.setTitle("Registro Usuario");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario fue a la ventana de registro");
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -93,6 +95,7 @@ public void handleLogin() {
         UsuarioActivo.getInstance().setVendedor(vendedorLogueado);
         if (vendedorLogueado.getUsuario().equals("Admin") && vendedorLogueado.getContrasena().equals("12345")) {
             System.out.println("Bienvenido, Administrador.");
+            EjemploLog.logInfo("El usuario inició con credenciales de Administrador");
             manejarOpcionesAdministrador();
         }else{
 
@@ -103,6 +106,7 @@ public void handleLogin() {
 
         Stage currentStage = (Stage) loginButton.getScene().getWindow();
         currentStage.close();
+        EjemploLog.logInfo("El usuario" + vendedorLogueado.getNombre()+ "se logueo exitosamente");
     } else {
         showAlert(AlertType.ERROR, messages.getString("login.failed"),
                   messages.getString("error.credentials"));
@@ -182,6 +186,7 @@ private void manejarOpcionesAdministrador() {
             stage.setTitle("Menú General");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ "accedió a la ventana del Menu General");
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(AlertType.ERROR, "Error", "No se pudo abrir el Menú General.");

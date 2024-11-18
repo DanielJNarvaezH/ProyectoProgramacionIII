@@ -22,6 +22,7 @@ import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Tienda;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.EjemploLog;
 import co.uniquindio.piii.utilities.Persistencia;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -83,6 +84,7 @@ void regresarVentana(MouseEvent event) {
             stage.setTitle("Menu General");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ "cambió de escena de producto hacia el Menu General");
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -125,6 +127,7 @@ void agregarProducto(MouseEvent event) throws IOException {
         //Arreglar método, para que se sobreescriba
         Persistencia.serializarObjetoBinario(RUTA_PRODUCTOS_BIN, nuevoProducto);
         System.out.println("Serialización registro de producto completada");
+        EjemploLog.logInfo("El usuario"+ UsuarioActivo.getInstance().getVendedor().getNombre()+ " creó un producto correctamente y se almacenó en el sistema");
 
         showAlert(AlertType.INFORMATION, "Registro exitoso", "Producto registrado correctamente.");
         limpiarCampos();
