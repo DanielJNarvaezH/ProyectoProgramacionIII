@@ -12,13 +12,16 @@ import co.uniquindio.piii.model.Tienda;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
+import java.util.ResourceBundle;
 import java.time.LocalDateTime;
 
 //Clase para manejar la serialización de los productos y actualizar los archivos segun su estado 
 
 public class GestorProductos {
     Tienda tienda = Tienda.getInstance(null);
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_PRODUCTOS_XML = config.getString("rutaProductosXML");
+    private static final String RUTA_PRODUCTOS_BIN = config.getString("rutaProductosBin");
     private List<Producto> productosCancelados = tienda.obtenerProductosPorEstado(EstadoProducto.CANCELADO);
     private List<Producto> productosPublicados = tienda.obtenerProductosPorEstado(EstadoProducto.PUBLICADO);
     private List<Producto> productosVendidos = tienda.obtenerProductosPorEstado(EstadoProducto.VENDIDO);

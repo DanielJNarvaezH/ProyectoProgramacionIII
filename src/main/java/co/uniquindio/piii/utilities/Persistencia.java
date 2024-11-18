@@ -62,16 +62,6 @@ public class Persistencia {
             System.out.println("Error al serializar el objeto en XML.");
         }
     }
-    
-
-    /*public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
-        XMLDecoder decodificadorXML;
-        Object objetoXML;
-        decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
-        objetoXML = decodificadorXML.readObject();
-        decodificadorXML.close();
-        return objetoXML;
-    }*/
 
     public static Object deserializarObjetoXML (String rutaArchivo) throws IOException{
         XMLDecoder decodificador;
@@ -148,36 +138,41 @@ public class Persistencia {
             }
         }
     //-------------------------------------------------------------------------------
-        public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+    public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         List<Object> objetosXML = new ArrayList<>();
         
-        try (XMLDecoder decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo))) {
-            // Leer todos los objetos del archivo XML
-            while (true) {
-                try {
-                    Object objetoXML = decodificadorXML.readObject();
-                    objetosXML.add(objetoXML);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    break; // Fin del archivo
+        Thread hiloDeserializacion = new Thread(() -> {
+            try (XMLDecoder decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo))) {
+                // Leer todos los objetos del archivo XML
+                while (true) {
+                    try {
+                        Object objetoXML = decodificadorXML.readObject();
+                        synchronized (objetosXML) {
+                            objetosXML.add(objetoXML);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        break; // Fin del archivo
+                    }
                 }
+            } catch (FileNotFoundException e) {
+                System.out.println("Archivo no encontrado, se creará uno nuevo al guardar.");
+            } catch (@SuppressWarnings("hiding") IOException e) {
+                System.err.println("Error al deserializar el objeto: " + e.getMessage());
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Archivo no encontrado, se creará uno nuevo al guardar.");
+        });
+    
+        // Iniciar el hilo
+        hiloDeserializacion.start();
+    
+        // Esperar a que el hilo termine
+        try {
+            hiloDeserializacion.join();
+        } catch (InterruptedException e) {
+            System.err.println("El hilo fue interrumpido: " + e.getMessage());
         }
-        
+    
         return objetosXML;
     }
-
-    /*public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
-        List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);
-        objetosExistentes.add(nuevoObjeto); // Agregar el nuevo objeto a la lista
-        
-        try (XMLEncoder codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
-            for (Object objeto : objetosExistentes) {
-                codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
-            }
-        }
-    }*/
 
     public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
         List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);

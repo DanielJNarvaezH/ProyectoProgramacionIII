@@ -2,14 +2,15 @@ package co.uniquindio.piii.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import co.uniquindio.piii.App;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.Persistencia;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,6 +66,9 @@ public class MuroVendedorController {
     @FXML
     private VBox productContainer;
 
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_PRODUCTOS_XML = config.getString("rutaProductosXML");
+
     @FXML
     void buscarVendedor(ActionEvent event) {
 
@@ -107,64 +111,99 @@ public class MuroVendedorController {
             showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de comentarios.");
         }
     }
-
-    public void mostrarProductos(List<Producto> productos) {
-        productContainer.getChildren().clear(); // Limpiar contenedor antes de añadir productos
-
-        for (Producto producto : productos) {
-            // Crear un contenedor horizontal para la imagen, detalles y botones
-            HBox productBox = new HBox(10);
-            productBox.setStyle(
-                    "-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
-            productBox.setSpacing(10);
-
-            // Crear ImageView
-            ImageView imageView = new ImageView();
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(100);
-            imageView.setPreserveRatio(true);
-            Image image = producto.getImagen(); // Ruta de la imagen
-            imageView.setImage(image);
-
-            // Crear TextArea
-            TextArea textArea = new TextArea();
-            textArea.setEditable(false);
-            textArea.setWrapText(true);
-            textArea.setText("Nombre: " + producto.getTitulo() + "\n" +
-                    "Código: " + producto.getCodigo() + "\n" +
-                    "Precio: $" + producto.getPrecio() + "\n" +
-                    "Descripción: " + producto.getDescripcion());
-            HBox.setHgrow(textArea, Priority.ALWAYS);
-
-            // Crear botones
-            Button commentButton = new Button("Comentario");
-            commentButton.setStyle(
-                    "-fx-font-size: 16px; " + // Tamaño de la fuente
-                            "-fx-padding: 10 30; " + // Relleno interno (vertical y horizontal)
-                            "-fx-min-width: 150px; " + // Ancho mínimo
-                            "-fx-min-height: 25px; " + // Altura mínima
-                            "-fx-text-fill: black; " + // Color del texto
-                            "-fx-border-radius: 4; " + // Bordes redondeados
-                            "-fx-background-radius: 4;" // Bordes del fondo
-            );
-            commentButton.setOnAction(e -> handleComment(producto));
-
-            Button likeButton = new Button("Me gusta");
-            likeButton.setStyle(
-                    "-fx-font-size: 16px; " +
-                            "-fx-padding: 10 30; " +
-                            "-fx-min-width: 150px; " +
-                            "-fx-min-height: 25px; " +
-                            "-fx-text-fill: black; " +
-                            "-fx-border-radius: 4; " +
-                            "-fx-background-radius: 4;");
-            likeButton.setOnAction(e -> handleLike(producto));
-
-            // Agregar los elementos al HBox
-            productBox.getChildren().addAll(imageView, textArea, commentButton, likeButton);
-
-            // Agregar el HBox al VBox principal
-            productContainer.getChildren().add(productBox);
+    
+    public void mostrarProductos() {
+        try {
+            // Cargar productos desde el archivo XML como List<Object>
+            List<Object> objetos = Persistencia.cargarRecursoSerializadoXML(RUTA_PRODUCTOS_XML);
+            System.out.println("Productos cargados desde XML: " + objetos.size() + " objetos.");
+    
+            // Convertir List<Object> a List<Producto>
+            List<Producto> productos = objetos.stream()
+                    .filter(obj -> obj instanceof Producto) // Filtrar solo los objetos de tipo Producto
+                    .map(obj -> (Producto) obj) // Convertir a Producto
+                    .collect(Collectors.toList());
+            System.out.println("Productos filtrados: " + productos.size() + " productos.");
+    
+            // Obtener el vendedor actual
+            Vendedor vendedor = UsuarioActivo.getInstance().getVendedor();
+            System.out.println("Vendedor actual: " + vendedor.getNombre());
+    
+            // Filtrar productos por el vendedor
+            List<Producto> productosFiltrados = productos.stream()
+                    .filter(producto -> producto.getVendedor().getNombre().equals(vendedor.getNombre()))
+                    .collect(Collectors.toList());
+            System.out.println("Productos filtrados por el vendedor: " + productosFiltrados.size() + " productos.");
+    
+            System.out.println("Cargando lista de productos");
+            // Limpiar contenedor antes de añadir productos
+            productContainer.getChildren().clear();
+    
+            // Mostrar los productos filtrados
+            if (productosFiltrados.isEmpty()) {
+                System.out.println("No hay productos para mostrar.");
+            } else {
+                for (Producto producto : productosFiltrados) {
+                    // Crear un contenedor horizontal para la imagen, detalles y botones
+                    System.out.println("Procesando solicitud para el producto: " + producto.getTitulo());
+                    HBox productBox = new HBox(10);
+                    productBox.setStyle(
+                            "-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
+                    productBox.setSpacing(10);
+    
+                    // Crear ImageView
+                    ImageView imageView = new ImageView();
+                    imageView.setFitWidth(100);
+                    imageView.setFitHeight(100);
+                    imageView.setPreserveRatio(true);
+                    Image image = producto.getImagen(); // Ruta de la imagen
+                    imageView.setImage(image);
+    
+                    // Crear TextArea
+                    TextArea textArea = new TextArea();
+                    textArea.setEditable(false);
+                    textArea.setWrapText(true);
+                    textArea.setText("Nombre: " + producto.getTitulo() + "\n" +
+                            "Código: " + producto.getCodigo() + "\n" +
+                            "Precio: $" + producto.getPrecio() + "\n" +
+                            "Descripción: " + producto.getDescripcion());
+                    HBox.setHgrow(textArea, Priority.ALWAYS);
+    
+                    // Crear botones
+                    Button commentButton = new Button("Comentario");
+                    commentButton.setStyle(
+                            "-fx-font-size: 16px; " + // Tamaño de la fuente
+                                    "-fx-padding: 10 30; " + // Relleno interno (vertical y horizontal)
+                                    "-fx-min-width: 150px; " + // Ancho mínimo
+                                    "-fx-min-height: 25px; " + // Altura mínima
+                                    "-fx-text-fill: black; " + // Color del texto
+                                    "-fx-border-radius: 4; " + // Bordes redondeados
+                                    "-fx-background-radius: 4;" // Bordes del fondo
+                    );
+                    commentButton.setOnAction(e -> handleComment(producto));
+    
+                    Button likeButton = new Button("Me gusta");
+                    likeButton.setStyle(
+                            "-fx-font-size: 16px; " +
+                                    "-fx-padding: 10 30; " +
+                                    "-fx-min-width: 150px; " +
+                                    "-fx-min-height: 25px; " +
+                                    "-fx-text-fill: black; " +
+                                    "-fx-border-radius: 4; " +
+                                    "-fx-background-radius: 4;");
+                    likeButton.setOnAction(e -> handleLike(producto));
+    
+                    // Agregar los elementos al HBox
+                    productBox.getChildren().addAll(imageView, textArea, commentButton, likeButton);
+    
+                    // Agregar el HBox al VBox principal
+                    productContainer.getChildren().add(productBox);
+                    System.out.println("Mostrando producto: " + producto.getTitulo());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los productos.");
         }
     }
 
@@ -183,8 +222,8 @@ public class MuroVendedorController {
     void initialize() {
         Vendedor vendedor = UsuarioActivo.getInstance().getVendedor();
         labelVendedor.setText(vendedor.getNombre());
-        ArrayList<Producto> productos = vendedor.getProductos();
-        mostrarProductos(productos);
+        //ArrayList<Producto> productos = vendedor.getProductos();
+        mostrarProductos();
         assert labelVendedor != null
                 : "fx:id=\"labelVendedor\" was not injected: check your FXML file 'muroProductos.fxml'.";
         assert txtVendedor != null
