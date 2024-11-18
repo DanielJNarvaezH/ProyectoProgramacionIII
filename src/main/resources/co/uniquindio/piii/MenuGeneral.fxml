@@ -2,32 +2,46 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" prefHeight="517.0" prefWidth="916.0" spacing="15" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.MenuGeneralController">
-   <HBox prefHeight="100.0" prefWidth="200.0" translateY="-100.0">
-      <children>
-         <Label prefHeight="44.0" prefWidth="120.0" text="Bienvenido">
-            <font>
-               <Font size="21.0" />
-            </font>
-         </Label>
-         <Label fx:id="labelPrueba" prefHeight="41.0" prefWidth="214.0" text="Label">
-            <font>
-               <Font size="22.0" />
-            </font>
-         </Label>
-      </children>
-   </HBox>
-    
+    <!-- Header -->
+    <HBox prefHeight="100.0" prefWidth="200.0" translateY="-100.0">
+        <children>
+            <Label prefHeight="44.0" prefWidth="120.0" text="Bienvenido">
+                <font>
+                    <Font size="21.0" />
+                </font>
+            </Label>
+            <Label fx:id="labelPrueba" prefHeight="41.0" prefWidth="214.0" text="Label">
+                <font>
+                    <Font size="22.0" />
+                </font>
+            </Label>
+        </children>
+    </HBox>
+
+    <!-- Botones existentes -->
     <Button fx:id="btnChatContacto" onAction="#handleChatContacto" prefHeight="31.0" prefWidth="157.0" text="Chat de Contacto" />
     <Button fx:id="btnProducto" onAction="#handleProducto" text="Agregar Producto" />
     <Button fx:id="btnMuro" onMouseClicked="#muroVendedor" text="Muro" />
-   <Button fx:id="btnMostrarVentasTotalesMes" mnemonicParsing="false" onAction="#mostrarVentasTotales" text="MostrarVentasTotalesMes" />
 
+    <!-- Nueva funcionalidad de ventas por mes -->
+    <HBox alignment="CENTER" spacing="10">
+        <children>
+            <Label text="Selecciona un mes:" />
+            <ComboBox fx:id="comboBoxMeses" promptText="Meses" />
+        </children>
+    </HBox>
+    <Button fx:id="btnMostrarVentasTotalesMes" mnemonicParsing="false" onAction="#mostrarVentasTotales" text="Mostrar Ventas Totales Mes" />
+    <Label fx:id="lblResultados" text="Resultados aparecerán aquí..." wrapText="true" />
+   <Button fx:id="btnMostrarVentasTotalesMes1" layoutX="387.0" layoutY="381.0" mnemonicParsing="false" onAction="#mostrarVentasTotales" text="Mostrar Ventas Totales Mes" />
+
+    <!-- Margins -->
     <VBox.margin>
         <Insets top="20" />
     </VBox.margin>

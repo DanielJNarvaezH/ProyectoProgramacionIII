@@ -118,26 +118,29 @@ public class Estadistica implements Serializable {
         this.totalContactos = obtenerTotalContactos(vendedores);
     }
 
-    public static void mostrarVentasPorMes(ArrayList<Vendedor> vendedores, Month mesSeleccionado) {
-        System.out.println("----- Ventas totales para el mes de " + mesSeleccionado + " -----");
-
+        /**
+     * Calcula las ventas totales de los vendedores para un mes específico.
+     */
+    public static String calcularVentasPorMes(ArrayList<Vendedor> vendedores, Month mesSeleccionado) {
+        StringBuilder resultado = new StringBuilder("----- Ventas totales para " + mesSeleccionado + " -----\n");
         int sumaTotal = 0;
 
         for (Vendedor vendedor : vendedores) {
-            System.out.println("Vendedor: " + vendedor.getNombre());
+            resultado.append("Vendedor: ").append(vendedor.getNombre()).append("\n");
             ArrayList<Producto> ventasMes = vendedor.getProductosVendidosPorMes(mesSeleccionado);
 
             if (ventasMes.isEmpty()) {
-                System.out.println("- Sin ventas en este mes.");
+                resultado.append("- Sin ventas en este mes.\n");
             } else {
                 for (Producto producto : ventasMes) {
-                    System.out.println("Producto vendido: " + producto.getTitulo() + ", Precio: $" + producto.getPrecio());
+                    resultado.append("  Producto vendido: ").append(producto.getTitulo())
+                            .append(", Precio: $").append(producto.getPrecio()).append("\n");
                     sumaTotal += producto.getPrecio();
                 }
             }
-            System.out.println();
         }
 
-        System.out.println("Suma total de ventas en " + mesSeleccionado + ": $" + sumaTotal);
+        resultado.append("Total vendido en ").append(mesSeleccionado).append(": $").append(sumaTotal).append("\n");
+        return resultado.toString();
     }
 }
