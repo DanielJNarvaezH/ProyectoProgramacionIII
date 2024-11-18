@@ -40,7 +40,7 @@ public class PruebaReporte {
         Persistencia.generarReporte(vendedores);
         // Mostrar ventas del mes seleccionado
         Month mesSeleccionado = Month.NOVEMBER; // Por ejemplo, noviembre
-        Estadistica.mostrarVentasPorMes(vendedores, mesSeleccionado);
+        Estadistica.calcularVentasPorMes(vendedores, mesSeleccionado);
 
 
     }
