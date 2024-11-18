@@ -5,11 +5,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
 import co.uniquindio.piii.App;
 import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.EjemploLog;
 import co.uniquindio.piii.utilities.Persistencia;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,6 +83,7 @@ public class MuroVendedorController {
             stage.setTitle("Menu General");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ "cambió de escena de muro hacia el Menu General");
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -199,6 +200,7 @@ public class MuroVendedorController {
                     // Agregar el HBox al VBox principal
                     productContainer.getChildren().add(productBox);
                     System.out.println("Mostrando producto: " + producto.getTitulo());
+                    EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ " accedió a su muro de productos");
                 }
             }
         } catch (Exception e) {
