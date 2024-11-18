@@ -33,45 +33,35 @@ public class Persistencia {
         return instance;
     }
 
-    public static void serializarObjetoBinario(String rutaArchivo, Object objeto) throws IOException{
-        ObjectOutputStream salida;
-
-        salida = new  ObjectOutputStream(new FileOutputStream(rutaArchivo));
-        salida.writeObject(objeto);
-        salida.close();
+    public static void serializarObjetoBinario(String rutaArchivo, Object objeto) {
+        Thread hilo = new Thread(() -> {
+            try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(rutaArchivo))) {
+                salida.writeObject(objeto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        
+        hilo.start(); // Inicia el hilo para serializar el objeto
     }
 
-    public static Object deserializarObjetoBinario( String nombre) throws Exception{
-        Object objeto;
-        ObjectInputStream entrada;
+    public static void deserializarObjetoBinario(String nombre, Callback callback) {
+        Thread hilo = new Thread(() -> {
+            Object objeto = null;
+            try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(nombre))) {
+                objeto = entrada.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            // Llama al callback con el objeto deserializado
+            callback.onDeserializationComplete(objeto);
+        });
 
-        entrada = new ObjectInputStream( new FileInputStream(nombre));
-        objeto = entrada.readObject();
-        entrada.close();
-
-        return objeto;
+        hilo.start(); // Inicia el hilo para deserializar el objeto
     }
 
-    public static void serializarObjetoXML(String rutaArchivo, Object objeto) throws IOException {
-        try (XMLEncoder codificador = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
-            codificador.writeObject(objeto);
-            codificador.flush();
-            System.out.println("Objeto serializado correctamente en XML: " + rutaArchivo);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al serializar el objeto en XML.");
-        }
-    }
-
-    public static Object deserializarObjetoXML (String rutaArchivo) throws IOException{
-        XMLDecoder decodificador;
-        Object objeto;
-
-        decodificador = new XMLDecoder( new FileInputStream(rutaArchivo));
-        objeto = decodificador.readObject();
-        decodificador.close();
-
-        return objeto;
+    public interface Callback {
+        void onDeserializationComplete(Object objeto);
     }
 
     public static void crearRespaldoArchivoXML(String rutaArchivoOriginal) throws IOException {
