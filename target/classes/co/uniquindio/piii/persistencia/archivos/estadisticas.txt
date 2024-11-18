@@ -2,3 +2,27 @@ Estadistica [totalProductoPublicados=10, totalLikes=20, totalComentarios=5, tota
 Estadistica [totalProductoPublicados=3, totalLikes=2, totalComentarios=4, totalContactos=0]
 Estadistica [totalProductoPublicados=1, totalLikes=0, totalComentarios=2, totalContactos=0]
 Estadistica [totalProductoPublicados=5, totalLikes=7, totalComentarios=8, totalContactos=0]
+-----Reporte de vendedores y productos-----
+Pedro - 123
+Productos publicados:
+1- Iphone 11, $1000000
+2- Guitarra, $200000
+Productos vendidos:
+1- Portatil Dell, $2000000
+
+Juan - 345
+-sin productos publicados-
+-sin productos vendidos-
+
+-----Reporte de vendedores y productos-----
+Pedro - 123
+Productos publicados:
+1- Iphone 11, $1000000
+2- Guitarra, $200000
+Productos vendidos:
+1- Portatil Dell, $2000000
+
+Juan - 345
+-sin productos publicados-
+-sin productos vendidos-
+

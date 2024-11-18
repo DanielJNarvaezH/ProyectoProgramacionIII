@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import co.uniquindio.piii.App;
 import co.uniquindio.piii.controller.LoginController;
 
@@ -14,11 +15,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class ChatContactoController {
@@ -26,7 +34,8 @@ public class ChatContactoController {
     @FXML
     public ListView<String> listViewUsuarios;
 
-    private final String RUTA_REGISTRO = "registros.txt";
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_REGISTRO_TXT = config.getString("rutaRegistrosTxt");
 
     private Cliente cliente;
 
@@ -57,7 +66,7 @@ public class ChatContactoController {
 
     private List<String> cargarUsuarios() {
         List<String> usuarios = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_REGISTRO))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_REGISTRO_TXT))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split("%%");
@@ -134,9 +143,29 @@ public class ChatContactoController {
 
     @FXML
     private void handleVolver(ActionEvent event) {
-        // Cierra la ventana actual
-        Stage stage = (Stage) listViewUsuarios.getScene().getWindow();
-        stage.close();
+        try {
+            // Cargar la ventana de registro de productos
+            Parent root = FXMLLoader.load(App.class.getResource("MenuGeneral.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Menu General");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de Registro.");
+        }
+    }
+
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
     }
 
     private void mostrarAlerta(AlertType tipo, String titulo, String mensaje) {
@@ -145,4 +174,6 @@ public class ChatContactoController {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+
+   
 }

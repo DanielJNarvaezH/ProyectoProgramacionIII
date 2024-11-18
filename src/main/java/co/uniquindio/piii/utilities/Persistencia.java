@@ -11,18 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Writer;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import java.util.Calendar;
-
 import co.uniquindio.piii.model.Estadistica;
+import co.uniquindio.piii.model.Producto;
 import co.uniquindio.piii.model.Vendedor;
 
 
@@ -68,16 +62,6 @@ public class Persistencia {
             System.out.println("Error al serializar el objeto en XML.");
         }
     }
-    
-
-    /*public static Object cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
-        XMLDecoder decodificadorXML;
-        Object objetoXML;
-        decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo));
-        objetoXML = decodificadorXML.readObject();
-        decodificadorXML.close();
-        return objetoXML;
-    }*/
 
     public static Object deserializarObjetoXML (String rutaArchivo) throws IOException{
         XMLDecoder decodificador;
@@ -127,27 +111,7 @@ public class Persistencia {
         String nombreArchivoBackup = nombreArchivo + "_" + dia + mes + anio + "_" + hora + "_" + minuto + "_" + segundo;
         return archivoOriginal.getParent() + File.separator + "backup" +  File.separator + nombreArchivoBackup;
     }
-    /* 
-    public void guardarHabitacionesTXT(ArrayList<Habitacion> habitaciones) throws IOException {
-        writer = new BufferedWriter(new FileWriter("habitaciones.txt"));
-        String personajeString;
-        for (Personaje personaje: personajes){
-            personajeString = habitaciones.getNumero() +"%%" +personaje.getPais() +"%%" + personaje.getEdad() + "%%" + personaje.getCodigoPelicula();
-            writer.write(personajeString);
-            writer.newLine();
-            writer.flush();
-        }
-        writer.close();
-    }
-    public void guardarSeriesTXT(ArrayList<Habitacion> habitaciones) throws IOException{
-        writer = new BufferedWriter(new FileWriter("habitaciones.txt"));
-        String serieString;
-        for (Serie serie: series){
-            serieString = serie.getTitulo() +"%%" +serie.getGenero() +"%%" + serie.getAñoInicio() + "%%" + serie.getCodigo() + "%%"  + serie.getPersonajes();
-            writer.write(serieString);
-            writer.newLine();
-            writer.flush();
-        }*/
+
 
 
         public static void guardarEstadisticasTXT(ArrayList<Estadistica> estadisticas)  {
@@ -174,34 +138,107 @@ public class Persistencia {
             }
         }
     //-------------------------------------------------------------------------------
-        public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
+    public static List<Object> cargarRecursoSerializadoXML(String rutaArchivo) throws IOException {
         List<Object> objetosXML = new ArrayList<>();
         
-        try (XMLDecoder decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo))) {
-            // Leer todos los objetos del archivo XML
-            while (true) {
-                try {
-                    Object objetoXML = decodificadorXML.readObject();
-                    objetosXML.add(objetoXML);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    break; // Fin del archivo
+        Thread hiloDeserializacion = new Thread(() -> {
+            try (XMLDecoder decodificadorXML = new XMLDecoder(new FileInputStream(rutaArchivo))) {
+                // Leer todos los objetos del archivo XML
+                while (true) {
+                    try {
+                        Object objetoXML = decodificadorXML.readObject();
+                        synchronized (objetosXML) {
+                            objetosXML.add(objetoXML);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        break; // Fin del archivo
+                    }
                 }
+            } catch (FileNotFoundException e) {
+                System.out.println("Archivo no encontrado, se creará uno nuevo al guardar.");
+            } catch (@SuppressWarnings("hiding") IOException e) {
+                System.err.println("Error al deserializar el objeto: " + e.getMessage());
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Archivo no encontrado, se creará uno nuevo al guardar.");
+        });
+    
+        // Iniciar el hilo
+        hiloDeserializacion.start();
+    
+        // Esperar a que el hilo termine
+        try {
+            hiloDeserializacion.join();
+        } catch (InterruptedException e) {
+            System.err.println("El hilo fue interrumpido: " + e.getMessage());
         }
-        
+    
         return objetosXML;
     }
 
     public static void salvarRecursoSerializadoXML(String rutaArchivo, Object nuevoObjeto) throws IOException {
         List<Object> objetosExistentes = cargarRecursoSerializadoXML(rutaArchivo);
         objetosExistentes.add(nuevoObjeto); // Agregar el nuevo objeto a la lista
-        
-        try (XMLEncoder codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
-            for (Object objeto : objetosExistentes) {
-                codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
+    
+        // Crear un nuevo hilo para realizar la serialización
+        Thread hiloSerializacion = new Thread(() -> {
+            try (XMLEncoder codificadorXML = new XMLEncoder(new FileOutputStream(rutaArchivo))) {
+                for (Object objeto : objetosExistentes) {
+                    codificadorXML.writeObject(objeto); // Escribir cada objeto en el archivo XML
+                }
+                System.out.println("Serialización completada en el hilo: " + Thread.currentThread().getName());
+            } catch (IOException e) {
+                System.err.println("Error al serializar el objeto: " + e.getMessage());
             }
+        });
+    
+        // Iniciar el hilo
+        hiloSerializacion.start();
+    }
+
+
+    public static void generarReporte(ArrayList<Vendedor> vendedores) {
+        StringBuilder reporte = new StringBuilder("-----Reporte de vendedores y productos-----\n");
+
+        for (Vendedor vendedor : vendedores) {
+            reporte.append(vendedor.getNombre()).append(" - ").append(vendedor.getUsuario()).append("\n");
+
+            // Productos publicados
+            List<Producto> productosPublicados = vendedor.getProductos();
+            if (productosPublicados.isEmpty()) {
+                reporte.append("-sin productos publicados-\n");
+            } else {
+                reporte.append("Productos publicados:\n");
+                for (int i = 0; i < productosPublicados.size(); i++) {
+                    Producto producto = productosPublicados.get(i);
+                    reporte.append(i + 1).append("- ")
+                            .append(producto.getTitulo()).append(", $")
+                            .append(producto.getPrecio()).append("\n");
+                }
+            }
+
+            // Productos vendidos
+            List<Producto> productosVendidos = vendedor.getProductosVendidos(); // Asumimos que existe este método.
+            if (productosVendidos == null || productosVendidos.isEmpty()) {
+                reporte.append("-sin productos vendidos-\n");
+            } else {
+                reporte.append("Productos vendidos:\n");
+                for (int i = 0; i < productosVendidos.size(); i++) {
+                    Producto producto = productosVendidos.get(i);
+                    reporte.append(i + 1).append("- ")
+                            .append(producto.getTitulo()).append(", $")
+                            .append(producto.getPrecio()).append("\n");
+                }
+            }
+            reporte.append("\n");
+        }
+
+        // Mostrar en consola
+        System.out.println(reporte);
+
+        // Guardar en archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(config.getString("rutaEstadisticas"), true))) {
+            writer.write(reporte.toString());
+        } catch (IOException e) {
+            System.err.println("Error al guardar el reporte en archivo: " + e.getMessage());
         }
     }
 }

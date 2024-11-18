@@ -8,6 +8,7 @@ import co.uniquindio.piii.exceptions.EmailYaRegistradoException;
 import co.uniquindio.piii.model.Registro;
 import co.uniquindio.piii.model.Tienda;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.EjemploLog;
 import co.uniquindio.piii.utilities.Persistencia;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,6 +72,7 @@ public class RegistroController {
                 System.out.println("Serialización registro completada");
     
                 showAlert(AlertType.INFORMATION, "Registro exitoso", "Usuario registrado correctamente.");
+                EjemploLog.logInfo("El usuario"+ nuevoVendedor.getNombre()+ "realizó su registro en la App, y se dirige a la escena de login");
                 limpiarCampos();
                 abrirVentanaLogin();
             } catch (EmailYaRegistradoException e) {
@@ -103,6 +105,7 @@ public class RegistroController {
             stage.setTitle("Login");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario se dirige hacia la ventana de login");
             
             Stage currentStage = (Stage) userTextField.getScene().getWindow();
             currentStage.close();

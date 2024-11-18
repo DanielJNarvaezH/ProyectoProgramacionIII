@@ -4,6 +4,8 @@ public enum EstadoProducto {
 
     VENDIDO,
     PUBLICADO,
-    CANCELADO
+    CANCELADO,
+    USADO,
+    NUEVO
 
 }

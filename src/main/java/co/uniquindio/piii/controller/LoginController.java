@@ -25,6 +25,7 @@ import co.uniquindio.piii.App;
 import co.uniquindio.piii.model.Registro;
 import co.uniquindio.piii.model.UsuarioActivo;
 import co.uniquindio.piii.model.Vendedor;
+import co.uniquindio.piii.utilities.EjemploLog;
 
 public class LoginController {
 
@@ -60,6 +61,9 @@ public class LoginController {
     @FXML
     private Button btnRegistrarse;
 
+    private static final ResourceBundle config = ResourceBundle.getBundle("archivosProperties.config");
+    private static final String RUTA_REGISTRO_TXT = config.getString("rutaRegistrosTxt");
+
     @FXML
     void IrVentanaRegistro(ActionEvent event) {
         try {
@@ -69,6 +73,7 @@ public class LoginController {
             stage.setTitle("Registro Usuario");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario fue a la ventana de registro");
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -102,7 +107,8 @@ public class LoginController {
                     // Comprobar si es el administrador
                     if (vendedorLogueado.getUsuario().equals("Admin") && vendedorLogueado.getContrasena().equals("12345")) {
                         System.out.println("Bienvenido, Administrador.");
-                        manejarOpcionesAdministrador();
+                        EjemploLog.logInfo("El usuario inició con credenciales de Administrador");
+            manejarOpcionesAdministrador();
                     } else {
                         // Mostrar mensaje de éxito
                         showAlert(AlertType.INFORMATION, messages.getString("login.success"),
@@ -115,7 +121,8 @@ public class LoginController {
                     // Cerrar la ventana actual
                     Stage currentStage = (Stage) loginButton.getScene().getWindow();
                     currentStage.close();
-                } else {
+                    EjemploLog.logInfo("El usuario" + vendedorLogueado.getNombre()+ "se logueo exitosamente");
+    } else {
                     // Mostrar error si el cliente no se inicializó correctamente
                     showAlert(AlertType.ERROR, "Error", "El cliente no se pudo inicializar correctamente.");
                 }
@@ -158,31 +165,8 @@ private void manejarOpcionesAdministrador() {
         }
     }
 }
-    /*private boolean validarCredenciales(String username, String password) {
-        String rutaArchivo = "registros.txt";
-        String linea;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
-            while ((linea = reader.readLine()) != null) {
-                String[] partes = linea.split("%%");
-                if (partes.length == 4) {
-                    String usuarioRegistrado = partes[1];
-                    String contrasenaRegistrada = partes[3];
-
-                    if (usuarioRegistrado.equals(username) && contrasenaRegistrada.equals(password)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo de registro: " + e.getMessage());
-        }
-
-        return false;
-    }*/
-
     private Vendedor validarCredenciales(String username, String password) { 
-    String rutaArchivo = "registros.txt";
+    String rutaArchivo = RUTA_REGISTRO_TXT;
     String linea;
 
     try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
@@ -227,6 +211,7 @@ private void manejarOpcionesAdministrador() {
             stage.setTitle("Menú General");
             stage.setScene(new Scene(root));
             stage.show();
+            EjemploLog.logInfo("El usuario" + UsuarioActivo.getInstance().getVendedor().getNombre()+ "accedió a la ventana del Menu General");
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(AlertType.ERROR, "Error", "No se pudo abrir el Menú General.");

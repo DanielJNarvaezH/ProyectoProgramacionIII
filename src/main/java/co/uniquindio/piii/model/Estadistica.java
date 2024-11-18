@@ -1,6 +1,7 @@
 package co.uniquindio.piii.model;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Estadistica implements Serializable {
     }
 
     // Obtener el total de productos publicados en una fecha específica
-    public int obtenerTotalProductosPorFecha(List<Producto> productos, LocalDate fecha) {
+    public int obtenerTotalProductosPorFecha(List<Producto> productos, LocalDateTime fecha) {
         return (int) productos.stream()
                 .filter(producto -> producto.getFechaPublicacion().equals(fecha))
                 .count();
@@ -115,5 +116,28 @@ public class Estadistica implements Serializable {
         this.totalLikes = obtenerTotalLikes(publicaciones);
         this.totalComentarios = obtenerTotalComentarios(publicaciones);
         this.totalContactos = obtenerTotalContactos(vendedores);
+    }
+
+    public static void mostrarVentasPorMes(ArrayList<Vendedor> vendedores, Month mesSeleccionado) {
+        System.out.println("----- Ventas totales para el mes de " + mesSeleccionado + " -----");
+
+        int sumaTotal = 0;
+
+        for (Vendedor vendedor : vendedores) {
+            System.out.println("Vendedor: " + vendedor.getNombre());
+            ArrayList<Producto> ventasMes = vendedor.getProductosVendidosPorMes(mesSeleccionado);
+
+            if (ventasMes.isEmpty()) {
+                System.out.println("- Sin ventas en este mes.");
+            } else {
+                for (Producto producto : ventasMes) {
+                    System.out.println("Producto vendido: " + producto.getTitulo() + ", Precio: $" + producto.getPrecio());
+                    sumaTotal += producto.getPrecio();
+                }
+            }
+            System.out.println();
+        }
+
+        System.out.println("Suma total de ventas en " + mesSeleccionado + ": $" + sumaTotal);
     }
 }
