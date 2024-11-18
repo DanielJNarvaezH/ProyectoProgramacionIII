@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="517.0" prefWidth="916.0" spacing="15" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.MenuGeneralController">
+<VBox alignment="CENTER" prefHeight="517.0" prefWidth="916.0" spacing="15" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.piii.controller.MenuGeneralController">
     <!-- Header -->
     <HBox prefHeight="100.0" prefWidth="200.0" translateY="-100.0">
         <children>
@@ -39,7 +39,6 @@
     </HBox>
     <Button fx:id="btnMostrarVentasTotalesMes" mnemonicParsing="false" onAction="#mostrarVentasTotales" text="Mostrar Ventas Totales Mes" />
     <Label fx:id="lblResultados" text="Resultados aparecerán aquí..." wrapText="true" />
-   <Button fx:id="btnMostrarVentasTotalesMes1" layoutX="387.0" layoutY="381.0" mnemonicParsing="false" onAction="#mostrarVentasTotales" text="Mostrar Ventas Totales Mes" />
 
     <!-- Margins -->
     <VBox.margin>

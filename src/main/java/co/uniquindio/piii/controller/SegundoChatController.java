@@ -20,29 +20,29 @@ public class SegundoChatController {
 
     private Cliente cliente;
     private String usuarioDestino;
-    private TextArea textAreaChatCompartido;
+
+    // Referencia al ChatController principal
+    private ChatController chatController;
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-        iniciarEscuchaMensajes(); // Inicia la escucha de mensajes una vez que el cliente está configurado
+        iniciarEscuchaMensajes();
     }
 
     public void setUsuarioDestino(String usuarioDestino) {
         this.usuarioDestino = usuarioDestino;
     }
 
-    public void setTextAreaChatCompartido(TextArea textAreaChatCompartido) {
-        this.textAreaChatCompartido = textAreaChatCompartido;
+    public void setChatController(ChatController chatController) {
+        this.chatController = chatController;
     }
 
     private void iniciarEscuchaMensajes() {
-        // Inicia un nuevo hilo para escuchar mensajes
         new Thread(() -> cliente.escucharMensajes(mensaje -> {
-            // Actualiza el área de texto del chat con los mensajes entrantes
             Platform.runLater(() -> textAreaChat.appendText(mensaje + "\n"));
-            // También se muestra en el chat compartido
-            if (textAreaChatCompartido != null) {
-                Platform.runLater(() -> textAreaChatCompartido.appendText(mensaje + "\n"));
+
+            if (chatController != null) {
+                chatController.actualizarChat(mensaje);
             }
         })).start();
     }
@@ -52,18 +52,21 @@ public class SegundoChatController {
         String mensaje = textFieldMensaje.getText();
         if (!mensaje.isEmpty()) {
             try {
-                cliente.enviarMensaje(usuarioDestino, mensaje); // Método para enviar mensajes al servidor
+                cliente.enviarMensaje(usuarioDestino, mensaje);
                 textAreaChat.appendText("Tú: " + mensaje + "\n");
-                // También se muestra en el chat compartido
-                if (textAreaChatCompartido != null) {
-                    Platform.runLater(() -> textAreaChatCompartido.appendText("Tú: " + mensaje + "\n"));
-                }
                 textFieldMensaje.clear();
+
+                if (chatController != null) {
+                    chatController.actualizarChat("Tú: " + mensaje);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 textAreaChat.appendText("Error al enviar el mensaje\n");
             }
         }
     }
-}
 
+    public void actualizarChat(String mensaje) {
+        Platform.runLater(() -> textAreaChat.appendText(mensaje + "\n"));
+    }
+}
