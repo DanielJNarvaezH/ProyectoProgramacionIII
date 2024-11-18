@@ -15,7 +15,6 @@ public class Tienda implements Serializable {
     private ArrayList<Producto> productos;
     private Map<Producto, Publicacion> publicacionesDeProductos; // Mapa para asociar productos con publicaciones
     private String nombre;
-    private LinkedList<Vendedor> vendedorActual;
 
     public static Tienda getInstance(String nombre) {
         if (instance == null) {
@@ -29,7 +28,6 @@ public class Tienda implements Serializable {
         this.nombre = nombre;
         this.productos = new ArrayList<>();
         this.contactos = new ArrayList<>();
-        this.vendedorActual = new LinkedList<>();
         this.publicacionesDeProductos = new HashMap<>(); // Inicializar el mapa de publicaciones
     }
 
@@ -76,14 +74,6 @@ public class Tienda implements Serializable {
 
     public void removerVendedor(Vendedor vendedor) {
         vendedores.remove(vendedor);
-    }
-
-    public LinkedList<Vendedor> getVendedorActual() {
-        return vendedorActual;
-    }
-
-    public void setVendedorActual(LinkedList<Vendedor> vendedorActual) {
-        this.vendedorActual = vendedorActual;
     }
 
     public ArrayList<Producto> obtenerProductosPorEstado(EstadoProducto estado) {
